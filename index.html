@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thera GB10 Field Validation</title>
+  <meta name="description" content="Two ASUS GX10 / NVIDIA GB10 nodes running local long-context inference experiments, with fabric and model benchmarks pending the correct-speed QSFP cable.">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #18212a;
+      --muted: #4d5a64;
+      --line: #c8d2dc;
+      --panel: #f5f7f9;
+      --accent: #00796b;
+      --accent-2: #b42318;
+      --bg: #ffffff;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.58;
+    }
+    main {
+      width: min(980px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 48px 0 64px;
+    }
+    header {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+    h1 {
+      font-size: 2.7rem;
+      line-height: 1.08;
+      margin: 0 0 12px;
+      letter-spacing: 0;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 12px;
+      letter-spacing: 0;
+    }
+    p {
+      margin: 0 0 16px;
+    }
+    a {
+      color: var(--accent);
+    }
+    .status {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+    }
+    .note {
+      border-left: 4px solid var(--accent);
+      background: var(--panel);
+      padding: 14px 16px;
+      margin: 18px 0;
+    }
+    .warning {
+      border-left-color: var(--accent-2);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 22px;
+      font-size: 0.97rem;
+    }
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+      padding: 9px 8px;
+    }
+    th {
+      background: var(--panel);
+      font-weight: 650;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: var(--panel);
+      padding: 0 4px;
+      border-radius: 4px;
+      overflow-wrap: anywhere;
+    }
+    ul, ol {
+      padding-left: 22px;
+    }
+    li {
+      margin: 6px 0;
+    }
+    blockquote {
+      margin: 18px 0;
+      padding: 12px 16px;
+      border-left: 4px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+    }
+    footer {
+      border-top: 1px solid var(--line);
+      margin-top: 40px;
+      padding-top: 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    @media (max-width: 680px) {
+      main {
+        width: min(100% - 22px, 980px);
+        padding-top: 28px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="status">Pre-publication proof post Â· 2026-04-16 Â· Fabric benchmark pending correct-speed QSFP cable</div>
+      <h1>Thera GB10 Field Validation</h1>
+      <p>I am building a local long-context inference and coding-agent cluster around ASUS GX10 / NVIDIA GB10 class systems. I personally purchased the first two nodes and have them running locally.</p>
+      <p>This page records what is already present, what has been tested internally, and what is still waiting on the proper high-speed cable and fresh benchmark runs.</p>
+    </header>
+
+    <section>
+      <h2>Current Hardware Proof</h2>
+      <table>
+        <tr><th>Field</th><th>Current value</th></tr>
+        <tr><td>Host</td><td><code>thera128gx10-1</code></td></tr>
+        <tr><td>Vendor / model</td><td><code>ASUSTeK COMPUTER INC. GX10</code></td></tr>
+        <tr><td>OS</td><td>Ubuntu 24.04.4 LTS</td></tr>
+        <tr><td>Kernel</td><td>Linux 6.17.0-1014-nvidia</td></tr>
+        <tr><td>Architecture</td><td>arm64</td></tr>
+        <tr><td>GPU reported by <code>nvidia-smi</code></td><td>NVIDIA GB10</td></tr>
+        <tr><td>NVIDIA driver</td><td>580.142</td></tr>
+        <tr><td>High-speed NICs reported by <code>lspci</code></td><td>Mellanox / NVIDIA ConnectX-7</td></tr>
+      </table>
+      <p>The second GB10 node is part of the same local Node C cluster and is addressed as <code>thera128gx10-2</code> in the local runbooks. The two nodes keep normal LAN management online while the direct fabric is treated as a separate private point-to-point network.</p>
+      <p>I am not publishing home network addresses, serial numbers, receipts, or private screenshots in this first public post. Those can be provided privately to a sponsor, vendor, or reviewer.</p>
+    </section>
+
+    <section>
+      <h2>Current Model Assets</h2>
+      <table>
+        <tr><th>Model asset</th><th>Local size</th></tr>
+        <tr><td>Qwen3.5-397B-A17B UD-IQ3_S</td><td>137 GB</td></tr>
+        <tr><td>MiniMax-M2.7 UD-IQ4_XS</td><td>101 GB</td></tr>
+      </table>
+      <p>Those files are present locally and fit on the current storage. The next publishable step is not "can the files download"; it is the real serving comparison under long-context coding-agent workloads.</p>
+    </section>
+
+    <section>
+      <h2>Internal Baseline</h2>
+      <p>The current Node C runbook records a working llama.cpp / TurboQuant service shape for Qwen on the two GB10 nodes.</p>
+      <table>
+        <tr><th>Field</th><th>Recorded value</th></tr>
+        <tr><td>Runtime</td><td>llama.cpp / TurboQuant</td></tr>
+        <tr><td>Model family</td><td>Qwen3.5-397B-A17B IQ3 class</td></tr>
+        <tr><td>Serving shape</td><td>8 slots</td></tr>
+        <tr><td>Context pool</td><td>4M total tokens</td></tr>
+        <tr><td>KV strategy under test</td><td>compressed value cache with TurboQuant</td></tr>
+        <tr><td>Split</td><td>two GB10 nodes over RPC / direct fabric</td></tr>
+      </table>
+      <div class="note warning">
+        At the time of this snapshot, no llama-server process was running, so this page does not claim fresh throughput, latency, or correctness results. Those numbers will be published only after the next controlled benchmark pass.
+      </div>
+    </section>
+
+    <section>
+      <h2>Cable And Fabric Status</h2>
+      <p>The current temporary cable is rated for 40 Gb/s. That is enough for setup work, interface configuration, and functional bring-up, but it is not enough to make a fair performance claim about the GB10 fabric.</p>
+      <p>The correct-speed cable is on the way. Until it is installed, I am not claiming final fabric bandwidth, final multi-node latency, or final model throughput.</p>
+      <ol>
+        <li>Confirm link negotiation without hard-coding the link to 40 Gb/s.</li>
+        <li>Run forward and reverse <code>iperf3</code> across the direct fabric.</li>
+        <li>Run jumbo-frame checks if the negotiated path supports MTU 9000.</li>
+        <li>Capture NIC error/drop/FEC counters before and after sustained load.</li>
+        <li>Repeat model-serving benchmarks after fabric validation.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Benchmark Question</h2>
+      <blockquote>What is the best single local model for two GB10 nodes when the target is maximum coding intelligence, fast inference, long context, and enough headroom to keep the operating systems stable?</blockquote>
+      <table>
+        <tr><th>Candidate</th><th>Why it matters</th></tr>
+        <tr><td>Qwen3.5-397B-A17B IQ3 class</td><td>Already recorded as a working two-node long-context baseline.</td></tr>
+        <tr><td>MiniMax-M2.7 IQ4 class</td><td>Smaller on disk than the Qwen IQ3 asset and reported as a strong agentic/coding candidate, but it needs real long-context coding validation.</td></tr>
+        <tr><td>GLM-5.1 IQ3 class</td><td>Potentially the most interesting agentic long-running-task candidate, but it must be validated against actual fit, speed, and coding outcomes on this hardware.</td></tr>
+      </table>
+      <p>Every candidate will be tested on real coding tasks over long context. Short prompt demos are not enough.</p>
+    </section>
+
+    <section>
+      <h2>Memory Budget</h2>
+      <p>Each GB10 node has 128 GB of unified memory. I reserve 20 GB per node for the OS and system stability. That leaves roughly 208 to 216 GB combined for model weights, KV cache, compute scratch, graph buffers, runtime overhead, fragmentation, and safety margin.</p>
+      <p>The reserve is deliberately conservative. In internal testing, the system has tolerated lower free-memory levels, but the public benchmark should not depend on running the machines at the edge of OOM.</p>
+    </section>
+
+    <section>
+      <h2>What A Third Node Unlocks</h2>
+      <p>A third GB10 would move this from a two-node point-to-point test into a three-node fabric/ring validation. That matters because it creates a more realistic small-cluster topology and opens the door to model and context budgets that are not realistic on two nodes alone.</p>
+      <ul>
+        <li>GLM-5.1 IQ3 class testing if the memory and runtime shape fit cleanly.</li>
+        <li>Qwen vs MiniMax vs GLM comparison under identical long-context coding tasks.</li>
+        <li>Ring/fabric behavior under sustained model traffic.</li>
+        <li>Failure-mode notes for agents that run for hours instead of minutes.</li>
+        <li>Power, thermal, memory, and stability reporting.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Deliverables For A Sponsor</h2>
+      <p>I am seeking permanent sponsored hardware, not a temporary loaner.</p>
+      <p>Preferred sponsorship: two ASUS GX10 / NVIDIA GB10 class systems plus a compatible QSFP high-speed switch or fabric kit. Minimum useful sponsorship: one permanent ASUS GX10 / NVIDIA GB10 class validation node.</p>
+      <ol>
+        <li>Three-node setup notes with exact commands.</li>
+        <li>Fabric bring-up and troubleshooting notes.</li>
+        <li>Reproducible llama.cpp / TurboQuant launch configurations.</li>
+        <li>Real long-context coding benchmark results.</li>
+        <li>Model fit table for Qwen, MiniMax, and GLM candidates.</li>
+        <li>Memory, throughput, latency, thermal, and stability notes.</li>
+        <li>Honest disclosure and acknowledgement of sponsored hardware.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Data Safety</h2>
+      <p>My professional background includes campus network administration and financial-sector systems administration. That is why this project cares about private local inference, long-context agents, and systems work where cloud-only AI is not always the right answer.</p>
+      <p>This project is not publishing employer confidential material. Public benchmark tasks will use public repositories, synthetic infrastructure tasks, redacted examples, or purpose-built test repos. No member data, credentials, internal network diagrams, confidential procedures, or private employer documents will be included.</p>
+    </section>
+
+    <footer>
+      <p>The project already has two purchased GB10-class nodes. The next missing piece is permanent sponsored hardware that lets the benchmark move from a two-node proof into a three-node and eventually four-node GB10 cluster study.</p>
+      <p>Contact: Mark Sheehy, <a href="mailto:mgsheehyjr89@gmail.com">mgsheehyjr89@gmail.com</a></p>
+    </footer>
+  </main>
+</body>
+</html>
