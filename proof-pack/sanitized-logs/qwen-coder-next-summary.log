@@ -1,0 +1,13 @@
+2026-04-17 public-safe summary
+
+surface: Qwen3-Coder-Next APEX/TurboQuant single-GB10 evidence
+model asset: Qwen3-Coder-Next-APEX-I-Quality.gguf
+asset size: 50,390,241,280 bytes
+verified serving geometry: 262656 context, 3 slots, 87552 tokens per slot
+single-request decode: approx 46.88 tok/s at 32K context
+three concurrent requests: approx 31.34 tok/s per stream
+audited median lane: 35.07 tok/s average decode
+raw batched decode: 98.46 tok/s at npl=3, 141.46 tok/s at npl=8
+
+private fields omitted: LAN addresses, raw paths, host-private session history
+

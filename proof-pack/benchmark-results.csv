@@ -1,0 +1,26 @@
+category,measurement,value,unit,model_or_surface,notes
+gpt_oss_120b,oob_stock_vllm_fallback,13,tok/s,GPT-OSS 120B,Representative OOB comparison value from local artifact summary
+gpt_oss_120b,tuned_gb10_audit_decode,63,tok/s,GPT-OSS 120B,Live implementation audit batch-1 decode
+gpt_oss_120b,model_memory,64.02,GiB,GPT-OSS 120B,MXFP4 model memory
+gpt_oss_120b,kv_cache_headroom,42.46,GiB,GPT-OSS 120B,Approx 1.24M tokens
+gpt_oss_120b,llama_cpp_pp2048,2443.91,tok/s,GPT-OSS 120B,llama.cpp bench prompt processing
+gpt_oss_120b,llama_cpp_tg32,58.72,tok/s,GPT-OSS 120B,llama.cpp bench decode
+gpt_oss_120b,aime25_score,0.925,score,GPT-OSS 120B,240-sample local eval
+qwen_coder_next,verified_context,262656,tokens,Qwen3-Coder-Next APEX/TurboQuant,Single-GB10 serving geometry
+qwen_coder_next,verified_slots,3,slots,Qwen3-Coder-Next APEX/TurboQuant,Single-GB10 serving geometry
+qwen_coder_next,tokens_per_slot,87552,tokens,Qwen3-Coder-Next APEX/TurboQuant,Single-GB10 serving geometry
+qwen_coder_next,single_request_decode_32k,46.88,tok/s,Qwen3-Coder-Next APEX/TurboQuant,Approximate single-request decode baseline
+qwen_coder_next,three_way_initial_per_stream,31.34,tok/s,Qwen3-Coder-Next APEX/TurboQuant,Initial verified three-way serving shape
+qwen_coder_next,three_way_audited_median_per_stream,35.07,tok/s,Qwen3-Coder-Next APEX/TurboQuant,Repeated-run audited lane
+qwen_coder_next,raw_batched_decode_npl3,98.46,tok/s,Qwen3-Coder-Next APEX/TurboQuant,Aggregate raw batched decode
+qwen_coder_next,raw_batched_decode_npl4,112.63,tok/s,Qwen3-Coder-Next APEX/TurboQuant,Aggregate raw batched decode
+qwen_coder_next,raw_batched_decode_npl5,121.93,tok/s,Qwen3-Coder-Next APEX/TurboQuant,Aggregate raw batched decode
+qwen_coder_next,raw_batched_decode_npl6,130.55,tok/s,Qwen3-Coder-Next APEX/TurboQuant,Aggregate raw batched decode
+qwen_coder_next,raw_batched_decode_npl8,141.46,tok/s,Qwen3-Coder-Next APEX/TurboQuant,Aggregate raw batched decode
+kernel_tuning,raw_baseline_tg,90.19,tok/s,Qwen3-Coder-Next kernel reproducer,pp128/tg128/pl3
+kernel_tuning,mmq_off_raw_tg,90.73,tok/s,Qwen3-Coder-Next kernel reproducer,MMQ disabled globally
+kernel_tuning,baseline_live_decode,31.38,tok/s,Qwen3-Coder-Next serving,Baseline live decode
+kernel_tuning,mmq_off_live_decode,31.36,tok/s,Qwen3-Coder-Next serving,MMQ disabled globally
+kernel_tuning,baseline_prompt,162.40,tok/s,Qwen3-Coder-Next serving,Baseline prompt throughput
+kernel_tuning,mmq_off_prompt,66.96,tok/s,Qwen3-Coder-Next serving,Prompt throughput regression
+

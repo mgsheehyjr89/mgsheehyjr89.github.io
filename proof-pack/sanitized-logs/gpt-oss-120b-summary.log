@@ -1,0 +1,11 @@
+2026-04-17 public-safe summary
+
+surface: GPT-OSS 120B single-GB10 evidence
+live implementation audit: 63 tok/s batch-1 decode
+model memory: 64.02 GiB MXFP4
+kv cache headroom: 42.46 GiB, approx 1.24M tokens
+llama.cpp bench: pp2048 2443.91 t/s, tg32 58.72 t/s
+AIME25 local eval: 0.925 over 240 samples
+
+private fields omitted: LAN addresses, raw paths, host-private session history
+

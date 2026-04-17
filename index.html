@@ -4,7 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Thera GB10 Field Validation</title>
-  <meta name="description" content="Public-safe evidence from two personally purchased ASUS GX10 / NVIDIA GB10 systems: local model assets, single-unit inference baselines, and kernel tuning findings.">
+  <meta name="description" content="Public-safe proof pack from two personally purchased ASUS GX10 / NVIDIA GB10 systems: model assets, benchmark baselines, kernel findings, and a permanent hardware sponsorship ask.">
+  <meta name="author" content="Mark Sheehy">
+  <link rel="canonical" href="https://mgsheehyjr89.github.io/">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Thera Field Lab">
+  <meta property="og:title" content="Thera GB10 Field Validation">
+  <meta property="og:description" content="Two owned GB10 nodes, public benchmark evidence, a downloadable proof pack, and a permanent hardware sponsorship ask for local long-context coding agents.">
+  <meta property="og:url" content="https://mgsheehyjr89.github.io/">
+  <meta property="og:image" content="https://mgsheehyjr89.github.io/social-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Thera GB10 Field Validation">
+  <meta name="twitter:description" content="Two owned GB10 nodes, public benchmark evidence, a downloadable proof pack, and a permanent hardware sponsorship ask.">
+  <meta name="twitter:image" content="https://mgsheehyjr89.github.io/social-card.png">
   <style>
     :root {
       color-scheme: light;
@@ -258,6 +273,12 @@
       color: #f8df86;
     }
 
+    .button.light {
+      border-color: #ffffff;
+      background: #ffffff;
+      color: var(--panel-dark);
+    }
+
     .proof-image {
       margin: 34px 0 0;
       border: 1px solid rgba(17, 24, 22, 0.2);
@@ -306,9 +327,18 @@
       --section-bg: #f4f8f6;
     }
 
-    .section:nth-of-type(8) {
+    .section.dark-section {
       --section-bg: #101816;
       color: #ffffff;
+    }
+
+    .section.dark-section .muted,
+    .section.dark-section .section-label {
+      color: #cfe0d9;
+    }
+
+    .section.dark-section .section-label {
+      background: #304c43;
     }
 
     .section-header {
@@ -353,15 +383,6 @@
 
     .muted {
       color: var(--muted);
-    }
-
-    .section:nth-of-type(8) .muted,
-    .section:nth-of-type(8) .section-label {
-      color: #cfe0d9;
-    }
-
-    .section:nth-of-type(8) .section-label {
-      background: #304c43;
     }
 
     .metric-grid {
@@ -448,6 +469,111 @@
       color: #d6dde2;
     }
 
+    .sponsor-panel {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.95fr) minmax(360px, 1.05fr);
+      gap: 22px;
+      align-items: stretch;
+      margin-top: 24px;
+    }
+
+    .sponsor-ask {
+      padding: 22px;
+      border: 1px solid #3d5750;
+      border-top: 6px solid var(--accent-gold);
+      border-radius: 8px;
+      background: #16231f;
+      color: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .sponsor-ask h3,
+    .operator-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.35rem;
+    }
+
+    .sponsor-ask p,
+    .sponsor-ask li {
+      color: #d6e5df;
+    }
+
+    .sponsor-ask ul,
+    .artifact-list {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .sponsor-grid,
+    .proof-pack-grid,
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .sponsor-card,
+    .proof-card,
+    .method-card,
+    .operator-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--accent);
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 10px 24px rgba(16, 24, 22, 0.08);
+    }
+
+    .sponsor-card strong,
+    .proof-card strong,
+    .method-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.02rem;
+    }
+
+    .section.dark-section .sponsor-card {
+      color: var(--ink);
+    }
+
+    .section.dark-section .sponsor-card .muted {
+      color: var(--muted);
+    }
+
+    .proof-card.featured {
+      background: #111816;
+      border-color: #111816;
+      border-top-color: var(--accent-gold);
+      color: #ffffff;
+    }
+
+    .proof-card.featured a {
+      color: #f8df86;
+    }
+
+    .proof-card.featured .muted {
+      color: #cfe0d9;
+    }
+
+    .operator-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.85fr) minmax(340px, 1.15fr);
+      gap: 18px;
+    }
+
+    .operator-card {
+      border-top-color: var(--accent-gold);
+    }
+
+    .media-note {
+      margin-top: 18px;
+      padding: 18px;
+      border-left: 5px solid var(--accent-hot);
+      border-radius: 0 8px 8px 0;
+      background: #fff1f4;
+      color: var(--muted);
+    }
+
     .evidence-list {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -463,7 +589,7 @@
       box-shadow: 0 10px 24px rgba(16, 24, 22, 0.08);
     }
 
-    .section:nth-of-type(8) .evidence-item {
+    .section.dark-section .evidence-item {
       background: #16231f;
       border-color: #39534b;
       border-top-color: var(--accent-gold);
@@ -594,7 +720,12 @@
       }
 
       .metric-grid,
-      .evidence-list {
+      .evidence-list,
+      .sponsor-panel,
+      .sponsor-grid,
+      .proof-pack-grid,
+      .method-grid,
+      .operator-grid {
         grid-template-columns: 1fr;
       }
 
@@ -663,10 +794,10 @@
     <div class="topbar">
       <div class="brand">Thera Field Lab</div>
       <nav class="nav" aria-label="Page sections">
-        <a href="#measured">Measured data</a>
+        <a href="#ask">Ask</a>
+        <a href="#proof-pack">Proof pack</a>
         <a href="#graphs">Graphs</a>
-        <a href="#kernel">Kernel findings</a>
-        <a href="#next">Next pass</a>
+        <a href="#method">Method</a>
         <a href="mailto:mgsheehyjr89@gmail.com">Contact</a>
       </nav>
     </div>
@@ -678,8 +809,9 @@
         <h1>Hardware in hand. Benchmarks on disk. The next pass proves the fabric.</h1>
         <p class="lead">Two personally purchased ASUS GX10 / NVIDIA GB10 systems are already running local inference work. The publishable record includes GPT-OSS 120B results, Qwen3-Coder-Next APEX/TurboQuant serving data, model assets for the two-node tests, and kernel findings from the GB10 runtime path.</p>
         <div class="actions">
-          <a class="button" href="#graphs">See the graphs</a>
-          <a class="button secondary" href="#ask">Hardware sponsorship ask</a>
+          <a class="button" href="#ask">Sponsor the next node</a>
+          <a class="button secondary" href="proof-pack.zip">Download proof pack</a>
+          <a class="button secondary" href="proof-pack/sponsorship-one-pager.pdf">One-page PDF</a>
         </div>
       </div>
 
@@ -710,6 +842,46 @@
         <img src="evidence-visual.png" alt="Sanitized Thera GB10 field validation snapshot with two GB10 nodes, runtime target, model assets, and next validation steps.">
       </figure>
     </header>
+
+    <section class="section dark-section" id="ask" aria-labelledby="ask-heading">
+      <div class="section-header">
+        <div>
+          <p class="section-label">Permanent hardware ask</p>
+          <h2 id="ask-heading">Sponsor The Next GB10 Node</h2>
+        </div>
+        <p class="muted">The useful ask is permanent hardware, not a loaner. The existing two systems were purchased personally and are already producing public-safe benchmark evidence.</p>
+      </div>
+
+      <div class="sponsor-panel">
+        <div class="sponsor-ask">
+          <h3>What I am asking for</h3>
+          <ul>
+            <li>Minimum: one permanent ASUS GX10 / NVIDIA GB10-class validation node plus the correct fabric cable.</li>
+            <li>Preferred: two permanent GB10-class nodes plus a compatible QSFP switch or fabric kit.</li>
+            <li>Useful add-ons: correct cables/transceivers, spare storage, and vendor technical contacts.</li>
+          </ul>
+          <div class="actions">
+            <a class="button light" href="mailto:mgsheehyjr89@gmail.com?subject=GB10%20hardware%20sponsorship">Contact Mark</a>
+            <a class="button secondary" href="proof-pack/sponsorship-one-pager.pdf">Open PDF</a>
+          </div>
+        </div>
+
+        <div class="sponsor-grid">
+          <div class="sponsor-card">
+            <strong>What sponsors get</strong>
+            <p class="muted">Public acknowledgement, reproducible setup notes, benchmark results, model-fit tables, fabric diagnostics, and kernel/runtime findings.</p>
+          </div>
+          <div class="sponsor-card">
+            <strong>Why now</strong>
+            <p class="muted">A third GB10 changes the work from point-to-point bring-up into the small-ring topology NVIDIA documents for GB10-class systems.</p>
+          </div>
+          <div class="sponsor-card">
+            <strong>Data boundary</strong>
+            <p class="muted">Public work uses public repos, synthetic infrastructure tasks, redacted examples, or purpose-built test repos. No member data or private employer material.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="section" aria-labelledby="summary-heading">
       <div class="section-header">
@@ -754,6 +926,53 @@
       </div>
     </section>
 
+    <section class="section" id="proof-pack" aria-labelledby="proof-pack-heading">
+      <div class="section-header">
+        <div>
+          <p class="section-label">Proof pack</p>
+          <h2 id="proof-pack-heading">Artifacts People Can Inspect</h2>
+        </div>
+        <p class="muted">The page now has a downloadable proof pack with machine-readable benchmark data, methodology, limitations, launch notes, sanitized summaries, and a one-page sponsor handout.</p>
+      </div>
+
+      <div class="proof-pack-grid">
+        <div class="proof-card featured">
+          <strong>Download everything</strong>
+          <p class="muted">Zip bundle containing the public-safe proof pack, benchmark data, launch notes, sanitized logs, and sponsorship one-pager.</p>
+          <p><a href="proof-pack.zip">Download proof-pack.zip</a></p>
+        </div>
+        <div class="proof-card">
+          <strong>One-page PDF</strong>
+          <p class="muted">A sponsor-facing PDF with the ask, current evidence, public output, and safety boundary.</p>
+          <p><a href="proof-pack/sponsorship-one-pager.pdf">Open sponsorship-one-pager.pdf</a></p>
+        </div>
+        <div class="proof-card">
+          <strong>Machine-readable data</strong>
+          <p class="muted">Benchmark values are available as CSV and JSON so graphs and claims can be checked without scraping the page.</p>
+          <p><a href="proof-pack/benchmark-results.csv">CSV</a> / <a href="proof-pack/benchmark-results.json">JSON</a></p>
+        </div>
+        <div class="proof-card">
+          <strong>Methodology</strong>
+          <p class="muted">Benchmark rules, measurement surfaces, privacy boundary, and pending fabric validation gates.</p>
+          <p><a href="proof-pack/methodology.md">Read methodology.md</a></p>
+        </div>
+        <div class="proof-card">
+          <strong>Limitations</strong>
+          <p class="muted">Explicit caveats, what is not claimed yet, and what must pass before stronger claims are made.</p>
+          <p><a href="proof-pack/limitations.md">Read limitations.md</a></p>
+        </div>
+        <div class="proof-card">
+          <strong>Launch notes</strong>
+          <p class="muted">Public-safe launch/configuration notes for GPT-OSS 120B, Qwen3-Coder-Next, and the two-node target shape.</p>
+          <p><a href="proof-pack/launch-configs/two-node-target.md">Open target notes</a></p>
+        </div>
+      </div>
+
+      <div class="media-note">
+        Physical photos of the two GB10 systems and cable/fabric setup should be added next from the operator's phone. I am not substituting stock photos for real proof.
+      </div>
+    </section>
+
     <section class="section" id="graphs" aria-labelledby="graphs-heading">
       <div class="section-header">
         <div>
@@ -767,6 +986,31 @@
         <img src="benchmark-graphs.png" alt="Four benchmark graphs comparing GPT-OSS 120B OOB versus tuned decode, Qwen Coder three-way serving, Qwen Coder raw scaling, and MMQ tuning results.">
         <figcaption>Two-node fabric throughput is intentionally not graphed yet. Final fabric claims wait for the correct-speed QSFP cable and fresh forward/reverse tests.</figcaption>
       </figure>
+    </section>
+
+    <section class="section" id="method" aria-labelledby="method-heading">
+      <div class="section-header">
+        <div>
+          <p class="section-label">Method and trust boundary</p>
+          <h2 id="method-heading">What Makes The Data Credible</h2>
+        </div>
+        <p class="muted">The public results separate measured facts, negative tuning findings, and pending claims. That makes the page more useful than a marketing benchmark screenshot.</p>
+      </div>
+
+      <div class="method-grid">
+        <div class="method-card">
+          <strong>Same-condition comparisons</strong>
+          <p class="muted">Kernel/runtime changes are judged against the same reproducer and the managed serving path, not isolated lucky runs.</p>
+        </div>
+        <div class="method-card">
+          <strong>Negative results retained</strong>
+          <p class="muted">MMQ-off and stream-k-off findings are published because they prevent wasted tuning and narrow the real CUDA target.</p>
+        </div>
+        <div class="method-card">
+          <strong>Privacy boundary</strong>
+          <p class="muted">The public pack excludes private LAN addresses, credentials, serials, receipts, raw shell history, and employer-private data.</p>
+        </div>
+      </div>
     </section>
 
     <section class="section" aria-labelledby="hardware-heading">
@@ -1075,11 +1319,33 @@
       </div>
     </section>
 
-    <section class="section" id="ask" aria-labelledby="ask-heading">
+    <section class="section" id="operator" aria-labelledby="operator-heading">
+      <div class="section-header">
+        <div>
+          <p class="section-label">Operator credibility</p>
+          <h2 id="operator-heading">Who Is Running This</h2>
+        </div>
+        <p class="muted">This is a personal field-validation effort by a systems operator with real network and infrastructure responsibilities. Employer names are context, not employer endorsement.</p>
+      </div>
+
+      <div class="operator-grid">
+        <div class="operator-card">
+          <h3>Mark Sheehy</h3>
+          <p class="muted">Systems and network administrator focused on local AI infrastructure, private inference, long-context agents, and practical deployment work.</p>
+          <p><a href="mailto:mgsheehyjr89@gmail.com">mgsheehyjr89@gmail.com</a></p>
+        </div>
+        <div class="operator-card">
+          <h3>Why this project exists</h3>
+          <p class="muted">Cloud-only AI does not fit every privacy-sensitive workflow. This work validates whether small local GB10 clusters can support long-running coding and infrastructure agents with enough context, speed, and operational headroom to matter.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark-section" id="sponsorship-details" aria-labelledby="sponsorship-details-heading">
       <div class="section-header">
         <div>
           <p class="section-label">Hardware sponsorship</p>
-          <h2 id="ask-heading">What Permanent Hardware Unlocks</h2>
+          <h2 id="sponsorship-details-heading">What Permanent Hardware Unlocks</h2>
         </div>
         <p class="muted">A third GB10 turns this from a point-to-point proof into the three-node ring topology NVIDIA documents for small GB10 clusters. A fourth node makes Q3/Q4 tradeoffs and failover behavior worth measuring seriously.</p>
       </div>

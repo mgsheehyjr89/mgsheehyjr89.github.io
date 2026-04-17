@@ -1,0 +1,15 @@
+graph,panel,series,label,value,unit
+benchmark_snapshot,GPT-OSS 120B OOB vs Tuned,OOB,OOB stock vLLM fallback,13,tok/s
+benchmark_snapshot,GPT-OSS 120B OOB vs Tuned,Tuned,Tuned GB10 audit,63,tok/s
+benchmark_snapshot,Qwen Coder 3-Way Serving,Initial,Initial verified shape,31.34,tok/s
+benchmark_snapshot,Qwen Coder 3-Way Serving,Audited,Audited tuned median,35.07,tok/s
+benchmark_snapshot,Qwen Coder Raw Scaling,npl3,npl=3,98.46,tok/s
+benchmark_snapshot,Qwen Coder Raw Scaling,npl4,npl=4,112.63,tok/s
+benchmark_snapshot,Qwen Coder Raw Scaling,npl5,npl=5,121.93,tok/s
+benchmark_snapshot,Qwen Coder Raw Scaling,npl6,npl=6,130.55,tok/s
+benchmark_snapshot,Qwen Coder Raw Scaling,npl8,npl=8,141.46,tok/s
+benchmark_snapshot,Kernel Tuning Negative Result,Baseline decode,decode t/s,31.38,tok/s
+benchmark_snapshot,Kernel Tuning Negative Result,MMQ-off decode,decode t/s,31.36,tok/s
+benchmark_snapshot,Kernel Tuning Negative Result,Baseline prompt,prompt t/s,162.40,tok/s
+benchmark_snapshot,Kernel Tuning Negative Result,MMQ-off prompt,prompt t/s,66.96,tok/s
+

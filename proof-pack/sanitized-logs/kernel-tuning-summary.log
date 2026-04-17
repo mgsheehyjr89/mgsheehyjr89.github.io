@@ -1,0 +1,12 @@
+2026-04-17 public-safe summary
+
+surface: Qwen3-Coder-Next GB10 kernel/runtime tuning
+raw baseline: speed_tg = 90.19 tok/s on pp128/tg128/pl3
+global MMQ disable raw: 90.73 tok/s
+global MMQ disable live decode: 31.36 vs 31.38 baseline
+global MMQ disable prompt throughput: 66.96 vs 162.40 baseline
+global stream-k disable: reproducer exceeded 6m20s and was terminated
+conclusion: MMQ yes/no and stream-k off are not viable high-level fixes
+next target: mixed q8_0 K / turbo2 V VEC decode path and on-the-fly turbo2 V dequantization
+hardware constraint: GB10 sm_121 is not datacenter Blackwell; do not assume WGMMA/tcgen05
+

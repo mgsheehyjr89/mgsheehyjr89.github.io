@@ -1,0 +1,49 @@
+{
+  "date": "2026-04-17",
+  "scope": "public-safe GB10 field-validation benchmark summary",
+  "privacy_boundary": "No private LAN addresses, credentials, serial numbers, receipts, employer-private diagrams, or raw private sessions.",
+  "results": {
+    "gpt_oss_120b": {
+      "oob_stock_vllm_fallback_tok_s": 13,
+      "tuned_gb10_audit_decode_tok_s": 63,
+      "model_memory_gib": 64.02,
+      "kv_cache_headroom_gib": 42.46,
+      "kv_cache_tokens_approx": 1240000,
+      "llama_cpp_pp2048_tok_s": 2443.91,
+      "llama_cpp_tg32_tok_s": 58.72,
+      "aime25_score": 0.925,
+      "aime25_samples": 240
+    },
+    "qwen3_coder_next_apex_turboquant": {
+      "verified_context_tokens": 262656,
+      "slots": 3,
+      "tokens_per_slot": 87552,
+      "single_request_decode_32k_tok_s": 46.88,
+      "three_way_initial_per_stream_tok_s": 31.34,
+      "three_way_audited_median_per_stream_tok_s": 35.07,
+      "raw_batched_decode_tok_s": {
+        "npl3": 98.46,
+        "npl4": 112.63,
+        "npl5": 121.93,
+        "npl6": 130.55,
+        "npl8": 141.46
+      }
+    },
+    "kernel_tuning": {
+      "raw_baseline_tg_tok_s": 90.19,
+      "mmq_off_raw_tg_tok_s": 90.73,
+      "baseline_live_decode_tok_s": 31.38,
+      "mmq_off_live_decode_tok_s": 31.36,
+      "baseline_prompt_tok_s": 162.40,
+      "mmq_off_prompt_tok_s": 66.96
+    }
+  },
+  "pending": [
+    "correct-speed QSFP fabric benchmark",
+    "forward and reverse iperf3",
+    "jumbo-frame checks if supported",
+    "NIC counters before and after sustained load",
+    "real long-context coding tasks across model candidates"
+  ]
+}
+
