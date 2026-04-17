@@ -4,254 +4,829 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Thera GB10 Field Validation</title>
-  <meta name="description" content="Two ASUS GX10 / NVIDIA GB10 nodes running local long-context inference experiments, with fabric and model benchmarks pending the correct-speed QSFP cable.">
+  <meta name="description" content="Public-safe evidence from two personally purchased ASUS GX10 / NVIDIA GB10 systems: local model assets, single-unit inference baselines, and kernel tuning findings.">
   <style>
     :root {
       color-scheme: light;
-      --ink: #18212a;
-      --muted: #4d5a64;
-      --line: #c8d2dc;
-      --panel: #f5f7f9;
-      --accent: #00796b;
-      --accent-2: #b42318;
       --bg: #ffffff;
+      --ink: #12171c;
+      --muted: #53606a;
+      --line: #cbd6dc;
+      --soft: #f2f7f6;
+      --soft-2: #f7f4f8;
+      --soft-3: #f6f7f9;
+      --accent: #00796b;
+      --accent-strong: #005e54;
+      --critical: #a8201a;
+      --warning: #b26a00;
+      --ok: #247a3c;
+      --shadow: 0 18px 44px rgba(18, 23, 28, 0.09);
     }
+
     * {
       box-sizing: border-box;
     }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       background: var(--bg);
       color: var(--ink);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-size: 17px;
       line-height: 1.58;
+      letter-spacing: 0;
     }
-    main {
-      width: min(980px, calc(100% - 32px));
+
+    a {
+      color: var(--accent-strong);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 48px 0 64px;
+      padding: 30px 0 64px;
     }
-    header {
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 12px 0 24px;
       border-bottom: 1px solid var(--line);
-      padding-bottom: 24px;
-      margin-bottom: 32px;
+      color: var(--muted);
+      font-size: 0.94rem;
     }
-    h1 {
-      font-size: 2.7rem;
+
+    .brand {
+      color: var(--ink);
+      font-weight: 760;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 14px;
+    }
+
+    .masthead {
+      padding: 46px 0 32px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      min-height: 34px;
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+      color: var(--accent-strong);
+      font-size: 0.92rem;
+      font-weight: 680;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
       line-height: 1.08;
-      margin: 0 0 12px;
       letter-spacing: 0;
     }
+
+    h1 {
+      max-width: 920px;
+      margin-top: 20px;
+      font-size: 3.2rem;
+      font-weight: 820;
+    }
+
+    .lead {
+      max-width: 880px;
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: 1.14rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 10px 15px;
+      border: 1px solid var(--accent-strong);
+      border-radius: 8px;
+      background: var(--accent-strong);
+      color: #ffffff;
+      font-weight: 720;
+      text-decoration: none;
+    }
+
+    .button.secondary {
+      background: #ffffff;
+      color: var(--accent-strong);
+    }
+
+    .proof-image {
+      margin-top: 34px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: var(--soft-3);
+    }
+
+    .section {
+      padding: 46px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-header {
+      max-width: 860px;
+      margin-bottom: 22px;
+    }
+
+    .section-label {
+      margin: 0 0 8px;
+      color: var(--accent-strong);
+      font-size: 0.9rem;
+      font-weight: 760;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
     h2 {
-      font-size: 1.45rem;
-      margin: 36px 0 12px;
-      letter-spacing: 0;
+      font-size: 2rem;
+      font-weight: 800;
     }
+
+    h3 {
+      margin-bottom: 10px;
+      font-size: 1.08rem;
+      font-weight: 780;
+    }
+
     p {
       margin: 0 0 16px;
     }
-    a {
-      color: var(--accent);
+
+    .muted {
+      color: var(--muted);
     }
-    .status {
-      display: inline-block;
-      padding: 6px 10px;
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .metric {
+      min-height: 142px;
+      padding: 18px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: var(--panel);
+      background: var(--soft-3);
+    }
+
+    .metric.good {
+      background: var(--soft);
+      border-color: #9fcec5;
+    }
+
+    .metric.warn {
+      background: #fff8eb;
+      border-color: #dfc57e;
+    }
+
+    .metric.deep {
+      background: #15191d;
+      border-color: #15191d;
+      color: #ffffff;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 720;
+      text-transform: uppercase;
+    }
+
+    .metric.deep .metric-label {
+      color: #b8c3ca;
+    }
+
+    .metric-value {
+      margin-top: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 2rem;
+      line-height: 1;
+      font-weight: 760;
+      overflow-wrap: anywhere;
+    }
+
+    .metric-copy {
+      margin: 10px 0 0;
       color: var(--muted);
       font-size: 0.95rem;
-      margin-bottom: 18px;
     }
-    .note {
-      border-left: 4px solid var(--accent);
-      background: var(--panel);
-      padding: 14px 16px;
-      margin: 18px 0;
+
+    .metric.deep .metric-copy {
+      color: #d6dde2;
     }
-    .warning {
-      border-left-color: var(--accent-2);
+
+    .evidence-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
     }
+
+    .evidence-item {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .evidence-item strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 1.02rem;
+    }
+
+    .table-wrap {
+      width: 100%;
+      margin: 18px 0 26px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
     table {
       width: 100%;
+      min-width: 720px;
       border-collapse: collapse;
-      margin: 16px 0 22px;
-      font-size: 0.97rem;
+      font-size: 0.96rem;
     }
-    th, td {
+
+    th,
+    td {
+      padding: 12px 14px;
       text-align: left;
       vertical-align: top;
       border-bottom: 1px solid var(--line);
-      padding: 9px 8px;
     }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
     th {
-      background: var(--panel);
-      font-weight: 650;
+      background: var(--soft-3);
+      font-weight: 760;
     }
+
     code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: var(--soft-3);
+      color: var(--ink);
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      background: var(--panel);
-      padding: 0 4px;
-      border-radius: 4px;
       overflow-wrap: anywhere;
     }
-    ul, ol {
-      padding-left: 22px;
+
+    .band {
+      margin: 26px 0 0;
+      padding: 20px;
+      border-left: 5px solid var(--accent);
+      background: var(--soft);
     }
-    li {
-      margin: 6px 0;
+
+    .band.warning {
+      border-left-color: var(--warning);
+      background: #fff8eb;
     }
-    blockquote {
-      margin: 18px 0;
-      padding: 12px 16px;
-      border-left: 4px solid var(--line);
-      background: var(--panel);
-      color: var(--ink);
+
+    .band.critical {
+      border-left-color: var(--critical);
+      background: #fff4f3;
     }
-    footer {
-      border-top: 1px solid var(--line);
-      margin-top: 40px;
-      padding-top: 18px;
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .timeline li {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--ink);
+      color: #ffffff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-weight: 760;
+    }
+
+    .source-box {
+      margin-top: 20px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft-2);
       color: var(--muted);
       font-size: 0.95rem;
     }
-    @media (max-width: 680px) {
-      main {
-        width: min(100% - 22px, 980px);
-        padding-top: 28px;
+
+    footer {
+      padding: 28px 0 12px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+      h1 {
+        font-size: 2.45rem;
       }
+
+      .metric-grid,
+      .evidence-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        font-size: 16px;
+      }
+
+      .page {
+        width: min(100% - 22px, 1180px);
+        padding-top: 18px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav {
+        justify-content: flex-start;
+      }
+
+      .masthead {
+        padding-top: 32px;
+      }
+
       h1 {
         font-size: 2rem;
       }
-      table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
+
+      h2 {
+        font-size: 1.55rem;
+      }
+
+      .metric-value {
+        font-size: 1.65rem;
       }
     }
   </style>
 </head>
 <body>
-  <main>
-    <header>
-      <div class="status">Pre-publication proof post - 2026-04-16 - Fabric benchmark pending correct-speed QSFP cable</div>
-      <h1>Thera GB10 Field Validation</h1>
-      <p>I am building a local long-context inference and coding-agent cluster around ASUS GX10 / NVIDIA GB10 class systems. I personally purchased the first two nodes and have them running locally.</p>
-      <p>This page records what is already present, what has been tested internally, and what is still waiting on the proper high-speed cable and fresh benchmark runs.</p>
+  <main class="page">
+    <div class="topbar">
+      <div class="brand">Thera GB10 Field Validation</div>
+      <nav class="nav" aria-label="Page sections">
+        <a href="#measured">Measured data</a>
+        <a href="#kernel">Kernel findings</a>
+        <a href="#next">Next pass</a>
+        <a href="mailto:mgsheehyjr89@gmail.com">Contact</a>
+      </nav>
+    </div>
+
+    <header class="masthead">
+      <div class="eyebrow">Public-safe snapshot - April 17, 2026</div>
+      <h1>Two personally purchased GB10 nodes, real inference data, and kernel work already underway.</h1>
+      <p class="lead">This is a local validation effort around ASUS GX10 / NVIDIA GB10 systems for long-context coding agents. The first two nodes are already in hand. The publishable record now includes single-unit GPT-OSS 120B results, Qwen3-Coder-Next APEX/TurboQuant serving data, and kernel tuning findings from the GB10 runtime path.</p>
+      <div class="actions">
+        <a class="button" href="#measured">Read the measurements</a>
+        <a class="button secondary" href="#ask">Hardware sponsorship ask</a>
+      </div>
+      <figure class="proof-image">
+        <img src="evidence-visual.png" alt="Sanitized Thera GB10 field validation snapshot with two GB10 nodes, runtime target, model assets, and next validation steps.">
+      </figure>
     </header>
 
-    <section>
-      <h2>Current Hardware Proof</h2>
-      <table>
-        <tr><th>Field</th><th>Current value</th></tr>
-        <tr><td>Host</td><td><code>thera128gx10-1</code></td></tr>
-        <tr><td>Vendor / model</td><td><code>ASUSTeK COMPUTER INC. GX10</code></td></tr>
-        <tr><td>OS</td><td>Ubuntu 24.04.4 LTS</td></tr>
-        <tr><td>Kernel</td><td>Linux 6.17.0-1014-nvidia</td></tr>
-        <tr><td>Architecture</td><td>arm64</td></tr>
-        <tr><td>GPU reported by <code>nvidia-smi</code></td><td>NVIDIA GB10</td></tr>
-        <tr><td>NVIDIA driver</td><td>580.142</td></tr>
-        <tr><td>High-speed NICs reported by <code>lspci</code></td><td>Mellanox / NVIDIA ConnectX-7</td></tr>
-      </table>
-      <p>The second GB10 node is part of the same local Node C cluster and is addressed as <code>thera128gx10-2</code> in the local runbooks. The two nodes keep normal LAN management online while the direct fabric is treated as a separate private point-to-point network.</p>
-      <p>I am not publishing home network addresses, serial numbers, receipts, or private screenshots in this first public post. Those can be provided privately to a sponsor, vendor, or reviewer.</p>
-    </section>
+    <section class="section" aria-labelledby="summary-heading">
+      <div class="section-header">
+        <p class="section-label">Current public proof</p>
+        <h2 id="summary-heading">Evidence Worth Sharing</h2>
+        <p class="muted">These numbers come from local artifacts and run logs on the GB10 workstream. Private network addresses, receipts, serial numbers, and employer-sensitive material are intentionally excluded from the public version.</p>
+      </div>
 
-    <section>
-      <h2>Current Model Assets</h2>
-      <table>
-        <tr><th>Model asset</th><th>Local size</th></tr>
-        <tr><td>Qwen3.5-397B-A17B UD-IQ3_S</td><td>137 GB</td></tr>
-        <tr><td>MiniMax-M2.7 UD-IQ4_XS</td><td>101 GB</td></tr>
-      </table>
-      <p>Those files are present locally and fit on the current storage. The next publishable step is not "can the files download"; it is the real serving comparison under long-context coding-agent workloads.</p>
-    </section>
-
-    <section>
-      <h2>Internal Baseline</h2>
-      <p>The current Node C runbook records a working llama.cpp / TurboQuant service shape for Qwen on the two GB10 nodes.</p>
-      <table>
-        <tr><th>Field</th><th>Recorded value</th></tr>
-        <tr><td>Runtime</td><td>llama.cpp / TurboQuant</td></tr>
-        <tr><td>Model family</td><td>Qwen3.5-397B-A17B IQ3 class</td></tr>
-        <tr><td>Serving shape</td><td>8 slots</td></tr>
-        <tr><td>Context pool</td><td>4M total tokens</td></tr>
-        <tr><td>KV strategy under test</td><td>compressed value cache with TurboQuant</td></tr>
-        <tr><td>Split</td><td>two GB10 nodes over RPC / direct fabric</td></tr>
-      </table>
-      <div class="note warning">
-        At the time of this snapshot, no llama-server process was running, so this page does not claim fresh throughput, latency, or correctness results. Those numbers will be published only after the next controlled benchmark pass.
+      <div class="metric-grid" aria-label="Evidence summary metrics">
+        <div class="metric good">
+          <div class="metric-label">Purchased systems</div>
+          <div class="metric-value">2x GB10</div>
+          <p class="metric-copy">ASUS GX10-class nodes are already local and under direct operator control.</p>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Current model assets</div>
+          <div class="metric-value">238G</div>
+          <p class="metric-copy">Qwen3.5-397B IQ3 plus MiniMax M2.7 IQ4 are present on disk today.</p>
+        </div>
+        <div class="metric deep">
+          <div class="metric-label">GPT-OSS 120B eval</div>
+          <div class="metric-value">0.925</div>
+          <p class="metric-copy">AIME25 score from a 240-sample local run against GPT-OSS 120B high effort.</p>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Qwen Coder raw sweep</div>
+          <div class="metric-value">141.46</div>
+          <p class="metric-copy">Aggregate tok/s at npl=8 in the single-GB10 raw batched decode sweep.</p>
+        </div>
+        <div class="metric good">
+          <div class="metric-label">Long-context target</div>
+          <div class="metric-value">4M</div>
+          <p class="metric-copy">Current two-node Qwen target: 8 slots sharing a 4M-token context pool.</p>
+        </div>
+        <div class="metric warn">
+          <div class="metric-label">Fabric status</div>
+          <div class="metric-value">Pending</div>
+          <p class="metric-copy">Correct-speed QSFP cable is still required before final fabric claims.</p>
+        </div>
       </div>
     </section>
 
-    <section>
-      <h2>Cable And Fabric Status</h2>
-      <p>The current temporary cable is rated for 40 Gb/s. That is enough for setup work, interface configuration, and functional bring-up, but it is not enough to make a fair performance claim about the GB10 fabric.</p>
-      <p>The correct-speed cable is on the way. Until it is installed, I am not claiming final fabric bandwidth, final multi-node latency, or final model throughput.</p>
-      <ol>
-        <li>Confirm link negotiation without hard-coding the link to 40 Gb/s.</li>
-        <li>Run forward and reverse <code>iperf3</code> across the direct fabric.</li>
-        <li>Run jumbo-frame checks if the negotiated path supports MTU 9000.</li>
-        <li>Capture NIC error/drop/FEC counters before and after sustained load.</li>
-        <li>Repeat model-serving benchmarks after fabric validation.</li>
+    <section class="section" aria-labelledby="hardware-heading">
+      <div class="section-header">
+        <p class="section-label">Hardware</p>
+        <h2 id="hardware-heading">Local GB10 Cluster State</h2>
+        <p class="muted">The public record can identify the class of hardware and current local roles without publishing private LAN details.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Public value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Primary GB10 host label</td>
+              <td><code>thera128gx10-1</code></td>
+            </tr>
+            <tr>
+              <td>Second GB10 host label</td>
+              <td><code>thera128gx10-2</code></td>
+            </tr>
+            <tr>
+              <td>Vendor / model</td>
+              <td><code>ASUSTeK COMPUTER INC. GX10</code></td>
+            </tr>
+            <tr>
+              <td>GPU class</td>
+              <td>NVIDIA GB10 / <code>sm_121</code></td>
+            </tr>
+            <tr>
+              <td>OS baseline</td>
+              <td>Ubuntu 24.04.4 LTS, arm64, NVIDIA 580-series driver</td>
+            </tr>
+            <tr>
+              <td>High-speed fabric device</td>
+              <td>Mellanox / NVIDIA ConnectX-7 class NICs reported locally</td>
+            </tr>
+            <tr>
+              <td>Management path</td>
+              <td>Normal LAN management stays separate from the direct GB10 fabric</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="band warning">
+        The temporary cable is rated for 40 Gb/s. Setup work can continue, but final multi-node throughput claims wait for the correct-speed QSFP cable and a fresh forward/reverse fabric benchmark.
+      </div>
+    </section>
+
+    <section class="section" id="measured" aria-labelledby="measured-heading">
+      <div class="section-header">
+        <p class="section-label">Single-unit baselines</p>
+        <h2 id="measured-heading">Measured Inference Data Already On Disk</h2>
+        <p class="muted">The strongest publishable numbers are the single-GB10 baselines because they do not depend on the pending fabric cable.</p>
+      </div>
+
+      <h3>GPT-OSS 120B on GB10</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Measurement</th>
+              <th>Recorded value</th>
+              <th>Why it matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Live implementation audit</td>
+              <td><code>63 tok/s</code> batch-1 decode</td>
+              <td>Confirms a working GPT-OSS 120B lane on one GB10-class system.</td>
+            </tr>
+            <tr>
+              <td>Model memory</td>
+              <td><code>64.02 GiB</code> MXFP4</td>
+              <td>Shows the 120B MoE fits comfortably inside the 128GB unified-memory envelope.</td>
+            </tr>
+            <tr>
+              <td>KV cache headroom</td>
+              <td><code>42.46 GiB</code>, about <code>1.24M</code> tokens</td>
+              <td>Useful prior for long-context budgeting on the larger two-node models.</td>
+            </tr>
+            <tr>
+              <td>llama.cpp bench</td>
+              <td><code>2443.91</code> pp2048 t/s, <code>58.72</code> tg32 t/s</td>
+              <td>Independent bench surface for prompt processing and decode speed.</td>
+            </tr>
+            <tr>
+              <td>AIME25 local eval</td>
+              <td><code>0.925</code> score over <code>240</code> samples</td>
+              <td>Functional eval data exists, not just synthetic throughput numbers.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Qwen3-Coder-Next APEX/TurboQuant on One GB10</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Measurement</th>
+              <th>Recorded value</th>
+              <th>Why it matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Model asset</td>
+              <td><code>Qwen3-Coder-Next-APEX-I-Quality.gguf</code>, <code>50,390,241,280</code> bytes</td>
+              <td>Known-good single-unit APEX model used for local runtime bring-up.</td>
+            </tr>
+            <tr>
+              <td>Verified serving geometry</td>
+              <td><code>262656</code> context, <code>3</code> slots, <code>87552</code> tokens per slot</td>
+              <td>Concrete long-context serving shape, not a short demo prompt.</td>
+            </tr>
+            <tr>
+              <td>Single-request decode</td>
+              <td>About <code>46.88 tok/s</code> at <code>32K</code> context</td>
+              <td>Baseline user-facing speed for one active request.</td>
+            </tr>
+            <tr>
+              <td>Three concurrent requests</td>
+              <td>About <code>31.34 tok/s</code> per stream at <code>262656</code> total context</td>
+              <td>Relevant to planner, implementor, and auditor agents sharing the box.</td>
+            </tr>
+            <tr>
+              <td>Raw batched decode sweep</td>
+              <td><code>98.46 tok/s</code> aggregate at npl=3, <code>141.46 tok/s</code> aggregate at npl=8</td>
+              <td>Backend ceiling before OpenAI-compatible server overhead.</td>
+            </tr>
+            <tr>
+              <td>Repeated-run audited lane</td>
+              <td><code>35.07 tok/s</code> average decode, about <code>105.2 tok/s</code> aggregate at 3-way</td>
+              <td>Median-of-5 result survived the audit pass better than the earlier single-run winner.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="source-box">
+        Source artifacts are retained locally under the Thera engineering directories and benchmark logs. Public copy uses rounded summaries so this can be shared without publishing private host addresses or raw session history.
+      </div>
+    </section>
+
+    <section class="section" id="kernel" aria-labelledby="kernel-heading">
+      <div class="section-header">
+        <p class="section-label">Kernel/runtime engineering</p>
+        <h2 id="kernel-heading">Kernel Tuning Findings We Can Release</h2>
+        <p class="muted">The kernel work is valuable because it records negative results. It rules out easy switches and narrows the next real optimization target.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Experiment or finding</th>
+              <th>Measured result</th>
+              <th>Engineering conclusion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Raw baseline for Qwen3-Coder-Next kernel tuning</td>
+              <td><code>speed_tg = 90.19 tok/s</code> on the pp128/tg128/pl3 reproducer</td>
+              <td>This is the direct backend baseline for selector-level experiments.</td>
+            </tr>
+            <tr>
+              <td>Disable MMQ globally</td>
+              <td>Raw <code>90.73 tok/s</code>; live decode <code>31.36</code> vs baseline <code>31.38</code>; live prompt t/s regressed from <code>162.40</code> to <code>66.96</code></td>
+              <td>MMQ yes/no is not the real lever. The live path needs a narrower kernel edit.</td>
+            </tr>
+            <tr>
+              <td>Disable stream-k globally</td>
+              <td>Same reproducer exceeded <code>6m20s</code> and was terminated; expected baseline was about <code>2m36s</code></td>
+              <td>stream-k is required on the current branch. Disabling it is not a viable tuning path.</td>
+            </tr>
+            <tr>
+              <td>Nsight direction</td>
+              <td>Hot work remains around quantized <code>mul_mat_q</code> paths and small-K MoE-shaped kernels</td>
+              <td>The next acceptable edit needs occupancy and launch evidence from Nsight Compute.</td>
+            </tr>
+            <tr>
+              <td>TurboQuant decode path</td>
+              <td>Active profile uses <code>K=q8_0</code>, <code>V=turbo2</code>; the q8_0 K path is already compact integer-dot math</td>
+              <td>The safer first target is the mixed VEC decode path and on-the-fly turbo2 V dequantization, not broad cache-format changes.</td>
+            </tr>
+            <tr>
+              <td>GB10 Blackwell constraint</td>
+              <td><code>sm_121</code> is not datacenter Blackwell; no WGMMA/tcgen05 assumptions</td>
+              <td>Optimizations must be written for the actual GB10 ISA and memory hierarchy.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="band">
+        The release-worthy point: the work is not "flip flags until it looks faster." It is a measured kernel workflow: reproducer first, same-condition comparisons, negative results preserved, then a narrow CUDA target.
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="assets-heading">
+      <div class="section-header">
+        <p class="section-label">Two-node model work</p>
+        <h2 id="assets-heading">Current Model Assets And Target Shape</h2>
+        <p class="muted">The two-node work is where the next public benchmark will land once the fabric is validated with the correct cable.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Asset or target</th>
+              <th>Current value</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Qwen3.5-397B-A17B UD-IQ3_S</td>
+              <td><code>137G</code> on disk</td>
+              <td>Primary two-node long-context candidate.</td>
+            </tr>
+            <tr>
+              <td>MiniMax-M2.7 UD-IQ4_XS</td>
+              <td><code>101G</code> on disk</td>
+              <td>Smaller challenger for coding-agent speed and intelligence testing.</td>
+            </tr>
+            <tr>
+              <td>Combined model storage</td>
+              <td><code>238G</code> for the two current large model assets</td>
+              <td>Both fit on disk for side-by-side testing.</td>
+            </tr>
+            <tr>
+              <td>Qwen two-node serving target</td>
+              <td><code>8</code> slots, <code>4M</code> total-token context pool</td>
+              <td>Working target from the current combined-node workstream.</td>
+            </tr>
+            <tr>
+              <td>System reserve</td>
+              <td>20GB per node reserved for OS and stability in public planning</td>
+              <td>Internal testing tolerated lower free-memory levels, but public claims should keep headroom.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="next" aria-labelledby="next-heading">
+      <div class="section-header">
+        <p class="section-label">Next validation pass</p>
+        <h2 id="next-heading">Concrete Benchmark Plan</h2>
+        <p class="muted">The next run should produce data that matters for agent work, not short prompt theater.</p>
+      </div>
+
+      <ol class="timeline">
+        <li>
+          <span class="step-number">01</span>
+          <div>
+            <strong>Install the correct-speed QSFP cable.</strong>
+            <p class="muted">Do not hard-code the link at 40G. Let the NICs negotiate, then record link speed, MTU, and NIC counters.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-number">02</span>
+          <div>
+            <strong>Run forward and reverse fabric tests.</strong>
+            <p class="muted">Capture <code>iperf3</code> both directions, jumbo-frame checks if MTU 9000 is valid, and error/drop/FEC counters before and after sustained load.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-number">03</span>
+          <div>
+            <strong>Run the same long-context coding tasks on Qwen and MiniMax.</strong>
+            <p class="muted">Use real repositories, multi-file modification tasks, long context, and 8-slot subagent pressure. Record correctness, completion behavior, time-to-first-token, decode throughput, queue behavior, memory, and failures.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-number">04</span>
+          <div>
+            <strong>Publish the kernel/runtime deltas with same-condition evidence.</strong>
+            <p class="muted">Only keep kernel changes that improve the direct backend and the managed OpenAI-compatible service without output corruption or prompt-throughput regression.</p>
+          </div>
+        </li>
       </ol>
+
+      <div class="band critical">
+        No public claim should say "combined inference server is solved" until the fabric run, long-context coding tasks, and repeated-run service benchmarks all pass under the same recorded configuration.
+      </div>
     </section>
 
-    <section>
-      <h2>Benchmark Question</h2>
-      <blockquote>What is the best single local model for two GB10 nodes when the target is maximum coding intelligence, fast inference, long context, and enough headroom to keep the operating systems stable?</blockquote>
-      <table>
-        <tr><th>Candidate</th><th>Why it matters</th></tr>
-        <tr><td>Qwen3.5-397B-A17B IQ3 class</td><td>Already recorded as a working two-node long-context baseline.</td></tr>
-        <tr><td>MiniMax-M2.7 IQ4 class</td><td>Smaller on disk than the Qwen IQ3 asset and reported as a strong agentic/coding candidate, but it needs real long-context coding validation.</td></tr>
-        <tr><td>GLM-5.1 IQ3 class</td><td>Potentially the most interesting agentic long-running-task candidate, but it must be validated against actual fit, speed, and coding outcomes on this hardware.</td></tr>
-      </table>
-      <p>Every candidate will be tested on real coding tasks over long context. Short prompt demos are not enough.</p>
-    </section>
+    <section class="section" id="ask" aria-labelledby="ask-heading">
+      <div class="section-header">
+        <p class="section-label">Hardware sponsorship</p>
+        <h2 id="ask-heading">What Permanent Hardware Unlocks</h2>
+        <p class="muted">A third GB10 turns this from a point-to-point proof into the three-node ring topology NVIDIA documents for small GB10 clusters. A fourth node makes Q3/Q4 tradeoffs and failover behavior worth measuring seriously.</p>
+      </div>
 
-    <section>
-      <h2>Memory Budget</h2>
-      <p>Each GB10 node has 128 GB of unified memory. I reserve 20 GB per node for the OS and system stability. That leaves roughly 208 to 216 GB combined for model weights, KV cache, compute scratch, graph buffers, runtime overhead, fragmentation, and safety margin.</p>
-      <p>The reserve is deliberately conservative. In internal testing, the system has tolerated lower free-memory levels, but the public benchmark should not depend on running the machines at the edge of OOM.</p>
-    </section>
-
-    <section>
-      <h2>What A Third Node Unlocks</h2>
-      <p>A third GB10 would move this from a two-node point-to-point test into a three-node fabric/ring validation. That matters because it creates a more realistic small-cluster topology and opens the door to model and context budgets that are not realistic on two nodes alone.</p>
-      <ul>
-        <li>GLM-5.1 IQ3 class testing if the memory and runtime shape fit cleanly.</li>
-        <li>Qwen vs MiniMax vs GLM comparison under identical long-context coding tasks.</li>
-        <li>Ring/fabric behavior under sustained model traffic.</li>
-        <li>Failure-mode notes for agents that run for hours instead of minutes.</li>
-        <li>Power, thermal, memory, and stability reporting.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Deliverables For A Sponsor</h2>
-      <p>I am seeking permanent sponsored hardware, not a temporary loaner.</p>
-      <p>Preferred sponsorship: two ASUS GX10 / NVIDIA GB10 class systems plus a compatible QSFP high-speed switch or fabric kit. Minimum useful sponsorship: one permanent ASUS GX10 / NVIDIA GB10 class validation node.</p>
-      <ol>
-        <li>Three-node setup notes with exact commands.</li>
-        <li>Fabric bring-up and troubleshooting notes.</li>
-        <li>Reproducible llama.cpp / TurboQuant launch configurations.</li>
-        <li>Real long-context coding benchmark results.</li>
-        <li>Model fit table for Qwen, MiniMax, and GLM candidates.</li>
-        <li>Memory, throughput, latency, thermal, and stability notes.</li>
-        <li>Honest disclosure and acknowledgement of sponsored hardware.</li>
-      </ol>
-    </section>
-
-    <section>
-      <h2>Data Safety</h2>
-      <p>My professional background includes campus network administration and financial-sector systems administration. That is why this project cares about private local inference, long-context agents, and systems work where cloud-only AI is not always the right answer.</p>
-      <p>This project is not publishing employer confidential material. Public benchmark tasks will use public repositories, synthetic infrastructure tasks, redacted examples, or purpose-built test repos. No member data, credentials, internal network diagrams, confidential procedures, or private employer documents will be included.</p>
+      <div class="evidence-list">
+        <div class="evidence-item">
+          <strong>Minimum useful sponsorship</strong>
+          <p class="muted">One permanent ASUS GX10 / NVIDIA GB10-class validation node plus the cable needed to join the fabric.</p>
+        </div>
+        <div class="evidence-item">
+          <strong>Preferred sponsorship</strong>
+          <p class="muted">Two permanent GB10-class nodes plus a compatible QSFP high-speed switch or fabric kit.</p>
+        </div>
+        <div class="evidence-item">
+          <strong>Public deliverables</strong>
+          <p class="muted">Setup notes, fabric diagnostics, reproducible llama.cpp/TurboQuant launch configs, model fit tables, kernel findings, and long-context coding benchmarks.</p>
+        </div>
+        <div class="evidence-item">
+          <strong>Data safety boundary</strong>
+          <p class="muted">Public tasks use public repos, synthetic infrastructure tasks, redacted examples, or purpose-built test repos. No member data, credentials, private diagrams, or employer confidential material.</p>
+        </div>
+      </div>
     </section>
 
     <footer>
-      <p>The project already has two purchased GB10-class nodes. The next missing piece is permanent sponsored hardware that lets the benchmark move from a two-node proof into a three-node and eventually four-node GB10 cluster study.</p>
       <p>Contact: Mark Sheehy, <a href="mailto:mgsheehyjr89@gmail.com">mgsheehyjr89@gmail.com</a></p>
+      <p>Hardware, model, and kernel claims are intentionally separated so sponsors can see what is already measured, what is in progress, and what still needs validation.</p>
     </footer>
   </main>
 </body>
