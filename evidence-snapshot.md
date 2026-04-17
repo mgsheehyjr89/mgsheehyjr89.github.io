@@ -3,7 +3,7 @@
 Date: 2026-04-17  
 Scope: sanitized local evidence for `docs/gb10-public-proof/index.html`
 
-This file records the local facts used in the proof post. It intentionally omits serial numbers, receipts, private screenshots, home network details, and secrets.
+This file records the local facts used in the proof post. It intentionally omits serial numbers, receipts, private screenshots, home network details, and credentials.
 
 ## Host Identity
 
@@ -95,7 +95,7 @@ Result:
 
 ## Graph Asset
 
-Generated public-safe graph file:
+Generated shareable graph file:
 
 ```text
 /home/thera/Thera/docs/gb10-public-proof/benchmark-graphs.png
@@ -147,7 +147,7 @@ proof-pack/sponsorship-one-pager.md
 proof-pack/sponsorship-one-pager.pdf
 ```
 
-The proof pack is public-safe and omits private LAN addresses, credentials, serial numbers, receipts, employer-private diagrams, raw private sessions, and confidential operational data.
+The proof pack omits private LAN addresses, credentials, serial numbers, receipts, employer-private diagrams, raw private sessions, and confidential operational data.
 
 ## Live Serving State At Snapshot Time
 

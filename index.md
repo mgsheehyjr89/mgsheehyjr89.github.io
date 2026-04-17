@@ -1,25 +1,25 @@
 ---
 layout: default
 title: "Thera GB10 Field Validation"
-description: "Two ASUS GX10 / NVIDIA GB10 nodes, public-safe single-unit model baselines, and kernel tuning findings from local long-context inference work."
+description: "Two ASUS GX10 / NVIDIA GB10 nodes, shareable single-unit model baselines, and kernel tuning findings from local long-context inference work."
 ---
 
 # Thera GB10 Field Validation
 
 Date: 2026-04-17  
-Status: public-safe proof snapshot, before final fabric benchmarks with the correct-speed QSFP cable
+Status: shareable evidence snapshot, before final fabric benchmarks with the correct-speed QSFP cable
 
-I am building a local long-context inference and coding-agent cluster around ASUS GX10 / NVIDIA GB10 class systems. I personally purchased the first two nodes and have them running locally. The immediate goal is to validate whether small GB10 clusters can serve private, long-running coding and infrastructure agents with sustained context and enough system headroom.
+This project validates whether small ASUS GX10 / NVIDIA GB10 clusters can serve private, long-running coding and infrastructure agents with sustained context and enough system headroom. The first two nodes are privately funded, installed locally, and already producing repeatable benchmark evidence.
 
-The public record now includes three kinds of evidence:
+The shareable record includes:
 
 - current GB10 hardware and model-asset proof,
 - single-unit GPT-OSS 120B and Qwen3-Coder-Next APEX/TurboQuant baselines,
 - kernel tuning findings that rule out easy runtime toggles and identify the next credible CUDA path.
 - representative graphs for OOB versus tuned decode, Qwen serving-shape tuning, raw batched scaling, and the MMQ negative result.
-- a public proof pack with benchmark CSV/JSON, methodology, limitations, launch notes, sanitized summaries, a zip download, and a one-page sponsorship PDF.
+- a proof pack with benchmark CSV/JSON, methodology, limitations, launch notes, sanitized summaries, a zip download, and a one-page sponsorship PDF.
 
-Private LAN addresses, receipts, serial numbers, credentials, employer-private diagrams, and raw session history are intentionally excluded from the public copy.
+Private LAN addresses, receipts, serial numbers, credentials, employer-private diagrams, and raw session history are intentionally excluded from the published copy.
 
 ## Evidence Summary
 
@@ -71,7 +71,7 @@ Published artifact links:
 - `proof-pack/launch-configs/`
 - `proof-pack/sanitized-logs/`
 
-Physical photos of the machines and cable/fabric setup are still pending operator capture. The page does not use stock photos as proof.
+No stock photos or vendor renders are used as evidence. Physical photos can be added after the fabric cable validation pass.
 
 ## Representative Graphs
 

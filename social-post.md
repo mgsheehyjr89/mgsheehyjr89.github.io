@@ -1,6 +1,6 @@
 # Short Public Post
 
-I am publishing a public-safe evidence update for my local Thera GB10 field-validation cluster.
+I am publishing a shareable evidence update for my local Thera GB10 field-validation cluster.
 
 Current status:
 

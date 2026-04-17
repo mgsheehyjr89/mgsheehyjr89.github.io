@@ -2,7 +2,7 @@
 
 ## 2026-04-17
 
-- Published public-safe GB10 proof page.
+- Published shareable GB10 proof page.
 - Added single-GB10 GPT-OSS 120B data.
 - Added single-GB10 Qwen3-Coder-Next APEX/TurboQuant data.
 - Added kernel tuning findings and negative-result summary.
@@ -16,4 +16,3 @@
 - Add correct-speed QSFP cable photos and link-state evidence after installation.
 - Add forward and reverse fabric benchmark results.
 - Add long-context real coding task results for Qwen, MiniMax, and GLM candidates.
-

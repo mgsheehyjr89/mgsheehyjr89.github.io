@@ -2,7 +2,7 @@
 
 Date: 2026-04-17
 
-This proof pack contains public-safe artifacts for the Thera GB10 field-validation page.
+This proof pack contains shareable artifacts for the Thera GB10 field-validation page.
 
 It intentionally omits private LAN addresses, serial numbers, receipts, credentials, employer-private diagrams, raw terminal sessions, and confidential operational data.
 
@@ -14,7 +14,7 @@ It intentionally omits private LAN addresses, serial numbers, receipts, credenti
 - `benchmark-results.csv` - machine-readable benchmark table.
 - `benchmark-results.json` - same benchmark data in JSON.
 - `graph-source-data.csv` - source values used for the public graph image.
-- `launch-configs/` - public-safe launch/configuration notes.
+- `launch-configs/` - shareable launch/configuration notes.
 - `sanitized-logs/` - short sanitized result summaries.
 - `CHANGELOG.md` - dated update trail.
 - `sponsorship-one-pager.pdf` - one-page sponsor handout.
@@ -45,4 +45,3 @@ Planned public outputs:
 - model-fit table for Qwen, MiniMax, and GLM candidates,
 - memory, throughput, latency, thermal, and stability notes,
 - kernel tuning findings with same-condition before/after data.
-

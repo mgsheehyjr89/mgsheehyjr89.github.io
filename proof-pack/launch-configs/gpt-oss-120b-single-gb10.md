@@ -2,7 +2,7 @@
 
 Date: 2026-04-17
 
-This file records public-safe launch context, not a full private shell history.
+This file records shareable launch context, not a full private shell history.
 
 ## Public Values
 
@@ -23,4 +23,3 @@ The next public pass should extract a sanitized command with:
 - host bindings removed,
 - private LAN addresses removed,
 - environment variables reduced to those necessary for reproduction.
-

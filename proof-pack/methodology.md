@@ -4,7 +4,7 @@ Date: 2026-04-17
 
 ## Scope
 
-This proof pack reports public-safe local evidence from ASUS GX10 / NVIDIA GB10-class systems used for local long-context inference and coding-agent validation.
+This proof pack reports shareable local evidence from ASUS GX10 / NVIDIA GB10-class systems used for local long-context inference and coding-agent validation.
 
 The public page currently emphasizes single-GB10 baselines because the correct-speed QSFP cable for final fabric benchmarking has not arrived yet.
 
@@ -39,4 +39,3 @@ After the correct-speed QSFP cable arrives:
 5. run jumbo-frame checks if valid,
 6. capture NIC counters after sustained load,
 7. repeat model-serving benchmarks using the same launch configuration.
-
