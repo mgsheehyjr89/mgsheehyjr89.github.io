@@ -104,12 +104,24 @@
 
     .masthead {
       position: relative;
-      padding-top: 56px;
-      padding-bottom: 54px;
+      padding-top: 48px;
+      padding-bottom: 58px;
       overflow: hidden;
       background: var(--panel-dark);
       color: #ffffff;
       border-bottom: 8px solid var(--accent-gold);
+    }
+
+    .hero-copy {
+      max-width: 1060px;
+    }
+
+    .hero-overline {
+      margin: 18px 0 0;
+      color: var(--accent-gold);
+      font-size: 0.84rem;
+      font-weight: 820;
+      text-transform: uppercase;
     }
 
     .eyebrow {
@@ -144,17 +156,80 @@
     }
 
     h1 {
-      max-width: 920px;
-      margin-top: 20px;
-      font-size: 3.2rem;
+      max-width: 1040px;
+      margin-top: 12px;
+      font-size: 4rem;
       font-weight: 820;
     }
 
     .lead {
-      max-width: 880px;
+      max-width: 820px;
       margin: 20px 0 0;
       color: #d5e1dd;
       font-size: 1.14rem;
+    }
+
+    .hero-stat-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 34px;
+      border: 1px solid #3d5750;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #16231f;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-stat {
+      min-height: 132px;
+      padding: 18px;
+      border-top: 5px solid var(--accent);
+      border-right: 1px solid #3d5750;
+    }
+
+    .hero-stat:last-child {
+      border-right: 0;
+    }
+
+    .hero-stat.hot {
+      border-top-color: var(--accent-hot);
+    }
+
+    .hero-stat.gold {
+      border-top-color: var(--accent-gold);
+    }
+
+    .hero-stat span,
+    .hero-stat em {
+      display: block;
+      color: #b8ccc4;
+      font-size: 0.84rem;
+      font-style: normal;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .hero-stat strong {
+      display: block;
+      margin-top: 10px;
+      color: #ffffff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 2.05rem;
+      line-height: 1;
+      overflow-wrap: anywhere;
+    }
+
+    .hero-stat em {
+      margin-top: 12px;
+      color: #d6e5df;
+      font-size: 0.9rem;
+      line-height: 1.35;
+      text-transform: none;
+    }
+
+    .hero-proof {
+      border-color: #f0b429;
+      background: #111816;
     }
 
     .actions {
@@ -237,13 +312,24 @@
     }
 
     .section-header {
-      max-width: 860px;
+      display: grid;
+      grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1.1fr);
+      gap: 28px;
+      align-items: end;
+      max-width: none;
       margin-bottom: 22px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(17, 24, 22, 0.12);
     }
 
     .section-label {
       margin: 0 0 8px;
-      color: var(--accent-strong);
+      display: inline-flex;
+      width: fit-content;
+      padding: 5px 9px;
+      border-radius: 8px;
+      background: var(--accent-strong);
+      color: #ffffff;
       font-size: 0.9rem;
       font-weight: 760;
       text-transform: uppercase;
@@ -274,14 +360,19 @@
       color: #cfe0d9;
     }
 
+    .section:nth-of-type(8) .section-label {
+      background: #304c43;
+    }
+
     .metric-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(12, minmax(0, 1fr));
       gap: 14px;
       margin-top: 28px;
     }
 
     .metric {
+      grid-column: span 4;
       min-height: 142px;
       padding: 18px;
       border: 1px solid var(--line);
@@ -289,6 +380,23 @@
       border-radius: 8px;
       background: var(--surface);
       box-shadow: 0 10px 26px rgba(16, 24, 22, 0.06);
+    }
+
+    .metric.wide {
+      grid-column: span 6;
+      min-height: 162px;
+    }
+
+    .metric.hero-metric {
+      background: #111816;
+      border-color: #111816;
+      border-top-color: var(--accent-gold);
+      color: #ffffff;
+    }
+
+    .metric.hero-metric .metric-label,
+    .metric.hero-metric .metric-copy {
+      color: #cfe0d9;
     }
 
     .metric.good {
@@ -482,12 +590,31 @@
 
     @media (max-width: 900px) {
       h1 {
-        font-size: 2.45rem;
+        font-size: 2.7rem;
       }
 
       .metric-grid,
       .evidence-list {
         grid-template-columns: 1fr;
+      }
+
+      .metric,
+      .metric.wide {
+        grid-column: auto;
+      }
+
+      .hero-stat-strip,
+      .section-header {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stat {
+        border-right: 0;
+        border-bottom: 1px solid #3d5750;
+      }
+
+      .hero-stat:last-child {
+        border-bottom: 0;
       }
     }
 
@@ -517,6 +644,10 @@
         font-size: 2rem;
       }
 
+      .hero-stat strong {
+        font-size: 1.7rem;
+      }
+
       h2 {
         font-size: 1.55rem;
       }
@@ -530,7 +661,7 @@
 <body>
   <main class="page">
     <div class="topbar">
-      <div class="brand">Thera GB10 Field Validation</div>
+      <div class="brand">Thera Field Lab</div>
       <nav class="nav" aria-label="Page sections">
         <a href="#measured">Measured data</a>
         <a href="#graphs">Graphs</a>
@@ -541,32 +672,61 @@
     </div>
 
     <header class="masthead">
-      <div class="eyebrow">Public-safe snapshot - April 17, 2026</div>
-      <h1>Two personally purchased GB10 nodes, real inference data, and kernel work already underway.</h1>
-      <p class="lead">This is a local validation effort around ASUS GX10 / NVIDIA GB10 systems for long-context coding agents. The first two nodes are already in hand. The publishable record now includes single-unit GPT-OSS 120B results, Qwen3-Coder-Next APEX/TurboQuant serving data, and kernel tuning findings from the GB10 runtime path.</p>
-      <div class="actions">
-        <a class="button" href="#measured">Read the measurements</a>
-        <a class="button secondary" href="#ask">Hardware sponsorship ask</a>
+      <div class="hero-copy">
+        <div class="eyebrow">Public-safe snapshot - April 17, 2026</div>
+        <p class="hero-overline">Local long-context inference field report</p>
+        <h1>Hardware in hand. Benchmarks on disk. The next pass proves the fabric.</h1>
+        <p class="lead">Two personally purchased ASUS GX10 / NVIDIA GB10 systems are already running local inference work. The publishable record includes GPT-OSS 120B results, Qwen3-Coder-Next APEX/TurboQuant serving data, model assets for the two-node tests, and kernel findings from the GB10 runtime path.</p>
+        <div class="actions">
+          <a class="button" href="#graphs">See the graphs</a>
+          <a class="button secondary" href="#ask">Hardware sponsorship ask</a>
+        </div>
       </div>
-      <figure class="proof-image">
+
+      <div class="hero-stat-strip" aria-label="Current proof summary">
+        <div class="hero-stat gold">
+          <span>Owned hardware</span>
+          <strong>2x GB10</strong>
+          <em>ASUS GX10-class nodes paid for personally and running locally.</em>
+        </div>
+        <div class="hero-stat">
+          <span>Model assets</span>
+          <strong>238G</strong>
+          <em>Qwen3.5-397B IQ3 plus MiniMax M2.7 IQ4 are on disk today.</em>
+        </div>
+        <div class="hero-stat hot">
+          <span>Long-context target</span>
+          <strong>8 / 4M</strong>
+          <em>Eight agent slots sharing a four-million-token context pool.</em>
+        </div>
+        <div class="hero-stat">
+          <span>Measured baseline</span>
+          <strong>141.46</strong>
+          <em>Qwen Coder raw batched decode aggregate at npl=8.</em>
+        </div>
+      </div>
+
+      <figure class="proof-image hero-proof">
         <img src="evidence-visual.png" alt="Sanitized Thera GB10 field validation snapshot with two GB10 nodes, runtime target, model assets, and next validation steps.">
       </figure>
     </header>
 
     <section class="section" aria-labelledby="summary-heading">
       <div class="section-header">
-        <p class="section-label">Current public proof</p>
-        <h2 id="summary-heading">Evidence Worth Sharing</h2>
+        <div>
+          <p class="section-label">Current public proof</p>
+          <h2 id="summary-heading">The Case At A Glance</h2>
+        </div>
         <p class="muted">These numbers come from local artifacts and run logs on the GB10 workstream. Private network addresses, receipts, serial numbers, and employer-sensitive material are intentionally excluded from the public version.</p>
       </div>
 
       <div class="metric-grid" aria-label="Evidence summary metrics">
-        <div class="metric good">
+        <div class="metric wide hero-metric">
           <div class="metric-label">Purchased systems</div>
           <div class="metric-value">2x GB10</div>
           <p class="metric-copy">ASUS GX10-class nodes are already local and under direct operator control.</p>
         </div>
-        <div class="metric">
+        <div class="metric wide">
           <div class="metric-label">Current model assets</div>
           <div class="metric-value">238G</div>
           <p class="metric-copy">Qwen3.5-397B IQ3 plus MiniMax M2.7 IQ4 are present on disk today.</p>
@@ -596,8 +756,10 @@
 
     <section class="section" id="graphs" aria-labelledby="graphs-heading">
       <div class="section-header">
-        <p class="section-label">Representative graphs</p>
-        <h2 id="graphs-heading">OOB Vs Tuned And Runtime Tuning Results</h2>
+        <div>
+          <p class="section-label">Representative graphs</p>
+          <h2 id="graphs-heading">Performance Story In Four Graphs</h2>
+        </div>
         <p class="muted">These graphs turn the public-safe benchmark values into something easier to scan: GPT-OSS OOB versus tuned decode, Qwen Coder serving-shape tuning, raw batched scaling, and the MMQ negative result.</p>
       </div>
 
@@ -609,8 +771,10 @@
 
     <section class="section" aria-labelledby="hardware-heading">
       <div class="section-header">
-        <p class="section-label">Hardware</p>
-        <h2 id="hardware-heading">Local GB10 Cluster State</h2>
+        <div>
+          <p class="section-label">Hardware</p>
+          <h2 id="hardware-heading">What Is In The Rack Today</h2>
+        </div>
         <p class="muted">The public record can identify the class of hardware and current local roles without publishing private LAN details.</p>
       </div>
 
@@ -662,8 +826,10 @@
 
     <section class="section" id="measured" aria-labelledby="measured-heading">
       <div class="section-header">
-        <p class="section-label">Single-unit baselines</p>
-        <h2 id="measured-heading">Measured Inference Data Already On Disk</h2>
+        <div>
+          <p class="section-label">Single-unit baselines</p>
+          <h2 id="measured-heading">Measured Inference Data Already On Disk</h2>
+        </div>
         <p class="muted">The strongest publishable numbers are the single-GB10 baselines because they do not depend on the pending fabric cable.</p>
       </div>
 
@@ -759,8 +925,10 @@
 
     <section class="section" id="kernel" aria-labelledby="kernel-heading">
       <div class="section-header">
-        <p class="section-label">Kernel/runtime engineering</p>
-        <h2 id="kernel-heading">Kernel Tuning Findings We Can Release</h2>
+        <div>
+          <p class="section-label">Kernel/runtime engineering</p>
+          <h2 id="kernel-heading">Kernel Tuning Findings We Can Release</h2>
+        </div>
         <p class="muted">The kernel work is valuable because it records negative results. It rules out easy switches and narrows the next real optimization target.</p>
       </div>
 
@@ -815,8 +983,10 @@
 
     <section class="section" aria-labelledby="assets-heading">
       <div class="section-header">
-        <p class="section-label">Two-node model work</p>
-        <h2 id="assets-heading">Current Model Assets And Target Shape</h2>
+        <div>
+          <p class="section-label">Two-node model work</p>
+          <h2 id="assets-heading">Current Model Assets And Target Shape</h2>
+        </div>
         <p class="muted">The two-node work is where the next public benchmark will land once the fabric is validated with the correct cable.</p>
       </div>
 
@@ -862,8 +1032,10 @@
 
     <section class="section" id="next" aria-labelledby="next-heading">
       <div class="section-header">
-        <p class="section-label">Next validation pass</p>
-        <h2 id="next-heading">Concrete Benchmark Plan</h2>
+        <div>
+          <p class="section-label">Next validation pass</p>
+          <h2 id="next-heading">Concrete Benchmark Plan</h2>
+        </div>
         <p class="muted">The next run should produce data that matters for agent work, not short prompt theater.</p>
       </div>
 
@@ -905,8 +1077,10 @@
 
     <section class="section" id="ask" aria-labelledby="ask-heading">
       <div class="section-header">
-        <p class="section-label">Hardware sponsorship</p>
-        <h2 id="ask-heading">What Permanent Hardware Unlocks</h2>
+        <div>
+          <p class="section-label">Hardware sponsorship</p>
+          <h2 id="ask-heading">What Permanent Hardware Unlocks</h2>
+        </div>
         <p class="muted">A third GB10 turns this from a point-to-point proof into the three-node ring topology NVIDIA documents for small GB10 clusters. A fourth node makes Q3/Q4 tradeoffs and failover behavior worth measuring seriously.</p>
       </div>
 
