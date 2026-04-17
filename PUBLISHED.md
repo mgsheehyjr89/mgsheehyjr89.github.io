@@ -61,4 +61,8 @@ Result:
 2026-04-17: live redesign screenshots captured at 1440x2100 and 390x1500
 2026-04-17: proof-pack publication prepared: Add GB10 sponsorship proof pack
 2026-04-17: local proof-pack verification passed: HTML links resolve, JSON parses, zip tests clean, one-page PDF is 1 page
+2026-04-17: proof-pack commit pushed: 981ef6a Add GB10 sponsorship proof pack
+2026-04-17: live proof-pack markers verified: Sponsor The Next GB10 Node, Artifacts People Can Inspect, proof-pack.zip, sponsorship-one-pager.pdf, twitter:card, social-card.png
+2026-04-17: live assets verified: social-card.png 1200x630, favicon.png 256x256, proof-pack.zip 15269 bytes with clean unzip test, sponsorship-one-pager.pdf 1 page
+2026-04-17: live proof-pack screenshots captured at 1440x3200 and 390x2200
 ```
