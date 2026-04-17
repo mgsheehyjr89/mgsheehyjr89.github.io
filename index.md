@@ -60,6 +60,7 @@ Public output in return:
 
 Published artifact links:
 
+- `build-log.html`
 - `proof-pack.zip`
 - `proof-pack/README.md`
 - `proof-pack/benchmark-results.csv`
