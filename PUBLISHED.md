@@ -65,4 +65,8 @@ Result:
 2026-04-17: live proof-pack markers verified: Sponsor The Next GB10 Node, Artifacts People Can Inspect, proof-pack.zip, sponsorship-one-pager.pdf, twitter:card, social-card.png
 2026-04-17: live assets verified: social-card.png 1200x630, favicon.png 256x256, proof-pack.zip 15269 bytes with clean unzip test, sponsorship-one-pager.pdf 1 page
 2026-04-17: live proof-pack screenshots captured at 1440x3200 and 390x2200
+2026-04-17: polish commit pushed: ee0b703 Polish GB10 public sponsorship page
+2026-04-17: live polish markers verified: Thera GB10 Validation, Evidence brief, Permanent GB10 Hardware Request, Download The Verification Materials, What Is Already Verified
+2026-04-17: live polish assets verified: evidence-visual.png 137455 bytes, social-card.png 45084 bytes, proof-pack.zip 13928 bytes with clean unzip test, sponsorship-one-pager.pdf 1 page
+2026-04-17: live polish screenshots captured at 1440x3200 and 390x2200
 ```
