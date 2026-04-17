@@ -12,7 +12,6 @@
 
 ## Pending
 
-- Add physical photos of the two GB10 systems.
-- Add correct-speed QSFP cable photos and link-state evidence after installation.
+- Add correct-speed QSFP link-state evidence after installation.
 - Add forward and reverse fabric benchmark results.
 - Add long-context real coding task results for Qwen, MiniMax, and GLM candidates.

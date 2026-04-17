@@ -3,7 +3,7 @@
 Date: 2026-04-17  
 Scope: sanitized local evidence for `docs/gb10-public-proof/index.html`
 
-This file records the local facts used in the proof post. It intentionally omits serial numbers, receipts, private screenshots, home network details, and credentials.
+This file records the local facts used in the proof post. It intentionally omits serial numbers, receipts, private screenshots, private network details, and credentials.
 
 ## Host Identity
 

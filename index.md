@@ -71,8 +71,6 @@ Published artifact links:
 - `proof-pack/launch-configs/`
 - `proof-pack/sanitized-logs/`
 
-No stock photos or vendor renders are used as evidence. Physical photos can be added after the fabric cable validation pass.
-
 ## Representative Graphs
 
 The public page includes `benchmark-graphs.png` with four visual summaries:

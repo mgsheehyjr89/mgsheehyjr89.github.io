@@ -7,7 +7,6 @@ Date: 2026-04-17
 - The temporary cable is rated for 40 Gb/s, so final GB10 fabric throughput is not claimed yet.
 - The public graph image intentionally excludes final two-node fabric throughput.
 - Qwen Coder values in the public graphs are single-GB10 historical baselines, not final combined-node service results.
-- No stock photos or vendor renders are used as evidence; physical photos can be added after the fabric cable validation pass.
 - Some model and benchmark artifacts remain local because raw logs can contain private paths, hostnames, or operational context.
 - The 20GB-per-node reserve is a public planning guardrail, not the absolute minimum observed during internal tests.
 
