@@ -8,6 +8,8 @@ Updated on 2026-04-18 with a Thera-token visual refresh, shared `site.css`, a ma
 
 Updated on 2026-04-18 with a blue model-card style visual system, formal validation-card copy, and refreshed blue PNG assets for the evidence board, benchmark graphs, social preview, and favicon.
 
+Updated on 2026-04-18 with a GitHub-dark model-card presentation, dark regenerated PNG assets, and a dark sponsorship one-pager.
+
 Live page:
 
 ```text
