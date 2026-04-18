@@ -4,1171 +4,300 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Thera GB10 Field Validation</title>
-  <meta name="description" content="Shareable evidence package from two privately funded ASUS GX10 / NVIDIA GB10 systems: model assets, benchmark baselines, kernel findings, and a permanent hardware sponsorship request.">
+  <meta name="description" content="A public field note from two privately funded ASUS GX10 / NVIDIA GB10 systems: local long-context coding agents, benchmark data, model assets, kernel findings, and a permanent hardware sponsorship request.">
   <meta name="author" content="Mark Sheehy">
   <link rel="canonical" href="https://mgsheehyjr89.github.io/">
   <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="stylesheet" href="site.css">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Thera Field Lab">
   <meta property="og:title" content="Thera GB10 Field Validation">
-  <meta property="og:description" content="Two owned GB10 nodes, benchmark evidence, a downloadable proof pack, and a permanent hardware sponsorship request for local long-context coding agents.">
+  <meta property="og:description" content="Two owned GB10 nodes, local benchmark evidence, long-context agent testing, and a permanent hardware sponsorship request.">
   <meta property="og:url" content="https://mgsheehyjr89.github.io/">
   <meta property="og:image" content="https://mgsheehyjr89.github.io/social-card.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Thera GB10 Field Validation">
-  <meta name="twitter:description" content="Two owned GB10 nodes, benchmark evidence, a downloadable proof pack, and a permanent hardware sponsorship request.">
+  <meta name="twitter:description" content="Two owned GB10 nodes, local benchmark evidence, long-context agent testing, and a permanent hardware sponsorship request.">
   <meta name="twitter:image" content="https://mgsheehyjr89.github.io/social-card.png">
-  <style>
-    :root {
-      color-scheme: light;
-      --bg: #eaf5f0;
-      --ink: #111816;
-      --muted: #4f615a;
-      --line: #b7cac2;
-      --surface: #ffffff;
-      --soft: #ddf1ea;
-      --soft-2: #fff1f4;
-      --soft-3: #eef5f8;
-      --accent: #00806b;
-      --accent-strong: #005f51;
-      --accent-hot: #c51f3b;
-      --accent-gold: #f0b429;
-      --panel-dark: #101816;
-      --panel-dark-2: #16231f;
-      --critical: #a8201a;
-      --warning: #a96500;
-      --ok: #247a3c;
-      --shadow: 0 18px 44px rgba(16, 24, 22, 0.14);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 17px;
-      line-height: 1.58;
-      letter-spacing: 0;
-    }
-
-    a {
-      color: var(--accent-strong);
-      text-decoration-thickness: 2px;
-      text-underline-offset: 3px;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-      height: auto;
-    }
-
-    .page {
-      width: 100%;
-      margin: 0 auto;
-      padding: 0;
-    }
-
-    .topbar,
-    .masthead,
-    .section,
-    footer {
-      padding-left: max(22px, calc((100vw - 1180px) / 2));
-      padding-right: max(22px, calc((100vw - 1180px) / 2));
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      min-height: 72px;
-      padding-top: 14px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-      background: var(--panel-dark);
-      color: #cfe0d9;
-      font-size: 0.94rem;
-    }
-
-    .brand {
-      color: #ffffff;
-      font-weight: 760;
-    }
-
-    .nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 14px;
-    }
-
-    .nav a {
-      color: #d9f3ea;
-    }
-
-    .masthead {
-      position: relative;
-      padding-top: 48px;
-      padding-bottom: 58px;
-      overflow: hidden;
-      background: var(--panel-dark);
-      color: #ffffff;
-      border-bottom: 8px solid var(--accent-gold);
-    }
-
-    .hero-copy {
-      max-width: 1060px;
-    }
-
-    .hero-overline {
-      margin: 18px 0 0;
-      color: var(--accent-gold);
-      font-size: 0.84rem;
-      font-weight: 820;
-      text-transform: uppercase;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      width: fit-content;
-      min-height: 34px;
-      padding: 5px 10px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #f5c94d;
-      color: #17231f;
-      font-size: 0.92rem;
-      font-weight: 680;
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 9px;
-      height: 9px;
-      border-radius: 999px;
-      background: var(--accent-hot);
-    }
-
-    h1,
-    h2,
-    h3 {
-      margin: 0;
-      line-height: 1.08;
-      letter-spacing: 0;
-    }
-
-    h1 {
-      max-width: 1040px;
-      margin-top: 12px;
-      font-size: 4rem;
-      font-weight: 820;
-    }
-
-    .lead {
-      max-width: 820px;
-      margin: 20px 0 0;
-      color: #d5e1dd;
-      font-size: 1.14rem;
-    }
-
-    .hero-stat-strip {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      margin-top: 34px;
-      border: 1px solid #3d5750;
-      border-radius: 8px;
-      overflow: hidden;
-      background: #16231f;
-      box-shadow: var(--shadow);
-    }
-
-    .hero-stat {
-      min-height: 132px;
-      padding: 18px;
-      border-top: 5px solid var(--accent);
-      border-right: 1px solid #3d5750;
-    }
-
-    .hero-stat:last-child {
-      border-right: 0;
-    }
-
-    .hero-stat.hot {
-      border-top-color: var(--accent-hot);
-    }
-
-    .hero-stat.gold {
-      border-top-color: var(--accent-gold);
-    }
-
-    .hero-stat span,
-    .hero-stat em {
-      display: block;
-      color: #b8ccc4;
-      font-size: 0.84rem;
-      font-style: normal;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .hero-stat strong {
-      display: block;
-      margin-top: 10px;
-      color: #ffffff;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 2.05rem;
-      line-height: 1;
-      overflow-wrap: anywhere;
-    }
-
-    .hero-stat em {
-      margin-top: 12px;
-      color: #d6e5df;
-      font-size: 0.9rem;
-      line-height: 1.35;
-      text-transform: none;
-    }
-
-    .hero-proof {
-      border-color: #f0b429;
-      background: #111816;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 26px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      min-height: 44px;
-      padding: 10px 15px;
-      border: 1px solid var(--accent-strong);
-      border-radius: 8px;
-      background: var(--accent-strong);
-      color: #ffffff;
-      font-weight: 720;
-      text-decoration: none;
-    }
-
-    .button.secondary {
-      border-color: #f5c94d;
-      background: transparent;
-      color: #f8df86;
-    }
-
-    .button.light {
-      border-color: #ffffff;
-      background: #ffffff;
-      color: var(--panel-dark);
-    }
-
-    .proof-image {
-      margin: 34px 0 0;
-      border: 1px solid rgba(17, 24, 22, 0.2);
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      background: var(--surface);
-    }
-
-    .proof-image figcaption {
-      padding: 12px 14px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.92rem;
-      background: #ffffff;
-    }
-
-    .section {
-      padding-top: 58px;
-      padding-bottom: 58px;
-      border-top: 1px solid rgba(17, 24, 22, 0.08);
-      background: var(--section-bg, var(--surface));
-    }
-
-    .section:nth-of-type(1) {
-      --section-bg: #e7f6ef;
-    }
-
-    .section:nth-of-type(2) {
-      --section-bg: #fff1f4;
-    }
-
-    .section:nth-of-type(3) {
-      --section-bg: #edf6f8;
-    }
-
-    .section:nth-of-type(5) {
-      --section-bg: #fff8e6;
-    }
-
-    .section:nth-of-type(6) {
-      --section-bg: #edf7ed;
-    }
-
-    .section:nth-of-type(7) {
-      --section-bg: #f4f8f6;
-    }
-
-    .section.dark-section {
-      --section-bg: #101816;
-      color: #ffffff;
-    }
-
-    .section.dark-section .muted,
-    .section.dark-section .section-label {
-      color: #cfe0d9;
-    }
-
-    .section.dark-section .section-label {
-      background: #304c43;
-    }
-
-    .section-header {
-      display: grid;
-      grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1.1fr);
-      gap: 28px;
-      align-items: end;
-      max-width: none;
-      margin-bottom: 22px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid rgba(17, 24, 22, 0.12);
-    }
-
-    .section-label {
-      margin: 0 0 8px;
-      display: inline-flex;
-      width: fit-content;
-      padding: 5px 9px;
-      border-radius: 8px;
-      background: var(--accent-strong);
-      color: #ffffff;
-      font-size: 0.9rem;
-      font-weight: 760;
-      text-transform: uppercase;
-      letter-spacing: 0;
-    }
-
-    h2 {
-      font-size: 2rem;
-      font-weight: 800;
-    }
-
-    h3 {
-      margin-bottom: 10px;
-      font-size: 1.08rem;
-      font-weight: 780;
-    }
-
-    p {
-      margin: 0 0 16px;
-    }
-
-    .muted {
-      color: var(--muted);
-    }
-
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 28px;
-    }
-
-    .metric {
-      grid-column: span 4;
-      min-height: 142px;
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-top: 5px solid var(--accent);
-      border-radius: 8px;
-      background: var(--surface);
-      box-shadow: 0 10px 26px rgba(16, 24, 22, 0.06);
-    }
-
-    .metric.wide {
-      grid-column: span 6;
-      min-height: 162px;
-    }
-
-    .metric.hero-metric {
-      background: #111816;
-      border-color: #111816;
-      border-top-color: var(--accent-gold);
-      color: #ffffff;
-    }
-
-    .metric.hero-metric .metric-label,
-    .metric.hero-metric .metric-copy {
-      color: #cfe0d9;
-    }
-
-    .metric.good {
-      background: #f3fbf7;
-      border-color: #9fcec5;
-      border-top-color: var(--ok);
-    }
-
-    .metric.warn {
-      background: #fff8eb;
-      border-color: #dfc57e;
-      border-top-color: var(--accent-gold);
-    }
-
-    .metric.deep {
-      background: #15191d;
-      border-color: #15191d;
-      border-top-color: var(--accent-hot);
-      color: #ffffff;
-    }
-
-    .metric-label {
-      color: var(--muted);
-      font-size: 0.84rem;
-      font-weight: 720;
-      text-transform: uppercase;
-    }
-
-    .metric.deep .metric-label {
-      color: #b8c3ca;
-    }
-
-    .metric-value {
-      margin-top: 8px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 2rem;
-      line-height: 1;
-      font-weight: 760;
-      overflow-wrap: anywhere;
-    }
-
-    .metric-copy {
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .metric.deep .metric-copy {
-      color: #d6dde2;
-    }
-
-    .sponsor-panel {
-      display: grid;
-      grid-template-columns: minmax(280px, 0.95fr) minmax(360px, 1.05fr);
-      gap: 22px;
-      align-items: stretch;
-      margin-top: 24px;
-    }
-
-    .sponsor-ask {
-      padding: 22px;
-      border: 1px solid #3d5750;
-      border-top: 6px solid var(--accent-gold);
-      border-radius: 8px;
-      background: #16231f;
-      color: #ffffff;
-      box-shadow: var(--shadow);
-    }
-
-    .sponsor-ask h3,
-    .profile-card h3 {
-      margin: 0 0 12px;
-      font-size: 1.35rem;
-    }
-
-    .sponsor-ask p,
-    .sponsor-ask li {
-      color: #d6e5df;
-    }
-
-    .sponsor-ask ul,
-    .artifact-list {
-      margin: 0;
-      padding-left: 20px;
-    }
-
-    .proof-pack-grid,
-    .method-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .sponsor-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-
-    .sponsor-card,
-    .proof-card,
-    .method-card,
-    .profile-card {
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-top: 5px solid var(--accent);
-      border-radius: 8px;
-      background: #ffffff;
-      box-shadow: 0 10px 24px rgba(16, 24, 22, 0.08);
-    }
-
-    .sponsor-card strong,
-    .proof-card strong,
-    .method-card strong {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 1.02rem;
-    }
-
-    .section.dark-section .sponsor-card {
-      color: var(--ink);
-    }
-
-    .section.dark-section .sponsor-card .muted {
-      color: var(--muted);
-    }
-
-    .proof-card.featured {
-      background: #111816;
-      border-color: #111816;
-      border-top-color: var(--accent-gold);
-      color: #ffffff;
-    }
-
-    .proof-card.featured a {
-      color: #f8df86;
-    }
-
-    .proof-card.featured .muted {
-      color: #cfe0d9;
-    }
-
-    .profile-grid {
-      display: grid;
-      grid-template-columns: minmax(280px, 0.85fr) minmax(340px, 1.15fr);
-      gap: 18px;
-    }
-
-    .profile-card {
-      border-top-color: var(--accent-gold);
-    }
-
-    .evidence-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .evidence-item {
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-top: 5px solid var(--accent);
-      border-radius: 8px;
-      background: #ffffff;
-      box-shadow: 0 10px 24px rgba(16, 24, 22, 0.08);
-    }
-
-    .section.dark-section .evidence-item {
-      background: #16231f;
-      border-color: #39534b;
-      border-top-color: var(--accent-gold);
-    }
-
-    .evidence-item strong {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 1.02rem;
-    }
-
-    .table-wrap {
-      width: 100%;
-      margin: 18px 0 26px;
-      overflow-x: auto;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #ffffff;
-      box-shadow: 0 10px 24px rgba(16, 24, 22, 0.06);
-    }
-
-    table {
-      width: 100%;
-      min-width: 720px;
-      border-collapse: collapse;
-      font-size: 0.96rem;
-    }
-
-    th,
-    td {
-      padding: 12px 14px;
-      text-align: left;
-      vertical-align: top;
-      border-bottom: 1px solid var(--line);
-    }
-
-    tr:last-child td {
-      border-bottom: 0;
-    }
-
-    th {
-      background: var(--panel-dark-2);
-      color: #ffffff;
-      font-weight: 760;
-    }
-
-    code {
-      padding: 2px 5px;
-      border-radius: 5px;
-      background: var(--soft-3);
-      color: var(--ink);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      overflow-wrap: anywhere;
-    }
-
-    .band {
-      margin: 26px 0 0;
-      padding: 20px;
-      border-left: 5px solid var(--accent);
-      background: #dff3ec;
-      border-radius: 0 8px 8px 0;
-    }
-
-    .band.warning {
-      border-left-color: var(--warning);
-      background: #fff8eb;
-    }
-
-    .band.critical {
-      border-left-color: var(--critical);
-      background: #fff4f3;
-    }
-
-    .timeline {
-      display: grid;
-      gap: 12px;
-      margin-top: 22px;
-      padding: 0;
-      list-style: none;
-    }
-
-    .timeline li {
-      display: grid;
-      grid-template-columns: 42px 1fr;
-      gap: 14px;
-      align-items: start;
-    }
-
-    .step-number {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 42px;
-      height: 42px;
-      border-radius: 8px;
-      background: var(--ink);
-      color: #ffffff;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-weight: 760;
-    }
-
-    .source-box {
-      margin-top: 20px;
-      padding: 16px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff1f4;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    footer {
-      padding-top: 30px;
-      padding-bottom: 30px;
-      border-top: 1px solid rgba(255, 255, 255, 0.14);
-      background: var(--panel-dark);
-      color: #cfe0d9;
-      font-size: 0.95rem;
-    }
-
-    footer a {
-      color: #f8df86;
-    }
-
-    @media (max-width: 900px) {
-      h1 {
-        font-size: 2.7rem;
-      }
-
-      .metric-grid,
-      .evidence-list,
-      .sponsor-panel,
-      .sponsor-grid,
-      .proof-pack-grid,
-      .method-grid,
-      .profile-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .metric,
-      .metric.wide {
-        grid-column: auto;
-      }
-
-      .hero-stat-strip,
-      .section-header {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-stat {
-        border-right: 0;
-        border-bottom: 1px solid #3d5750;
-      }
-
-      .hero-stat:last-child {
-        border-bottom: 0;
-      }
-    }
-
-    @media (max-width: 640px) {
-      body {
-        font-size: 16px;
-      }
-
-      .page {
-        padding-top: 0;
-      }
-
-      .topbar {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .nav {
-        justify-content: flex-start;
-      }
-
-      .masthead {
-        padding-top: 32px;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      .hero-stat strong {
-        font-size: 1.7rem;
-      }
-
-      h2 {
-        font-size: 1.55rem;
-      }
-
-      .metric-value {
-        font-size: 1.65rem;
-      }
-    }
-  </style>
 </head>
 <body>
   <main class="page">
     <div class="topbar">
-      <div class="brand">Thera GB10 Validation</div>
+      <div class="brand">Thera GB10 Field Lab</div>
       <nav class="nav" aria-label="Page sections">
+        <a href="#story">Build story</a>
+        <a href="#verified">Verified</a>
+        <a href="#data">Data</a>
+        <a href="#next">Next tests</a>
         <a href="#ask">Sponsorship</a>
-        <a href="build-log.html">Build log</a>
-        <a href="#proof-pack">Evidence</a>
-        <a href="#graphs">Graphs</a>
-        <a href="#method">Method</a>
-        <a href="mailto:mgsheehyjr89@gmail.com">Contact</a>
+        <a href="proof-pack.zip">Proof pack</a>
       </nav>
     </div>
 
-    <header class="masthead">
-      <div class="hero-copy">
-        <div class="eyebrow">Evidence brief - April 17, 2026</div>
-        <p class="hero-overline">Local AI infrastructure validation</p>
-        <h1>Two GB10 nodes are already running. A third turns the test into a real cluster.</h1>
-        <p class="lead">This project validates whether small GB10 clusters can run private, long-context coding and infrastructure agents locally. The record below includes owned hardware, measured single-node baselines, model assets, kernel/runtime findings, and the validation gates still open before final fabric claims.</p>
-        <div class="actions">
-          <a class="button" href="#ask">Sponsor the next node</a>
-          <a class="button secondary" href="build-log.html">Read build log</a>
-          <a class="button secondary" href="proof-pack.zip">Download proof pack</a>
-          <a class="button secondary" href="proof-pack/sponsorship-one-pager.pdf">One-page PDF</a>
+    <header class="hero">
+      <div class="hero-layout">
+        <div>
+          <div class="eyebrow">Field note - April 18, 2026</div>
+          <h1>I bought two GB10 boxes to find out if local coding agents can actually work.</h1>
+          <p class="lead">The interesting part is not that the machines boot. It is whether they can hold long context, run multiple agent slots, survive real repo work, and stay fast enough to matter without sending the work to a hosted model.</p>
+          <div class="actions">
+            <a class="button" href="#story">Start with the build story</a>
+            <a class="button secondary" href="#data">Skip to the numbers</a>
+            <a class="button secondary" href="build-log.html">Full build log</a>
+          </div>
         </div>
-      </div>
 
-      <div class="hero-stat-strip" aria-label="Current proof summary">
-        <div class="hero-stat gold">
-          <span>Owned hardware</span>
-          <strong>2x GB10</strong>
-          <em>ASUS GX10-class nodes privately funded and available for repeat testing.</em>
-        </div>
-        <div class="hero-stat">
-          <span>Model assets</span>
-          <strong>238G</strong>
-          <em>Qwen3.5-397B IQ3 plus MiniMax M2.7 IQ4 are on disk today.</em>
-        </div>
-        <div class="hero-stat hot">
-          <span>Long-context target</span>
-          <strong>8 / 4M</strong>
-          <em>Eight agent slots sharing a four-million-token context pool.</em>
-        </div>
-        <div class="hero-stat">
-          <span>Measured baseline</span>
-          <strong>141.46</strong>
-          <em>Qwen Coder raw batched decode aggregate at npl=8.</em>
-        </div>
+        <aside class="signal-board" aria-label="Current proof summary">
+          <div class="signal-board-header">
+            <span>Current local state</span>
+            <span>Public share</span>
+          </div>
+          <div class="signal-grid">
+            <div class="signal blue">
+              <span>Owned hardware</span>
+              <strong>2x GB10</strong>
+              <p>ASUS GX10-class systems are installed and available for repeat tests.</p>
+            </div>
+            <div class="signal teal">
+              <span>Model assets</span>
+              <strong>238G</strong>
+              <p>Qwen3.5-397B IQ3 and MiniMax M2.7 IQ4 are both staged.</p>
+            </div>
+            <div class="signal amber">
+              <span>Agent target</span>
+              <strong>8 / 4M</strong>
+              <p>Eight slots sharing a four-million-token context pool is the working target.</p>
+            </div>
+            <div class="signal red">
+              <span>Fabric claim</span>
+              <strong>Hold</strong>
+              <p>The correct-speed cable must land before final throughput claims.</p>
+            </div>
+          </div>
+        </aside>
       </div>
-
-      <figure class="proof-image hero-proof">
-        <img src="evidence-visual.png" alt="Thera GB10 validation evidence brief with two GB10 nodes, runtime target, model assets, benchmark proof, and next validation steps.">
-      </figure>
     </header>
 
-    <section class="section dark-section" id="ask" aria-labelledby="ask-heading">
+    <section class="section tint" id="story" aria-labelledby="story-heading">
       <div class="section-header">
         <div>
-          <p class="section-label">Hardware sponsorship</p>
-          <h2 id="ask-heading">Permanent GB10 Hardware Request</h2>
+          <p class="section-label blue">Build story</p>
+          <h2 id="story-heading">The Part That Matters</h2>
         </div>
-        <p class="muted">The request is straightforward: permanent hardware for reproducible GB10 cluster validation. The first two systems are privately funded and already producing shareable benchmark evidence.</p>
+        <p class="muted">I am putting the narrative before the tables on purpose. The numbers matter, but the setup choices are what make the numbers useful to another builder, sponsor, or reviewer.</p>
       </div>
 
-      <div class="sponsor-panel">
-        <div class="sponsor-ask">
-          <h3>Requested hardware</h3>
-          <ul>
-            <li>Minimum: one permanent ASUS GX10 / NVIDIA GB10-class validation node plus the correct fabric cable.</li>
-            <li>Preferred: two permanent GB10-class nodes plus a compatible QSFP switch or fabric kit.</li>
-            <li>Useful add-ons: correct cables/transceivers, spare storage, and vendor technical contacts.</li>
-          </ul>
-          <div class="actions">
-            <a class="button light" href="mailto:mgsheehyjr89@gmail.com?subject=GB10%20hardware%20sponsorship">Contact Mark</a>
-            <a class="button secondary" href="proof-pack/sponsorship-one-pager.pdf">Open PDF</a>
+      <div class="story-grid">
+        <article class="story-copy">
+          <p>I started with two privately funded ASUS GX10 / NVIDIA GB10 systems because I wanted a straight answer to a practical question: can a small local cluster run coding agents with enough context to do real work, or does everything collapse into short prompts and half-finished edits?</p>
+
+          <p>The first rule was boring on purpose. I kept the management path separate from the high-speed fabric. SSH, package work, sync, and recovery stay on the normal LAN. The direct link is a private fabric for model traffic and measurements. If a fabric experiment goes sideways, basic administration should still be calm.</p>
+
+          <p>I am also not treating the temporary cable as a benchmark result. It is useful for bring-up. It is not the basis for a final cluster claim. The NICs should negotiate normally, and the correct-speed cable should be the point where forward and reverse fabric numbers become publishable.</p>
+
+          <div class="pull">The real test is not a one-prompt demo. It is a long-context coding workload with multiple agent slots, repo edits, tool use, test failures, queue behavior, and enough pressure to expose where the system actually spends time.</div>
+
+          <p>The model work is being framed the same way. Qwen3.5-397B IQ3 is the current two-node target because it fits the 8-slot, 4M-token working shape. MiniMax M2.7 IQ4 is staged because it may trade size for speed and coding quality. GLM remains the family I am watching for long-running agent behavior, but it does not get a winner label until it runs the same jobs under the same scoring rules.</p>
+        </article>
+
+        <div class="side-stack">
+          <div class="note blue">
+            <strong>Design choice</strong>
+            <p class="muted">Management stays boring. Fabric work stays isolated. No default gateway moves to the experimental link.</p>
+          </div>
+          <div class="note teal">
+            <strong>Serving shape</strong>
+            <p class="muted">Two nodes, one model, eight slots, and a four-million-token context pool for real agent/subagent work.</p>
+          </div>
+          <div class="note amber">
+            <strong>Public boundary</strong>
+            <p class="muted">Private addresses, credentials, serials, receipts, raw shell history, and employer-private data stay out of the public pack.</p>
           </div>
         </div>
-
-        <div class="sponsor-grid">
-          <div class="sponsor-card">
-            <strong>What sponsors get</strong>
-            <p class="muted">Public acknowledgement, reproducible setup notes, benchmark results, model-fit tables, fabric diagnostics, and kernel/runtime findings.</p>
-          </div>
-          <div class="sponsor-card">
-            <strong>Why now</strong>
-            <p class="muted">A third GB10 changes the work from point-to-point bring-up into the small-ring topology NVIDIA documents for GB10-class systems.</p>
-          </div>
-          <div class="sponsor-card">
-            <strong>Data boundary</strong>
-            <p class="muted">Public work uses public repos, synthetic infrastructure tasks, redacted examples, or purpose-built test repos. No member data or private employer material.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="summary-heading">
-      <div class="section-header">
-        <div>
-          <p class="section-label">Evidence snapshot</p>
-          <h2 id="summary-heading">What Is Already Verified</h2>
-        </div>
-        <p class="muted">The headline numbers come from local artifacts and run logs. Private network addresses, receipts, serial numbers, and employer-sensitive material are intentionally excluded from this shareable record.</p>
       </div>
 
-      <div class="metric-grid" aria-label="Evidence summary metrics">
-        <div class="metric wide hero-metric">
-          <div class="metric-label">Purchased systems</div>
-          <div class="metric-value">2x GB10</div>
-          <p class="metric-copy">ASUS GX10-class systems are installed locally and available for repeat testing.</p>
-        </div>
-        <div class="metric wide">
-          <div class="metric-label">Current model assets</div>
-          <div class="metric-value">238G</div>
-          <p class="metric-copy">Qwen3.5-397B IQ3 plus MiniMax M2.7 IQ4 are present on disk today.</p>
-        </div>
-        <div class="metric deep">
-          <div class="metric-label">GPT-OSS 120B eval</div>
-          <div class="metric-value">0.925</div>
-          <p class="metric-copy">AIME25 score from a 240-sample local run against GPT-OSS 120B high effort.</p>
-        </div>
-        <div class="metric">
-          <div class="metric-label">Qwen Coder raw sweep</div>
-          <div class="metric-value">141.46</div>
-          <p class="metric-copy">Aggregate tok/s at npl=8 in the single-GB10 raw batched decode sweep.</p>
-        </div>
-        <div class="metric good">
-          <div class="metric-label">Long-context target</div>
-          <div class="metric-value">4M</div>
-          <p class="metric-copy">Current two-node Qwen target: 8 slots sharing a 4M-token context pool.</p>
-        </div>
-        <div class="metric warn">
-          <div class="metric-label">Fabric status</div>
-          <div class="metric-value">Pending</div>
-          <p class="metric-copy">Correct-speed QSFP cable is still required before final fabric claims.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="proof-pack" aria-labelledby="proof-pack-heading">
-      <div class="section-header">
-        <div>
-          <p class="section-label">Evidence package</p>
-          <h2 id="proof-pack-heading">Download The Verification Materials</h2>
-        </div>
-        <p class="muted">The proof pack includes machine-readable benchmark data, methodology notes, limitations, launch summaries, sanitized logs, and a one-page sponsor handout.</p>
-      </div>
-
-      <div class="proof-pack-grid">
-        <div class="proof-card featured">
-          <strong>Download everything</strong>
-          <p class="muted">Zip bundle containing the proof pack, benchmark data, launch notes, sanitized logs, and sponsorship one-pager.</p>
-          <p><a href="proof-pack.zip">Download proof-pack.zip</a></p>
-        </div>
-        <div class="proof-card">
-          <strong>One-page PDF</strong>
-          <p class="muted">A sponsor-facing PDF with the ask, current evidence, public output, and safety boundary.</p>
-          <p><a href="proof-pack/sponsorship-one-pager.pdf">Open sponsorship-one-pager.pdf</a></p>
-        </div>
-        <div class="proof-card">
-          <strong>Machine-readable data</strong>
-          <p class="muted">Benchmark values are available as CSV and JSON so graphs and claims can be checked without scraping the page.</p>
-          <p><a href="proof-pack/benchmark-results.csv">CSV</a> / <a href="proof-pack/benchmark-results.json">JSON</a></p>
-        </div>
-        <div class="proof-card">
-          <strong>Methodology</strong>
-          <p class="muted">Benchmark rules, measurement surfaces, privacy boundary, and pending fabric validation gates.</p>
-          <p><a href="proof-pack/methodology.md">Read methodology.md</a></p>
-        </div>
-        <div class="proof-card">
-          <strong>Limitations</strong>
-          <p class="muted">Explicit caveats, what is not claimed yet, and what must pass before stronger claims are made.</p>
-          <p><a href="proof-pack/limitations.md">Read limitations.md</a></p>
-        </div>
-        <div class="proof-card">
-          <strong>Launch notes</strong>
-          <p class="muted">Shareable launch/configuration notes for GPT-OSS 120B, Qwen3-Coder-Next, and the two-node target shape.</p>
-          <p><a href="proof-pack/launch-configs/two-node-target.md">Open target notes</a></p>
-        </div>
-      </div>
-
-    </section>
-
-    <section class="section" id="graphs" aria-labelledby="graphs-heading">
-      <div class="section-header">
-        <div>
-          <p class="section-label">Benchmark visuals</p>
-          <h2 id="graphs-heading">Performance Story In Four Graphs</h2>
-        </div>
-        <p class="muted">Four plots summarize the measured benchmark data: GPT-OSS OOB versus tuned decode, Qwen Coder serving-shape tuning, raw batched scaling, and the MMQ negative result.</p>
-      </div>
-
-      <figure class="proof-image">
-        <img src="benchmark-graphs.png" alt="Four benchmark graphs comparing GPT-OSS 120B OOB versus tuned decode, Qwen Coder three-way serving, Qwen Coder raw scaling, and MMQ tuning results.">
-        <figcaption>Two-node fabric throughput is intentionally not graphed yet. Final fabric claims wait for the correct-speed QSFP cable and fresh forward/reverse tests.</figcaption>
+      <figure class="image-frame">
+        <img src="evidence-visual.png" alt="GB10 validation evidence board with owned hardware, model assets, benchmark evidence, and next validation pass.">
+        <figcaption>The public evidence board: owned hardware, model assets, benchmark records, and validation gates without private infrastructure details.</figcaption>
       </figure>
     </section>
 
-    <section class="section" id="method" aria-labelledby="method-heading">
+    <section class="section" id="verified" aria-labelledby="verified-heading">
       <div class="section-header">
         <div>
-          <p class="section-label">Measurement discipline</p>
-          <h2 id="method-heading">What Makes The Data Credible</h2>
+          <p class="section-label green">Verified now</p>
+          <h2 id="verified-heading">What Is Already Done</h2>
         </div>
-        <p class="muted">The results separate measured facts, negative tuning findings, and pending claims so reviewers can tell what is verified and what still needs a controlled run.</p>
+        <p class="muted">This section contains present facts only. Anything waiting on the correct cable, repeated service runs, or candidate bakeoffs is moved out of this lane.</p>
       </div>
 
-      <div class="method-grid">
-        <div class="method-card">
-          <strong>Same-condition comparisons</strong>
-          <p class="muted">Kernel/runtime changes are judged against the same reproducer and the managed serving path, not isolated lucky runs.</p>
+      <div class="metric-grid four" aria-label="Verified evidence metrics">
+        <div class="metric blue">
+          <div class="metric-label">Installed systems</div>
+          <div class="metric-value">2x</div>
+          <p class="metric-copy">Two ASUS GX10 / NVIDIA GB10-class systems are online for repeat testing.</p>
         </div>
-        <div class="method-card">
-          <strong>Negative results retained</strong>
-          <p class="muted">MMQ-off and stream-k-off findings are published because they prevent wasted tuning and narrow the real CUDA target.</p>
+        <div class="metric teal">
+          <div class="metric-label">Large models staged</div>
+          <div class="metric-value">238G</div>
+          <p class="metric-copy">Qwen3.5-397B IQ3 plus MiniMax M2.7 IQ4 fit on disk together for side-by-side tests.</p>
         </div>
-        <div class="method-card">
-          <strong>Privacy boundary</strong>
-          <p class="muted">The public pack excludes private LAN addresses, credentials, serials, receipts, raw shell history, and employer-private data.</p>
+        <div class="metric green">
+          <div class="metric-label">GPT-OSS eval</div>
+          <div class="metric-value">0.925</div>
+          <p class="metric-copy">AIME25 score over a 240-sample local GPT-OSS 120B run.</p>
         </div>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="hardware-heading">
-      <div class="section-header">
-        <div>
-          <p class="section-label">Hardware</p>
-          <h2 id="hardware-heading">Installed Systems</h2>
+        <div class="metric amber">
+          <div class="metric-label">Qwen raw decode</div>
+          <div class="metric-value">141.46</div>
+          <p class="metric-copy">Aggregate tok/s at npl=8 from the single-GB10 raw batched decode sweep.</p>
         </div>
-        <p class="muted">Hardware details are limited to what reviewers need for context while private LAN details remain out of the published record.</p>
       </div>
 
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Field</th>
+              <th>Layer</th>
               <th>Public value</th>
+              <th>Why it matters</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Primary GB10 host label</td>
-              <td><code>thera128gx10-1</code></td>
+              <td>Node labels</td>
+              <td><code>thera128gx10-1</code> and <code>thera128gx10-2</code></td>
+              <td>Repeat work has named roles without exposing private addressing.</td>
             </tr>
             <tr>
-              <td>Second GB10 host label</td>
-              <td><code>thera128gx10-2</code></td>
-            </tr>
-            <tr>
-              <td>Vendor / model</td>
-              <td><code>ASUSTeK COMPUTER INC. GX10</code></td>
-            </tr>
-            <tr>
-              <td>GPU class</td>
-              <td>NVIDIA GB10 / <code>sm_121</code></td>
+              <td>Hardware class</td>
+              <td>ASUS GX10 / NVIDIA GB10, <code>sm_121</code></td>
+              <td>The kernel/runtime notes are tied to the actual GB10 architecture.</td>
             </tr>
             <tr>
               <td>OS baseline</td>
               <td>Ubuntu 24.04.4 LTS, arm64, NVIDIA 580-series driver</td>
+              <td>The public record names the software floor for reproducibility.</td>
             </tr>
             <tr>
-              <td>High-speed fabric device</td>
-              <td>Mellanox / NVIDIA ConnectX-7 class NICs reported locally</td>
+              <td>Management approach</td>
+              <td>Normal LAN management remains separate from the direct fabric</td>
+              <td>Administration and recovery are not dependent on the experiment.</td>
             </tr>
             <tr>
-              <td>Management path</td>
-              <td>Normal LAN management stays separate from the direct GB10 fabric</td>
+              <td>High-speed device class</td>
+              <td>Mellanox / NVIDIA ConnectX-7-class NICs reported locally</td>
+              <td>The private fabric test is grounded in the right hardware class.</td>
             </tr>
           </tbody>
         </table>
       </div>
-
-      <div class="band warning">
-        The temporary cable is rated for 40 Gb/s. Setup work can continue, but final multi-node throughput claims wait for the correct-speed QSFP cable and a fresh forward/reverse fabric benchmark.
-      </div>
     </section>
 
-    <section class="section" id="measured" aria-labelledby="measured-heading">
+    <section class="section cool" id="data" aria-labelledby="data-heading">
       <div class="section-header">
         <div>
-          <p class="section-label">Single-unit baselines</p>
-          <h2 id="measured-heading">Measured Inference Data Already On Disk</h2>
+          <p class="section-label teal">Measured data</p>
+          <h2 id="data-heading">The Numbers People Came For</h2>
         </div>
-        <p class="muted">The strongest publishable numbers are the single-GB10 baselines because they do not depend on the pending fabric cable.</p>
+        <p class="muted">These are the publishable measurements on disk today. The page separates single-node baselines, negative kernel findings, and pending multi-node claims so the record stays honest.</p>
       </div>
 
-      <h3>GPT-OSS 120B on GB10</h3>
+      <figure class="image-frame">
+        <img src="benchmark-graphs.png" alt="Four benchmark graphs comparing GPT-OSS 120B OOB versus tuned decode, Qwen Coder serving shape, Qwen Coder raw scaling, and MMQ tuning results.">
+        <figcaption>Representative graphs from the proof pack: OOB versus tuned GPT-OSS, Qwen Coder serving and raw sweeps, and a negative MMQ tuning result.</figcaption>
+      </figure>
+
+      <h3>GPT-OSS 120B on one GB10</h3>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
               <th>Measurement</th>
               <th>Recorded value</th>
-              <th>Why it matters</th>
+              <th>Takeaway</th>
             </tr>
           </thead>
           <tbody>
             <tr>
+              <td>Representative OOB comparison</td>
+              <td><code>13 tok/s</code></td>
+              <td>Baseline comparison before the tuned local lane.</td>
+            </tr>
+            <tr>
               <td>Live implementation audit</td>
               <td><code>63 tok/s</code> batch-1 decode</td>
-              <td>Confirms a working GPT-OSS 120B lane on one GB10-class system.</td>
+              <td>A useful GPT-OSS 120B lane on one GB10-class system.</td>
             </tr>
             <tr>
               <td>Model memory</td>
               <td><code>64.02 GiB</code> MXFP4</td>
-              <td>Shows the 120B MoE fits comfortably inside the 128GB unified-memory envelope.</td>
+              <td>The 120B MoE leaves real memory room on a 128GB box.</td>
             </tr>
             <tr>
               <td>KV cache headroom</td>
               <td><code>42.46 GiB</code>, about <code>1.24M</code> tokens</td>
-              <td>Useful prior for long-context budgeting on the larger two-node models.</td>
-            </tr>
-            <tr>
-              <td>llama.cpp bench</td>
-              <td><code>2443.91</code> pp2048 t/s, <code>58.72</code> tg32 t/s</td>
-              <td>Independent bench surface for prompt processing and decode speed.</td>
+              <td>Useful prior for larger long-context budgeting.</td>
             </tr>
             <tr>
               <td>AIME25 local eval</td>
-              <td><code>0.925</code> score over <code>240</code> samples</td>
-              <td>Functional eval data exists, not just synthetic throughput numbers.</td>
+              <td><code>0.925</code> over <code>240</code> samples</td>
+              <td>Functional eval data exists, not just throughput.</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <h3>Qwen3-Coder-Next APEX/TurboQuant on One GB10</h3>
+      <h3>Qwen3-Coder-Next APEX/TurboQuant on one GB10</h3>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
               <th>Measurement</th>
               <th>Recorded value</th>
-              <th>Why it matters</th>
+              <th>Takeaway</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Model asset</td>
-              <td><code>Qwen3-Coder-Next-APEX-I-Quality.gguf</code>, <code>50,390,241,280</code> bytes</td>
-              <td>Known-good single-unit APEX model used for local runtime bring-up.</td>
-            </tr>
-            <tr>
               <td>Verified serving geometry</td>
               <td><code>262656</code> context, <code>3</code> slots, <code>87552</code> tokens per slot</td>
-              <td>Concrete long-context serving shape, not a short demo prompt.</td>
+              <td>Concrete long-context serving shape, not a short prompt demo.</td>
             </tr>
             <tr>
               <td>Single-request decode</td>
               <td>About <code>46.88 tok/s</code> at <code>32K</code> context</td>
-              <td>Baseline user-facing speed for one active request.</td>
+              <td>Baseline interactive speed for one active request.</td>
             </tr>
             <tr>
               <td>Three concurrent requests</td>
-              <td>About <code>31.34 tok/s</code> per stream at <code>262656</code> total context</td>
-              <td>Relevant to planner, implementor, and auditor agents sharing the box.</td>
+              <td>About <code>31.34 tok/s</code> per stream</td>
+              <td>Relevant to planner, implementor, and auditor agents sharing a box.</td>
             </tr>
             <tr>
               <td>Raw batched decode sweep</td>
-              <td><code>98.46 tok/s</code> aggregate at npl=3, <code>141.46 tok/s</code> aggregate at npl=8</td>
-              <td>Backend ceiling before OpenAI-compatible server overhead.</td>
+              <td><code>98.46 tok/s</code> at npl=3, <code>141.46 tok/s</code> at npl=8</td>
+              <td>Backend ceiling before OpenAI-compatible service overhead.</td>
             </tr>
             <tr>
               <td>Repeated-run audited lane</td>
               <td><code>35.07 tok/s</code> average decode, about <code>105.2 tok/s</code> aggregate at 3-way</td>
-              <td>Median-of-5 result survived the audit pass better than the earlier single-run winner.</td>
+              <td>The median-of-5 lane survived audit better than the earlier single-run winner.</td>
             </tr>
           </tbody>
         </table>
-      </div>
-
-      <div class="source-box">
-        Source artifacts are retained locally under the Thera engineering directories and benchmark logs. Public copy uses rounded summaries so this can be shared without publishing private host addresses or raw session history.
       </div>
     </section>
 
     <section class="section" id="kernel" aria-labelledby="kernel-heading">
       <div class="section-header">
         <div>
-          <p class="section-label">Kernel/runtime engineering</p>
-          <h2 id="kernel-heading">Kernel Tuning Findings We Can Release</h2>
+          <p class="section-label red">Kernel notes</p>
+          <h2 id="kernel-heading">The Negative Results Are Useful</h2>
         </div>
-        <p class="muted">The kernel work is valuable because it records negative results. It rules out easy switches and narrows the next real optimization target.</p>
+        <p class="muted">The kernel/runtime work is worth publishing because it rules out easy switches and narrows the real CUDA target.</p>
       </div>
 
       <div class="table-wrap">
@@ -1182,100 +311,42 @@
           </thead>
           <tbody>
             <tr>
-              <td>Raw baseline for Qwen3-Coder-Next kernel tuning</td>
-              <td><code>speed_tg = 90.19 tok/s</code> on the pp128/tg128/pl3 reproducer</td>
+              <td>Raw baseline for Qwen3-Coder-Next tuning</td>
+              <td><code>speed_tg = 90.19 tok/s</code> on pp128/tg128/pl3</td>
               <td>Direct backend baseline for selector-level experiments.</td>
             </tr>
             <tr>
               <td>Disable MMQ globally</td>
-              <td>Raw <code>90.73 tok/s</code>; live decode <code>31.36</code> vs baseline <code>31.38</code>; live prompt t/s regressed from <code>162.40</code> to <code>66.96</code></td>
-              <td>MMQ yes/no is not the real lever. The live path needs a narrower kernel edit.</td>
+              <td>Raw <code>90.73 tok/s</code>; live decode <code>31.36</code> vs <code>31.38</code>; prompt t/s regressed from <code>162.40</code> to <code>66.96</code></td>
+              <td>MMQ yes/no is not the lever. The live path needs a narrower edit.</td>
             </tr>
             <tr>
               <td>Disable stream-k globally</td>
-              <td>Same reproducer exceeded <code>6m20s</code> and was terminated; expected baseline was about <code>2m36s</code></td>
-              <td>stream-k is required on the current branch. Disabling it is not a viable tuning path.</td>
-            </tr>
-            <tr>
-              <td>Nsight direction</td>
-              <td>Hot work remains around quantized <code>mul_mat_q</code> paths and small-K MoE-shaped kernels</td>
-              <td>The next acceptable edit needs occupancy and launch evidence from Nsight Compute.</td>
+              <td>The reproducer exceeded <code>6m20s</code> and was terminated; expected baseline was about <code>2m36s</code></td>
+              <td>stream-k is required on this branch. Disabling it is not a viable tuning path.</td>
             </tr>
             <tr>
               <td>TurboQuant decode path</td>
-              <td>Active profile uses <code>K=q8_0</code>, <code>V=turbo2</code>; the q8_0 K path is already compact integer-dot math</td>
-              <td>The safer first target is the mixed VEC decode path and on-the-fly turbo2 V dequantization, not broad cache-format changes.</td>
+              <td>Active profile uses <code>K=q8_0</code>, <code>V=turbo2</code></td>
+              <td>The safer first target is the mixed VEC decode path and on-the-fly turbo2 V dequantization.</td>
             </tr>
             <tr>
               <td>GB10 Blackwell constraint</td>
-              <td><code>sm_121</code> is not datacenter Blackwell; no WGMMA/tcgen05 assumptions</td>
-              <td>Optimizations must be written for the actual GB10 ISA and memory hierarchy.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="band">
-        The release-worthy point: the work is not "flip flags until it looks faster." It is a measured kernel workflow: reproducer first, same-condition comparisons, negative results preserved, then a narrow CUDA target.
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="assets-heading">
-      <div class="section-header">
-        <div>
-          <p class="section-label">Two-node model work</p>
-          <h2 id="assets-heading">Current Model Assets And Target Shape</h2>
-        </div>
-        <p class="muted">Model assets are ready for side-by-side long-context tests after fabric validation with the correct cable.</p>
-      </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Asset or target</th>
-              <th>Current value</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Qwen3.5-397B-A17B UD-IQ3_S</td>
-              <td><code>137G</code> on disk</td>
-              <td>Primary two-node long-context candidate.</td>
-            </tr>
-            <tr>
-              <td>MiniMax-M2.7 UD-IQ4_XS</td>
-              <td><code>101G</code> on disk</td>
-              <td>Smaller challenger for coding-agent speed and intelligence testing.</td>
-            </tr>
-            <tr>
-              <td>Combined model storage</td>
-              <td><code>238G</code> for the two current large model assets</td>
-              <td>Both fit on disk for side-by-side testing.</td>
-            </tr>
-            <tr>
-              <td>Qwen two-node serving target</td>
-              <td><code>8</code> slots, <code>4M</code> total-token context pool</td>
-              <td>Working target from the current combined-node workstream.</td>
-            </tr>
-            <tr>
-              <td>System reserve</td>
-              <td>20GB per node reserved for OS and service stability</td>
-              <td>Testing tolerated lower free-memory levels, but published plans keep operational headroom.</td>
+              <td><code>sm_121</code> is not datacenter Blackwell</td>
+              <td>No WGMMA/tcgen05 assumptions. Tune for the actual GB10 ISA and memory hierarchy.</td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <section class="section" id="next" aria-labelledby="next-heading">
+    <section class="section tint" id="next" aria-labelledby="next-heading">
       <div class="section-header">
         <div>
-          <p class="section-label">Next validation pass</p>
-          <h2 id="next-heading">Concrete Benchmark Plan</h2>
+          <p class="section-label amber">Not claimed yet</p>
+          <h2 id="next-heading">The Next Validation Pass</h2>
         </div>
-        <p class="muted">The benchmark plan focuses on workload behavior that matters for long-running agents, not short demo prompts.</p>
+        <p class="muted">The open work is concrete. It is not being blended into the verified numbers above.</p>
       </div>
 
       <ol class="timeline">
@@ -1283,91 +354,134 @@
           <span class="step-number">01</span>
           <div>
             <strong>Install the correct-speed QSFP cable.</strong>
-            <p class="muted">Do not hard-code the link at 40G. Let the NICs negotiate, then record link speed, MTU, and NIC counters.</p>
+            <p class="muted">Do not hard-code the link to the temporary 40G cable. Let the NICs negotiate, then record link speed, MTU, and counters.</p>
           </div>
         </li>
         <li>
           <span class="step-number">02</span>
           <div>
             <strong>Run forward and reverse fabric tests.</strong>
-            <p class="muted">Capture <code>iperf3</code> both directions, jumbo-frame checks if MTU 9000 is valid, and error/drop/FEC counters before and after sustained load.</p>
+            <p class="muted">Capture <code>iperf3</code> both directions, jumbo-frame checks when MTU 9000 is valid, and error/drop/FEC counters before and after sustained load.</p>
           </div>
         </li>
         <li>
           <span class="step-number">03</span>
           <div>
-            <strong>Run the same long-context coding tasks on Qwen and MiniMax.</strong>
-            <p class="muted">Use real repositories, multi-file modification tasks, long context, and 8-slot subagent pressure. Record correctness, completion behavior, time-to-first-token, decode throughput, queue behavior, memory, and failures.</p>
+            <strong>Run real coding tasks across the model candidates.</strong>
+            <p class="muted">Use long repositories, multi-file edits, tests, failures, and 8-slot subagent pressure. Score correctness, completion behavior, queue behavior, latency, decode speed, memory, and crashes.</p>
           </div>
         </li>
         <li>
           <span class="step-number">04</span>
           <div>
-            <strong>Publish the kernel/runtime deltas with same-condition evidence.</strong>
-            <p class="muted">Only keep kernel changes that improve the direct backend and the managed OpenAI-compatible service without output corruption or prompt-throughput regression.</p>
+            <strong>Publish only repeated combined-service results.</strong>
+            <p class="muted">A stronger two-node claim needs fabric numbers, long-context coding tasks, and repeated service runs under one recorded launch shape.</p>
           </div>
         </li>
       </ol>
 
-      <div class="band critical">
-        Stronger cluster claims require three results under one recorded configuration: fabric benchmarks, long-context coding tasks, and repeated service runs.
+      <div class="band red">
+        No public claim is being made yet that C-1 and C-2 are a fully validated combined inference server. The hardware is installed, the target is defined, and the missing tests are named.
       </div>
     </section>
 
-    <section class="section" id="project-lead" aria-labelledby="project-lead-heading">
+    <section class="section terminal" id="ask" aria-labelledby="ask-heading">
       <div class="section-header">
         <div>
-          <p class="section-label">Project lead</p>
+          <p class="section-label amber">Hardware request</p>
+          <h2 id="ask-heading">A Third GB10 Changes The Experiment</h2>
+        </div>
+        <p class="muted">With two nodes, the fabric test is point-to-point. With three, the topology becomes the small direct ring NVIDIA documents for Spark-class systems. That is a different validation problem, not just more memory.</p>
+      </div>
+
+      <div class="ask-grid">
+        <div class="ask-panel">
+          <h3>Permanent sponsorship ask</h3>
+          <ul>
+            <li>Minimum: one permanent ASUS GX10 / NVIDIA GB10-class validation node plus the correct fabric cable.</li>
+            <li>Preferred: two permanent GB10-class nodes plus a compatible QSFP switch or fabric kit.</li>
+            <li>Useful add-ons: correct cables/transceivers, spare storage, and a vendor technical contact for fabric and runtime questions.</li>
+          </ul>
+          <div class="button-row">
+            <a class="button teal" href="mailto:mgsheehyjr89@gmail.com?subject=GB10%20hardware%20sponsorship">Contact Mark</a>
+            <a class="button secondary" href="proof-pack/sponsorship-one-pager.pdf">Open one-page PDF</a>
+          </div>
+        </div>
+
+        <div class="method-grid">
+          <div class="method-card amber">
+            <strong>What a sponsor gets</strong>
+            <p>Public acknowledgement, reproducible setup notes, fabric diagnostics, model-fit tables, benchmark results, and kernel/runtime findings.</p>
+          </div>
+          <div class="method-card blue">
+            <strong>What the third node unlocks</strong>
+            <p>Ring topology validation, service-placement choices, routing behavior, failure behavior, and long-running agent traffic under load.</p>
+          </div>
+          <div class="method-card red">
+            <strong>Data boundary</strong>
+            <p>Public tasks use public repos, synthetic infrastructure tasks, redacted examples, or purpose-built test repos. No member data or private employer material.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="proof-pack" aria-labelledby="proof-pack-heading">
+      <div class="section-header">
+        <div>
+          <p class="section-label blue">Proof pack</p>
+          <h2 id="proof-pack-heading">Download The Verification Materials</h2>
+        </div>
+        <p class="muted">The proof pack contains machine-readable data, methodology notes, limitations, launch summaries, sanitized logs, and a sponsor handout.</p>
+      </div>
+
+      <div class="proof-pack-grid">
+        <div class="proof-card blue">
+          <strong>Full bundle</strong>
+          <p class="muted">Zip file with the proof pack, benchmark data, launch notes, sanitized logs, and sponsor handout.</p>
+          <p><a href="proof-pack.zip">Download proof-pack.zip</a></p>
+        </div>
+        <div class="proof-card teal">
+          <strong>Machine-readable data</strong>
+          <p class="muted">Benchmark values are available as CSV and JSON so claims can be checked without scraping the page.</p>
+          <p><a href="proof-pack/benchmark-results.csv">CSV</a> / <a href="proof-pack/benchmark-results.json">JSON</a></p>
+        </div>
+        <div class="proof-card amber">
+          <strong>Method and caveats</strong>
+          <p class="muted">Benchmark rules, privacy boundary, current limitations, and validation gates.</p>
+          <p><a href="proof-pack/methodology.md">Methodology</a> / <a href="proof-pack/limitations.md">Limitations</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section tint" id="project-lead" aria-labelledby="project-lead-heading">
+      <div class="section-header">
+        <div>
+          <p class="section-label green">Project lead</p>
           <h2 id="project-lead-heading">Who Is Running The Validation</h2>
         </div>
-        <p class="muted">Independent validation led by a systems and network administrator with hands-on responsibility for infrastructure, private AI evaluation, and production support.</p>
+        <p class="muted">Independent validation led by a systems and network administrator focused on private inference, long-context agents, and practical infrastructure work.</p>
       </div>
 
       <div class="profile-grid">
-        <div class="profile-card">
+        <div class="profile-card blue">
           <h3>Mark Sheehy</h3>
-          <p class="muted">Systems and network administrator focused on local AI infrastructure, private inference, long-context agents, and practical deployment work.</p>
+          <p class="muted">Systems and network administrator working on local AI infrastructure, private inference, long-context coding agents, and deployment validation.</p>
           <p><a href="mailto:mgsheehyjr89@gmail.com">mgsheehyjr89@gmail.com</a></p>
         </div>
-        <div class="profile-card">
-          <h3>Why it matters</h3>
-          <p class="muted">Cloud-only AI does not fit every privacy-sensitive workflow. This work validates whether small local GB10 clusters can support long-running coding and infrastructure agents with enough context, speed, and operational headroom to matter.</p>
+        <div class="profile-card teal">
+          <h3>Why I care</h3>
+          <p class="muted">Cloud-only AI does not fit every privacy-sensitive workflow. This work tests whether small local GB10 clusters can provide enough context, speed, and operational headroom to matter.</p>
+        </div>
+        <div class="profile-card amber">
+          <h3>References</h3>
+          <p class="muted"><a href="https://docs.nvidia.com/dgx/dgx-spark/spark-clustering.html">NVIDIA Spark clustering</a>, <a href="https://build.nvidia.com/spark/connect-three-sparks">three-Spark ring topology</a>, and <a href="https://developer.nvidia.com/blog/new-software-and-model-optimizations-supercharge-nvidia-dgx-spark/">DGX Spark software notes</a> informed the topology work.</p>
         </div>
       </div>
     </section>
 
-    <section class="section dark-section" id="sponsorship-details" aria-labelledby="sponsorship-details-heading">
-      <div class="section-header">
-        <div>
-          <p class="section-label">Hardware sponsorship</p>
-          <h2 id="sponsorship-details-heading">What Permanent Hardware Unlocks</h2>
-        </div>
-        <p class="muted">A third GB10 turns this from a point-to-point proof into the three-node ring topology NVIDIA documents for small GB10 clusters. A fourth node makes Q3/Q4 tradeoffs and failover behavior worth measuring seriously.</p>
-      </div>
-
-      <div class="evidence-list">
-        <div class="evidence-item">
-          <strong>Minimum useful sponsorship</strong>
-          <p class="muted">One permanent ASUS GX10 / NVIDIA GB10-class validation node plus the cable needed to join the fabric.</p>
-        </div>
-        <div class="evidence-item">
-          <strong>Preferred sponsorship</strong>
-          <p class="muted">Two permanent GB10-class nodes plus a compatible QSFP high-speed switch or fabric kit.</p>
-        </div>
-        <div class="evidence-item">
-          <strong>Public deliverables</strong>
-          <p class="muted">Setup notes, fabric diagnostics, reproducible llama.cpp/TurboQuant launch configs, model fit tables, kernel findings, and long-context coding benchmarks.</p>
-        </div>
-        <div class="evidence-item">
-          <strong>Data safety boundary</strong>
-          <p class="muted">Public tasks use public repos, synthetic infrastructure tasks, redacted examples, or purpose-built test repos. No member data, credentials, private diagrams, or employer confidential material.</p>
-        </div>
-      </div>
-    </section>
-
-    <footer>
+    <footer class="site-footer">
       <p>Contact: Mark Sheehy, <a href="mailto:mgsheehyjr89@gmail.com">mgsheehyjr89@gmail.com</a></p>
-      <p>Hardware, model, and kernel claims are intentionally separated so sponsors can see what is already measured, what is in progress, and what still needs validation.</p>
+      <p>Hardware, model, and kernel claims are separated so reviewers can tell what is measured, what is under test, and what still needs validation.</p>
     </footer>
   </main>
 </body>

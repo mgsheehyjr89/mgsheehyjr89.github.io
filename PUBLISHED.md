@@ -4,6 +4,8 @@ Published on 2026-04-16.
 
 Updated on 2026-04-17 with single-unit GPT-OSS 120B data, Qwen3-Coder-Next APEX/TurboQuant data, kernel tuning findings, the evidence image asset, representative benchmark graphs, a full public proof-page redesign, social sharing assets, and a downloadable sponsorship proof pack.
 
+Updated on 2026-04-18 with a Thera-token visual refresh, shared `site.css`, a first-person main-page build story, corrected evidence flow, and a matching build-log page.
+
 Live page:
 
 ```text
@@ -20,6 +22,8 @@ Published file:
 
 ```text
 index.html
+build-log.html
+site.css
 evidence-visual.png
 benchmark-graphs.png
 social-card.png

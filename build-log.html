@@ -3,515 +3,62 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>I'm Building a Two-GB10 Local AI Cluster</title>
-  <meta name="description" content="A first-person build log for a two-node ASUS GX10 / NVIDIA GB10 local AI cluster: configs, benchmarks, mistakes, model choices, and next validation steps.">
+  <title>Building a Two-GB10 Local AI Cluster</title>
+  <meta name="description" content="A first-person build log for a two-node ASUS GX10 / NVIDIA GB10 local AI cluster: network shape, configs, benchmark evidence, kernel findings, model choices, and next tests.">
   <meta name="author" content="Mark Sheehy">
   <link rel="canonical" href="https://mgsheehyjr89.github.io/build-log.html">
   <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="stylesheet" href="site.css">
   <meta property="og:type" content="article">
-  <meta property="og:site_name" content="Thera GB10 Validation">
-  <meta property="og:title" content="I'm Building a Two-GB10 Local AI Cluster">
-  <meta property="og:description" content="What I configured, what broke, what measured well, and why the next GB10 matters.">
+  <meta property="og:site_name" content="Thera GB10 Field Lab">
+  <meta property="og:title" content="Building a Two-GB10 Local AI Cluster">
+  <meta property="og:description" content="What I configured, what measured well, what broke, and why the third GB10 matters.">
   <meta property="og:url" content="https://mgsheehyjr89.github.io/build-log.html">
   <meta property="og:image" content="https://mgsheehyjr89.github.io/social-card.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="I'm Building a Two-GB10 Local AI Cluster">
-  <meta name="twitter:description" content="Configs, benchmarks, mistakes, model choices, and next validation steps.">
+  <meta name="twitter:title" content="Building a Two-GB10 Local AI Cluster">
+  <meta name="twitter:description" content="Network shape, configs, benchmark evidence, kernel findings, model choices, and next tests.">
   <meta name="twitter:image" content="https://mgsheehyjr89.github.io/social-card.png">
-  <style>
-    :root {
-      color-scheme: light;
-      --bg: #eef6f2;
-      --ink: #101816;
-      --muted: #4e615a;
-      --line: #b7cac2;
-      --surface: #ffffff;
-      --panel: #0b1713;
-      --panel-2: #12231d;
-      --accent: #00806b;
-      --accent-2: #00a98c;
-      --gold: #f0b429;
-      --hot: #d51f49;
-      --soft-hot: #fff1f4;
-      --soft-green: #ddf1ea;
-      --shadow: 0 18px 44px rgba(16, 24, 22, 0.14);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 17px;
-      line-height: 1.62;
-      letter-spacing: 0;
-    }
-
-    a {
-      color: #005f51;
-      text-decoration-thickness: 2px;
-      text-underline-offset: 3px;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-      height: auto;
-    }
-
-    code,
-    pre {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    }
-
-    pre {
-      overflow-x: auto;
-      margin: 18px 0;
-      padding: 18px;
-      border-radius: 8px;
-      background: #101816;
-      color: #d7eee7;
-      font-size: 0.92rem;
-      line-height: 1.55;
-    }
-
-    .topbar,
-    .hero,
-    .article,
-    footer {
-      padding-left: max(22px, calc((100vw - 1040px) / 2));
-      padding-right: max(22px, calc((100vw - 1040px) / 2));
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      min-height: 72px;
-      background: var(--panel);
-      color: #e6f4ee;
-    }
-
-    .brand {
-      font-weight: 800;
-      font-size: 0.95rem;
-    }
-
-    .nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      font-size: 0.9rem;
-    }
-
-    .nav a {
-      color: #d7eee7;
-    }
-
-    .hero {
-      padding-top: 54px;
-      padding-bottom: 46px;
-      border-bottom: 8px solid var(--gold);
-      background: var(--panel);
-      color: #f7fbf9;
-    }
-
-    .eyebrow,
-    .section-label {
-      display: inline-flex;
-      align-items: center;
-      width: fit-content;
-      margin: 0 0 14px;
-      padding: 6px 10px;
-      border-radius: 6px;
-      background: var(--gold);
-      color: #15201c;
-      font-size: 0.78rem;
-      font-weight: 850;
-      text-transform: uppercase;
-    }
-
-    h1,
-    h2,
-    h3 {
-      margin: 0;
-      line-height: 1.05;
-      letter-spacing: 0;
-    }
-
-    h1 {
-      max-width: 900px;
-      font-size: 4rem;
-    }
-
-    h2 {
-      margin-top: 54px;
-      font-size: 2.25rem;
-    }
-
-    h3 {
-      margin-top: 28px;
-      font-size: 1.35rem;
-    }
-
-    .lead {
-      max-width: 820px;
-      margin: 24px 0 0;
-      color: #c9d9d3;
-      font-size: 1.18rem;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 30px;
-    }
-
-    .hero-stat {
-      min-height: 116px;
-      padding: 18px;
-      border: 1px solid #35564e;
-      border-top: 6px solid var(--accent-2);
-      border-radius: 8px;
-      background: var(--panel-2);
-    }
-
-    .hero-stat.gold {
-      border-top-color: var(--gold);
-    }
-
-    .hero-stat.hot {
-      border-top-color: var(--hot);
-    }
-
-    .hero-stat strong {
-      display: block;
-      margin-bottom: 8px;
-      color: #ffffff;
-      font-size: 1.9rem;
-      line-height: 1;
-    }
-
-    .hero-stat span {
-      color: #c4d8d1;
-      font-size: 0.88rem;
-      font-weight: 750;
-    }
-
-    .article {
-      padding-top: 46px;
-      padding-bottom: 70px;
-    }
-
-    .article-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 290px;
-      gap: 34px;
-      align-items: start;
-    }
-
-    .post {
-      min-width: 0;
-    }
-
-    .post p,
-    .post li {
-      color: #25332e;
-    }
-
-    .post p {
-      margin: 15px 0 0;
-    }
-
-    .post ul,
-    .post ol {
-      padding-left: 24px;
-    }
-
-    .pull {
-      margin: 28px 0;
-      padding: 22px;
-      border-left: 6px solid var(--hot);
-      border-radius: 0 8px 8px 0;
-      background: var(--soft-hot);
-      color: #33302e;
-      font-size: 1.08rem;
-      font-weight: 650;
-    }
-
-    .image-frame {
-      margin: 28px 0;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #ffffff;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .image-frame figcaption {
-      padding: 12px 14px;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-      margin-top: 18px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #ffffff;
-      box-shadow: 0 10px 24px rgba(16, 24, 22, 0.08);
-    }
-
-    table {
-      width: 100%;
-      min-width: 660px;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      padding: 13px 14px;
-      border-bottom: 1px solid #d9e6e0;
-      text-align: left;
-      vertical-align: top;
-    }
-
-    th {
-      background: #e6f4ee;
-      color: #15201c;
-      font-size: 0.82rem;
-      text-transform: uppercase;
-    }
-
-    tr:last-child td {
-      border-bottom: 0;
-    }
-
-    .side {
-      position: sticky;
-      top: 20px;
-      display: grid;
-      gap: 14px;
-    }
-
-    .side-card {
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-top: 5px solid var(--accent);
-      border-radius: 8px;
-      background: #ffffff;
-      box-shadow: 0 10px 24px rgba(16, 24, 22, 0.08);
-    }
-
-    .side-card.gold {
-      border-top-color: var(--gold);
-    }
-
-    .side-card strong {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 1.05rem;
-    }
-
-    .side-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .cta {
-      margin-top: 40px;
-      padding: 24px;
-      border-radius: 8px;
-      background: var(--panel);
-      color: #f7fbf9;
-    }
-
-    .cta p {
-      color: #cfe0d9;
-    }
-
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 42px;
-      padding: 0 16px;
-      border: 2px solid var(--gold);
-      border-radius: 8px;
-      background: var(--gold);
-      color: #111816;
-      font-weight: 800;
-      text-decoration: none;
-    }
-
-    .button.secondary {
-      background: transparent;
-      color: #f8df86;
-    }
-
-    footer {
-      padding-top: 28px;
-      padding-bottom: 28px;
-      background: var(--panel);
-      color: #cfe0d9;
-      font-size: 0.95rem;
-    }
-
-    footer a {
-      color: #f8df86;
-    }
-
-    @media (max-width: 900px) {
-      h1 {
-        font-size: 2.6rem;
-      }
-
-      .hero-grid,
-      .article-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .side {
-        position: static;
-      }
-    }
-
-    @media (max-width: 640px) {
-      body {
-        font-size: 16px;
-      }
-
-      .topbar {
-        align-items: flex-start;
-        flex-direction: column;
-        padding-top: 18px;
-        padding-bottom: 18px;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      h2 {
-        font-size: 1.55rem;
-      }
-
-      .hero {
-        padding-top: 34px;
-      }
-    }
-  </style>
 </head>
 <body>
   <div class="topbar">
-    <div class="brand">Thera GB10 Validation</div>
+    <div class="brand">Thera GB10 Field Lab</div>
     <nav class="nav" aria-label="Site sections">
-      <a href="index.html">Evidence page</a>
-      <a href="build-log.html">Build log</a>
+      <a href="index.html">Main page</a>
+      <a href="index.html#data">Data</a>
       <a href="proof-pack.zip">Proof pack</a>
       <a href="mailto:mgsheehyjr89@gmail.com">Contact</a>
     </nav>
   </div>
 
-  <header class="hero">
-    <div class="eyebrow">Build log - April 17, 2026</div>
-    <h1>I'm Building a Two-GB10 Local AI Cluster. Here's the Actual Setup So Far.</h1>
-    <p class="lead">I bought the first two ASUS GX10 / NVIDIA GB10 systems myself because I wanted to stop guessing whether local long-context coding agents are practical. This is the configuration work, the benchmark evidence, the mistakes, and the reason I want the next node.</p>
-
-    <div class="hero-grid" aria-label="Build summary">
-      <div class="hero-stat gold">
-        <strong>2x</strong>
-        <span>GB10-class systems installed and running locally</span>
-      </div>
-      <div class="hero-stat">
-        <strong>238G</strong>
-        <span>large model assets staged for side-by-side testing</span>
-      </div>
-      <div class="hero-stat hot">
-        <strong>8 / 4M</strong>
-        <span>target: eight agent slots over a four-million-token pool</span>
-      </div>
-      <div class="hero-stat">
-        <strong>141.46</strong>
-        <span>Qwen Coder raw batched decode aggregate at npl=8</span>
-      </div>
-    </div>
+  <header class="article-hero">
+    <div class="eyebrow">Build log - April 18, 2026</div>
+    <h1>Building a Two-GB10 Local AI Cluster</h1>
+    <p class="lead">I bought the first two ASUS GX10 / NVIDIA GB10 systems myself because I wanted to stop guessing about local long-context coding agents. This is the setup work, the benchmark evidence, the mistakes, and the reason the next node matters.</p>
   </header>
 
-  <main class="article">
+  <main class="article-shell">
     <div class="article-layout">
       <article class="post">
-        <p class="section-label">Short version</p>
-        <p>I have two GB10-class machines online, model assets staged, a private fabric plan in place, and real single-node numbers on disk. The useful next step is not another short demo prompt. The useful next step is a controlled two-node service run under long-context coding pressure, followed by a three-node ring once a third GB10 is available.</p>
-
-        <p>The posts that get attention in the local AI and infrastructure world usually do four things well: they show the hardware class, explain the exact networking shape, publish numbers, and admit what broke. That is the format I am using here.</p>
+        <p class="section-label blue">Short version</p>
+        <p>I have two GB10-class systems online, large model assets staged, single-node benchmark data on disk, and a private fabric design ready for correct-speed validation. The next useful result is a repeated two-node service run under long-context coding pressure. After that, a third GB10 changes the topology from point-to-point into the small ring NVIDIA documents for Spark-class systems.</p>
 
         <figure class="image-frame">
           <img src="evidence-visual.png" alt="GB10 validation evidence board with owned hardware, model assets, benchmark evidence, and next validation pass.">
-          <figcaption>The evidence board I am using publicly: hardware class, model assets, benchmark record, and validation gates.</figcaption>
+          <figcaption>The public evidence board I am using: hardware class, model assets, benchmark record, and validation gates.</figcaption>
         </figure>
 
-        <h2>Why I Set It Up This Way</h2>
-        <p>The goal is local inference for long-running coding and infrastructure agents. I care about three things at the same time: maximum coding intelligence, fast enough inference to keep agents moving, and enough context that subagents can work without immediately collapsing the task into a toy prompt.</p>
+        <h2>Why I Built It This Way</h2>
+        <p>The workload I care about is not a chatbot answering one prompt. I want local agents that can stay inside a large repo, keep context, call tools, make edits, run tests, absorb failures, and finish without turning the hard parts into stubs.</p>
 
-        <p>I kept management and fabric separate from the beginning. The normal LAN stays for SSH, updates, RDP-adjacent administration, package sync, and recovery. The high-speed link is treated as a private point-to-point fabric. That keeps a bad fabric experiment from taking basic management with it.</p>
+        <p>That changes the whole shape of the system. The model has to be smart enough for coding, fast enough that agents do not stall, and large enough in context that several slots can work at once. I am targeting eight slots and a four-million-token context pool because the extra slots are for subagents, not for casual chat concurrency.</p>
 
-        <div class="pull">The main design rule: never replace the boring management path with the experimental high-speed path. Add the fabric as a separate network and prove it before routing real model traffic through it.</div>
+        <div class="pull">The main design rule is simple: never replace the boring management path with the experimental high-speed path. Add the fabric as a separate network and prove it before moving model traffic onto it.</div>
 
-        <h2>The Baseline Hardware Shape</h2>
-        <p>The public labels are C-1 and C-2. Both are ASUS GX10 / NVIDIA GB10-class systems with ConnectX-7-class high-speed networking. I am not publishing private addressing or serial-level details; the useful part for reviewers is the hardware class, runtime shape, and measured behavior.</p>
+        <h2>The Network Shape</h2>
+        <p>Both systems keep normal LAN management for SSH, updates, package sync, and recovery. The high-speed link is treated as a private fabric. It has no default gateway and no reason to carry ordinary management traffic.</p>
 
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Layer</th>
-                <th>Current setup</th>
-                <th>Why it matters</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Management</td>
-                <td>Normal LAN, SSH/admin path preserved</td>
-                <td>Recovery remains boring even while fabric work changes.</td>
-              </tr>
-              <tr>
-                <td>Fabric</td>
-                <td>Direct QSFP/CX7-style link, isolated from LAN</td>
-                <td>Model traffic can be measured without moving the default gateway.</td>
-              </tr>
-              <tr>
-                <td>Model assets</td>
-                <td>Qwen3.5-397B IQ3 and MiniMax M2.7 IQ4 on disk</td>
-                <td>Both candidates fit for side-by-side testing.</td>
-              </tr>
-              <tr>
-                <td>Serving target</td>
-                <td>8 slots sharing a 4M-token context pool</td>
-                <td>This matches the agent/subagent workload I actually care about.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h2>First Checks I Ran On Each Node</h2>
-        <p>I started with the boring checks because they catch expensive mistakes early: wrong interface, wrong link mode, missing driver, unexpected MTU behavior, or a service accidentally binding to the wrong network.</p>
+        <p>I started with Ethernet mode because plain IP needs to be boring before RDMA, InfiniBand, or distributed runtime tuning enters the picture. The temporary cable is only useful for bring-up. It is not the basis for a final throughput claim, and I am not hard-coding the configuration to its temporary limit.</p>
 
         <pre><code>lspci | grep -Ei 'mellanox|nvidia|connectx|ethernet|infiniband'
 ip -br link
@@ -523,10 +70,8 @@ sudo ethtool &lt;fabric_iface&gt;
 sudo mst status
 sudo mlxconfig -d &lt;device&gt; q | grep -Ei 'LINK_TYPE|SRIOV|ROCE'</code></pre>
 
-        <p>I kept the fabric in Ethernet mode for the first pass. InfiniBand and RDMA can come later, but plain IP has to be boring before I trust anything above it.</p>
-
-        <h2>The Fabric Config Shape</h2>
-        <p>The fabric network is a small private point-to-point subnet with no gateway. I am using placeholders below because the exact private addressing is not the point. The important part is the shape: one interface, one private fabric address per node, no default route, jumbo MTU only after validation.</p>
+        <h2>The Fabric Config</h2>
+        <p>The direct fabric is a small private subnet with one address on each node and no gateway. The placeholders below are intentional. The useful public part is the shape, not private addressing.</p>
 
         <pre><code># C-1
 sudo nmcli con add type ethernet ifname &lt;fabric_iface&gt; \
@@ -546,34 +91,30 @@ sudo nmcli con add type ethernet ifname &lt;fabric_iface&gt; \
 sudo nmcli con mod gb10-fabric-c1 802-3-ethernet.mtu 9000
 sudo nmcli con up gb10-fabric-c1</code></pre>
 
-        <p>I do not want the temporary cable to define the final setup. The current temporary cable is useful for functional bring-up, but the link should negotiate normally when the correct cable lands. Hard-coding the link to today's temporary limit would be the wrong lesson to bake into the configuration.</p>
+        <p>The final fabric test is narrow: negotiated link speed, MTU, counters, forward iperf3, reverse iperf3, jumbo ping when MTU 9000 is valid, and error/drop/FEC counters before and after load.</p>
 
-        <pre><code># Forward and reverse tests after the correct-speed cable is installed:
-iperf3 -s -B &lt;c1_fabric_ip&gt;
+        <pre><code>iperf3 -s -B &lt;c1_fabric_ip&gt;
 iperf3 -c &lt;c1_fabric_ip&gt; -P 8 -t 30
 iperf3 -c &lt;c1_fabric_ip&gt; -P 8 -t 30 -R
 
-# If MTU 9000 is enabled:
 ping -M do -s 8972 -c 3 &lt;peer_fabric_ip&gt;
 
-# Counter check before and after load:
 sudo ethtool -S &lt;fabric_iface&gt; | grep -Ei 'err|drop|fec|crc|timeout|pause'</code></pre>
 
         <h2>The Model-Serving Target</h2>
-        <p>The model question is not "what is the biggest file I can barely load." The question is which single model gives the best coding intelligence at usable speed while preserving enough memory for KV cache, compute, and the operating systems.</p>
+        <p>The question is not which file is biggest. The question is which single model gives the best coding intelligence at usable speed while leaving enough memory for KV cache, compute, and the operating systems.</p>
 
-        <p>My current target shape is Qwen3.5-397B IQ3 across the two GB10 nodes with eight slots sharing a four-million-token context pool. MiniMax M2.7 IQ4 is staged as a smaller challenger. GLM is still the model family I am watching hardest for long-running agent behavior, but I am not going to call a winner until the candidates run the same real coding tasks.</p>
+        <p>Right now the working two-node target is Qwen3.5-397B IQ3 with eight slots sharing a four-million-token context pool. MiniMax M2.7 IQ4 is staged as a smaller challenger. GLM remains the family I am watching hardest for long-running agent behavior, but I am not calling a winner until the same coding tasks run across the candidates.</p>
 
-        <pre><code># Representative serving shape, not a universal launch command:
-model: Qwen3.5-397B-A17B-UD-IQ3_S
+        <pre><code>model: Qwen3.5-397B-A17B-UD-IQ3_S
 slots: 8
 context_pool: 4M tokens
 kv_profile_observed: K=q8_0, V=turbo2
-reserve: keep OS/service headroom on both nodes
+reserve: keep OS and service headroom on both nodes
 test_load: real repos, multi-file edits, tests, failures recorded</code></pre>
 
-        <h2>Numbers I Can Publish Right Now</h2>
-        <p>The strongest numbers today are still single-GB10 baselines and kernel/runtime tuning results. I am keeping the two-node fabric claims separate until the correct cable and repeated service benchmarks are finished.</p>
+        <h2>Numbers I Can Publish Today</h2>
+        <p>The strongest numbers today are still single-GB10 baselines and kernel/runtime findings. I am keeping two-node fabric claims separate until the correct cable and repeated service benchmarks are finished.</p>
 
         <div class="table-wrap">
           <table>
@@ -587,22 +128,22 @@ test_load: real repos, multi-file edits, tests, failures recorded</code></pre>
             <tbody>
               <tr>
                 <td>GPT-OSS 120B tuned decode</td>
-                <td>63 tok/s batch-1 decode</td>
+                <td><code>63 tok/s</code> batch-1 decode</td>
                 <td>One GB10-class system can run a useful 120B lane.</td>
               </tr>
               <tr>
                 <td>GPT-OSS AIME25 local eval</td>
-                <td>0.925 over 240 samples</td>
-                <td>There is functional eval data, not just throughput.</td>
+                <td><code>0.925</code> over <code>240</code> samples</td>
+                <td>There is functional eval data, not only throughput.</td>
               </tr>
               <tr>
                 <td>Qwen Coder raw sweep</td>
-                <td>141.46 tok/s aggregate at npl=8</td>
+                <td><code>141.46 tok/s</code> aggregate at npl=8</td>
                 <td>The backend has headroom before service overhead.</td>
               </tr>
               <tr>
                 <td>MMQ-off experiment</td>
-                <td>Prompt throughput regressed from 162.40 to 66.96 tok/s</td>
+                <td>Prompt throughput regressed from <code>162.40</code> to <code>66.96 tok/s</code></td>
                 <td>The easy toggle was not the real optimization path.</td>
               </tr>
             </tbody>
@@ -611,15 +152,15 @@ test_load: real repos, multi-file edits, tests, failures recorded</code></pre>
 
         <figure class="image-frame">
           <img src="benchmark-graphs.png" alt="Benchmark graphs for GPT-OSS tuned decode, Qwen Coder serving shape, Qwen raw scaling, and MMQ tuning results.">
-          <figcaption>The current public graph set: useful baselines, plus a negative kernel result that saves time.</figcaption>
+          <figcaption>The graph set includes useful baselines plus a negative kernel result that saves tuning time.</figcaption>
         </figure>
 
         <h2>What Broke Or Almost Broke</h2>
         <ul>
-          <li>The cable mattered more than expected. A lower-rated cable is fine for setup, but it is not the basis for a real fabric claim.</li>
+          <li>The cable mattered more than expected. A lower-rated cable is fine for setup, but it is not a final fabric benchmark.</li>
           <li>The easy kernel toggles did not solve the bottleneck. MMQ-off stayed flat on decode and hurt prompt throughput; disabling stream-k globally was worse.</li>
           <li>Benchmarks that look good in isolation are not enough. The real test is long-context coding with multiple agent slots under the same launch configuration.</li>
-          <li>Model quality claims are fragile unless the same tasks run across Qwen, MiniMax, and GLM with the same scoring rules.</li>
+          <li>Model quality claims are fragile unless Qwen, MiniMax, and GLM run the same tasks with the same scoring rules.</li>
         </ul>
 
         <h2>What I Would Repeat</h2>
@@ -627,17 +168,16 @@ test_load: real repos, multi-file edits, tests, failures recorded</code></pre>
           <li>Name the nodes and document roles first.</li>
           <li>Keep LAN management separate from the high-speed fabric.</li>
           <li>Prove IP networking before RDMA or distributed runtime tuning.</li>
-          <li>Record negative results, because they prevent the next person from wasting the same night.</li>
-          <li>Publish the benchmark data as CSV/JSON, not only as screenshots.</li>
+          <li>Record negative results because they stop the next person from wasting the same night.</li>
+          <li>Publish benchmark data as CSV/JSON, not only screenshots.</li>
         </ol>
 
         <h2>Why A Third Node Changes The Work</h2>
-        <p>With two nodes, the fabric test is point-to-point. With three, the topology becomes a small ring, which is exactly the shape NVIDIA documents for three Spark-class systems using direct QSFP connections. That matters because the third node is not just "more memory." It changes what can be tested: ring behavior, routing choices, service placement, failure behavior, and whether long-running agent traffic remains usable under load.</p>
+        <p>With two nodes, the fabric test is point-to-point. With three, the topology becomes a small ring, which is the shape NVIDIA documents for three Spark-class systems using direct QSFP connections. That matters because the third node is not just more memory. It changes the validation: ring behavior, routing choices, service placement, failure behavior, and whether long-running agent traffic stays usable under load.</p>
 
         <p>A fourth node would open Q3/Q4 tradeoff testing and redundancy experiments, but the first meaningful jump is two to three. That is why the sponsorship request starts with one permanent GB10-class node plus the right fabric cable.</p>
 
         <h2>The Next Concrete Test</h2>
-        <p>The next pass is narrow and measurable:</p>
         <ol>
           <li>Install the correct-speed fabric cable.</li>
           <li>Record negotiated link speed, MTU, and counters.</li>
@@ -647,53 +187,50 @@ test_load: real repos, multi-file edits, tests, failures recorded</code></pre>
           <li>Score correctness, completion behavior, queue behavior, time-to-first-token, decode throughput, memory pressure, and failures.</li>
         </ol>
 
-        <h2>What This Is Really Testing</h2>
-        <p>I am not trying to make a tiny local cluster win a synthetic chart for one prompt. I am testing whether local GB10 systems can support the work commercial agents often fail at: staying on a task, using long context, running tools, editing real repositories, absorbing test failures, and finishing without stubs.</p>
-
-        <div class="cta">
-          <h2>Permanent Hardware Request</h2>
-          <p>The first two systems are privately funded. The useful next contribution is one permanent GB10-class node plus the correct fabric cable. The preferred contribution is two permanent nodes plus a compatible QSFP switch or fabric kit.</p>
-          <div class="button-row">
-            <a class="button" href="mailto:mgsheehyjr89@gmail.com?subject=GB10%20hardware%20sponsorship">Contact Mark</a>
-            <a class="button secondary" href="proof-pack.zip">Download proof pack</a>
-          </div>
-        </div>
+        <div class="band red">I am not trying to make a tiny cluster win a synthetic one-prompt chart. I am testing whether local GB10 systems can support the work commercial agents often fail at: staying on a task, using long context, running tools, editing real repositories, absorbing test failures, and finishing.</div>
 
         <h2>References I Used</h2>
-        <p>The setup shape is grounded in NVIDIA's Spark clustering docs and current GB10 software notes. The writing format is shaped by what the local LLM community tends to ask for: exact setup, memory footprint, usage pattern, tool/framework details, and honest caveats.</p>
         <ul>
           <li><a href="https://docs.nvidia.com/dgx/dgx-spark/spark-clustering.html">NVIDIA DGX Spark stacking guide</a></li>
           <li><a href="https://build.nvidia.com/spark/connect-three-sparks">NVIDIA three-Spark ring topology playbook</a></li>
           <li><a href="https://developer.nvidia.com/blog/new-software-and-model-optimizations-supercharge-nvidia-dgx-spark/">NVIDIA DGX Spark software and model optimization update</a></li>
           <li><a href="https://www.asus.com/us/business/blog/transforming-ai-education-with-asus-ascent-gx10/">ASUS Ascent GX10 use-case writeup</a></li>
-          <li><a href="https://www.reddit.com/r/LocalLLaMA/comments/1sknx6n/best_local_llms_apr_2026/">LocalLLaMA April 2026 model discussion</a></li>
         </ul>
+
+        <div class="ask-panel">
+          <h2>Permanent Hardware Request</h2>
+          <p>The first two systems are privately funded. The useful next contribution is one permanent GB10-class node plus the correct fabric cable. The preferred contribution is two permanent nodes plus a compatible QSFP switch or fabric kit.</p>
+          <div class="button-row">
+            <a class="button teal" href="mailto:mgsheehyjr89@gmail.com?subject=GB10%20hardware%20sponsorship">Contact Mark</a>
+            <a class="button secondary" href="proof-pack.zip">Download proof pack</a>
+          </div>
+        </div>
       </article>
 
       <aside class="side" aria-label="Build log summary">
-        <div class="side-card gold">
-          <strong>Current status</strong>
+        <div class="side-card blue">
+          <strong>Current state</strong>
           <p>Two GB10-class systems are installed. Final fabric claims wait for the correct-speed cable and repeated service benchmarks.</p>
         </div>
-        <div class="side-card">
+        <div class="side-card teal">
           <strong>Best current proof</strong>
           <p>Single-node GPT-OSS 120B and Qwen Coder baselines, model assets on disk, and kernel/runtime tuning records.</p>
         </div>
-        <div class="side-card">
+        <div class="side-card amber">
           <strong>Open question</strong>
           <p>Which single model gives the best mix of coding intelligence, long context, and speed across the two GB10 nodes?</p>
         </div>
-        <div class="side-card">
-          <strong>Next useful hardware</strong>
+        <div class="side-card red">
+          <strong>Next hardware</strong>
           <p>One permanent GB10-class node plus the correct fabric cable turns the setup into a three-node ring validation.</p>
         </div>
       </aside>
     </div>
   </main>
 
-  <footer>
+  <footer class="site-footer">
     <p>Contact: Mark Sheehy, <a href="mailto:mgsheehyjr89@gmail.com">mgsheehyjr89@gmail.com</a></p>
-    <p><a href="index.html">Evidence page</a> | <a href="proof-pack.zip">Proof pack</a> | <a href="proof-pack/sponsorship-one-pager.pdf">One-page PDF</a></p>
+    <p><a href="index.html">Main page</a> | <a href="proof-pack.zip">Proof pack</a> | <a href="proof-pack/sponsorship-one-pager.pdf">One-page PDF</a></p>
   </footer>
 </body>
 </html>
