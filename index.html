@@ -3,35 +3,35 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Thera GB10 Field Validation</title>
-  <meta name="description" content="A public field note from two privately funded ASUS GX10 / NVIDIA GB10 systems: local long-context coding agents, benchmark data, model assets, kernel findings, and a permanent hardware sponsorship request.">
+  <title>Thera GB10 Local Inference Validation</title>
+  <meta name="description" content="A public validation card for two privately funded ASUS GX10 / NVIDIA GB10 systems: hardware state, model assets, benchmark evidence, kernel findings, limitations, and a permanent hardware sponsorship request.">
   <meta name="author" content="Mark Sheehy">
   <link rel="canonical" href="https://mgsheehyjr89.github.io/">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="stylesheet" href="site.css">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Thera Field Lab">
-  <meta property="og:title" content="Thera GB10 Field Validation">
-  <meta property="og:description" content="Two owned GB10 nodes, local benchmark evidence, long-context agent testing, and a permanent hardware sponsorship request.">
+  <meta property="og:site_name" content="Thera GB10 Validation">
+  <meta property="og:title" content="Thera GB10 Local Inference Validation">
+  <meta property="og:description" content="A model-card style validation record for two privately funded GB10 nodes, benchmark evidence, long-context serving targets, and a permanent hardware sponsorship request.">
   <meta property="og:url" content="https://mgsheehyjr89.github.io/">
   <meta property="og:image" content="https://mgsheehyjr89.github.io/social-card.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Thera GB10 Field Validation">
-  <meta name="twitter:description" content="Two owned GB10 nodes, local benchmark evidence, long-context agent testing, and a permanent hardware sponsorship request.">
+  <meta name="twitter:title" content="Thera GB10 Local Inference Validation">
+  <meta name="twitter:description" content="Two owned GB10 nodes, local benchmark evidence, long-context serving targets, and a permanent hardware sponsorship request.">
   <meta name="twitter:image" content="https://mgsheehyjr89.github.io/social-card.png">
 </head>
 <body>
   <main class="page">
     <div class="topbar">
-      <div class="brand">Thera GB10 Field Lab</div>
+      <div class="brand">Thera GB10 Validation</div>
       <nav class="nav" aria-label="Page sections">
-        <a href="#story">Build story</a>
-        <a href="#verified">Verified</a>
-        <a href="#data">Data</a>
-        <a href="#next">Next tests</a>
-        <a href="#ask">Sponsorship</a>
+        <a href="#scope">Scope</a>
+        <a href="#configuration">Configuration</a>
+        <a href="#benchmarks">Benchmarks</a>
+        <a href="#limitations">Limitations</a>
+        <a href="#sponsorship">Sponsorship</a>
         <a href="proof-pack.zip">Proof pack</a>
       </nav>
     </div>
@@ -39,120 +39,118 @@
     <header class="hero">
       <div class="hero-layout">
         <div>
-          <div class="eyebrow">Field note - April 18, 2026</div>
-          <h1>I bought two GB10 boxes to find out if local coding agents can actually work.</h1>
-          <p class="lead">The interesting part is not that the machines boot. It is whether they can hold long context, run multiple agent slots, survive real repo work, and stay fast enough to matter without sending the work to a hosted model.</p>
+          <div class="eyebrow">Validation card - April 18, 2026</div>
+          <h1>Two-node GB10 validation for local long-context coding agents.</h1>
+          <p class="lead">This record documents a privately funded ASUS GX10 / NVIDIA GB10 testbed for local inference: hardware state, model assets, measured single-node baselines, kernel/runtime findings, validation limits, and the hardware request required to extend the work into a three-node fabric.</p>
           <div class="actions">
-            <a class="button" href="#story">Start with the build story</a>
-            <a class="button secondary" href="#data">Skip to the numbers</a>
-            <a class="button secondary" href="build-log.html">Full build log</a>
+            <a class="button" href="#benchmarks">Review benchmark evidence</a>
+            <a class="button secondary" href="proof-pack/benchmark-results.csv">Open CSV data</a>
+            <a class="button secondary" href="build-log.html">Configuration notes</a>
           </div>
         </div>
 
-        <aside class="signal-board" aria-label="Current proof summary">
+        <aside class="signal-board" aria-label="Validation summary">
           <div class="signal-board-header">
-            <span>Current local state</span>
-            <span>Public share</span>
+            <span>Validation summary</span>
+            <span>Public record</span>
           </div>
           <div class="signal-grid">
             <div class="signal blue">
-              <span>Owned hardware</span>
+              <span>Hardware</span>
               <strong>2x GB10</strong>
-              <p>ASUS GX10-class systems are installed and available for repeat tests.</p>
+              <p>ASUS GX10-class systems installed and available for repeat testing.</p>
             </div>
             <div class="signal teal">
               <span>Model assets</span>
-              <strong>238G</strong>
-              <p>Qwen3.5-397B IQ3 and MiniMax M2.7 IQ4 are both staged.</p>
+              <strong>238 GB</strong>
+              <p>Qwen3.5-397B IQ3 and MiniMax M2.7 IQ4 staged for candidate testing.</p>
+            </div>
+            <div class="signal blue">
+              <span>Serving target</span>
+              <strong>8 / 4M</strong>
+              <p>Eight agent slots over a four-million-token context pool.</p>
             </div>
             <div class="signal amber">
-              <span>Agent target</span>
-              <strong>8 / 4M</strong>
-              <p>Eight slots sharing a four-million-token context pool is the working target.</p>
-            </div>
-            <div class="signal red">
-              <span>Fabric claim</span>
-              <strong>Hold</strong>
-              <p>The correct-speed cable must land before final throughput claims.</p>
+              <span>Fabric status</span>
+              <strong>Pending</strong>
+              <p>Final throughput claims wait for the correct-speed QSFP cable.</p>
             </div>
           </div>
         </aside>
       </div>
     </header>
 
-    <section class="section tint" id="story" aria-labelledby="story-heading">
+    <section class="section tint" id="scope" aria-labelledby="scope-heading">
       <div class="section-header">
         <div>
-          <p class="section-label blue">Build story</p>
-          <h2 id="story-heading">The Part That Matters</h2>
+          <p class="section-label blue">Validation scope</p>
+          <h2 id="scope-heading">Purpose And Evaluation Boundary</h2>
         </div>
-        <p class="muted">I am putting the narrative before the tables on purpose. The numbers matter, but the setup choices are what make the numbers useful to another builder, sponsor, or reviewer.</p>
+        <p class="muted">The objective is to determine whether compact GB10 clusters can support private, long-context coding and infrastructure agents with credible speed, memory headroom, and operational stability.</p>
       </div>
 
       <div class="story-grid">
         <article class="story-copy">
-          <p>I started with two privately funded ASUS GX10 / NVIDIA GB10 systems because I wanted a straight answer to a practical question: can a small local cluster run coding agents with enough context to do real work, or does everything collapse into short prompts and half-finished edits?</p>
+          <p>The current testbed consists of two privately funded ASUS GX10 / NVIDIA GB10 systems. The public evidence focuses on reproducible technical facts: node class, runtime configuration, model storage, benchmark data, kernel findings, known limitations, and the next validation gates.</p>
 
-          <p>The first rule was boring on purpose. I kept the management path separate from the high-speed fabric. SSH, package work, sync, and recovery stay on the normal LAN. The direct link is a private fabric for model traffic and measurements. If a fabric experiment goes sideways, basic administration should still be calm.</p>
+          <p>The workload under evaluation is long-running agentic coding, not short-form chat. The target workload includes repository-scale context, multi-file edits, tool calls, test execution, error recovery, and parallel subagent activity. The relevant serving shape is therefore a single high-capability model with multiple slots and a large shared context pool.</p>
 
-          <p>I am also not treating the temporary cable as a benchmark result. It is useful for bring-up. It is not the basis for a final cluster claim. The NICs should negotiate normally, and the correct-speed cable should be the point where forward and reverse fabric numbers become publishable.</p>
+          <p>Management and inference fabric remain separate. Administrative access, package work, sync, and recovery stay on the normal LAN. The high-speed link is treated as an isolated private fabric for model traffic and measurement.</p>
 
-          <div class="pull">The real test is not a one-prompt demo. It is a long-context coding workload with multiple agent slots, repo edits, tool use, test failures, queue behavior, and enough pressure to expose where the system actually spends time.</div>
-
-          <p>The model work is being framed the same way. Qwen3.5-397B IQ3 is the current two-node target because it fits the 8-slot, 4M-token working shape. MiniMax M2.7 IQ4 is staged because it may trade size for speed and coding quality. GLM remains the family I am watching for long-running agent behavior, but it does not get a winner label until it runs the same jobs under the same scoring rules.</p>
+          <div class="pull">Validation claims are separated by evidence level: measured single-node baselines, current two-node target configuration, and pending fabric/service results.</div>
         </article>
 
         <div class="side-stack">
           <div class="note blue">
-            <strong>Design choice</strong>
-            <p class="muted">Management stays boring. Fabric work stays isolated. No default gateway moves to the experimental link.</p>
+            <strong>Primary use case</strong>
+            <p class="muted">Private local inference for long-context coding and infrastructure agents.</p>
           </div>
           <div class="note teal">
-            <strong>Serving shape</strong>
-            <p class="muted">Two nodes, one model, eight slots, and a four-million-token context pool for real agent/subagent work.</p>
+            <strong>Serving objective</strong>
+            <p class="muted">One strong model, eight agent slots, four-million-token context pool, and stable OS headroom.</p>
           </div>
           <div class="note amber">
-            <strong>Public boundary</strong>
-            <p class="muted">Private addresses, credentials, serials, receipts, raw shell history, and employer-private data stay out of the public pack.</p>
+            <strong>Publication boundary</strong>
+            <p class="muted">Private addresses, credentials, serials, receipts, raw shell history, and employer-private data are excluded.</p>
           </div>
         </div>
       </div>
 
       <figure class="image-frame">
         <img src="evidence-visual.png" alt="GB10 validation evidence board with owned hardware, model assets, benchmark evidence, and next validation pass.">
-        <figcaption>The public evidence board: owned hardware, model assets, benchmark records, and validation gates without private infrastructure details.</figcaption>
+        <figcaption>Public evidence board: hardware class, model assets, benchmark records, and validation gates without private infrastructure details.</figcaption>
       </figure>
     </section>
 
-    <section class="section" id="verified" aria-labelledby="verified-heading">
+    <section class="section" id="configuration" aria-labelledby="configuration-heading">
       <div class="section-header">
         <div>
-          <p class="section-label green">Verified now</p>
-          <h2 id="verified-heading">What Is Already Done</h2>
+          <p class="section-label blue">Configuration</p>
+          <h2 id="configuration-heading">Current System State</h2>
         </div>
-        <p class="muted">This section contains present facts only. Anything waiting on the correct cable, repeated service runs, or candidate bakeoffs is moved out of this lane.</p>
+        <p class="muted">The values below describe the current public configuration and are safe to share. Pending fabric performance is intentionally not mixed into this section.</p>
       </div>
 
-      <div class="metric-grid four" aria-label="Verified evidence metrics">
+      <div class="metric-grid four" aria-label="Current validation metrics">
         <div class="metric blue">
           <div class="metric-label">Installed systems</div>
           <div class="metric-value">2x</div>
-          <p class="metric-copy">Two ASUS GX10 / NVIDIA GB10-class systems are online for repeat testing.</p>
+          <p class="metric-copy">ASUS GX10 / NVIDIA GB10-class systems installed locally.</p>
         </div>
         <div class="metric teal">
-          <div class="metric-label">Large models staged</div>
-          <div class="metric-value">238G</div>
-          <p class="metric-copy">Qwen3.5-397B IQ3 plus MiniMax M2.7 IQ4 fit on disk together for side-by-side tests.</p>
+          <div class="metric-label">Large model assets</div>
+          <div class="metric-value">238 GB</div>
+          <p class="metric-copy">Qwen3.5-397B IQ3 and MiniMax M2.7 IQ4 staged together.</p>
         </div>
         <div class="metric green">
-          <div class="metric-label">GPT-OSS eval</div>
+          <div class="metric-label">Functional eval</div>
           <div class="metric-value">0.925</div>
-          <p class="metric-copy">AIME25 score over a 240-sample local GPT-OSS 120B run.</p>
+          <p class="metric-copy">AIME25 score from a 240-sample local GPT-OSS 120B run.</p>
         </div>
-        <div class="metric amber">
-          <div class="metric-label">Qwen raw decode</div>
+        <div class="metric blue">
+          <div class="metric-label">Raw decode ceiling</div>
           <div class="metric-value">141.46</div>
-          <p class="metric-copy">Aggregate tok/s at npl=8 from the single-GB10 raw batched decode sweep.</p>
+          <p class="metric-copy">Aggregate tok/s at npl=8 from the single-GB10 Qwen raw sweep.</p>
         </div>
       </div>
 
@@ -160,21 +158,21 @@
         <table>
           <thead>
             <tr>
-              <th>Layer</th>
+              <th>Field</th>
               <th>Public value</th>
-              <th>Why it matters</th>
+              <th>Validation relevance</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Node labels</td>
               <td><code>thera128gx10-1</code> and <code>thera128gx10-2</code></td>
-              <td>Repeat work has named roles without exposing private addressing.</td>
+              <td>Named roles support repeatable configuration work without exposing private addressing.</td>
             </tr>
             <tr>
               <td>Hardware class</td>
               <td>ASUS GX10 / NVIDIA GB10, <code>sm_121</code></td>
-              <td>The kernel/runtime notes are tied to the actual GB10 architecture.</td>
+              <td>Runtime and kernel findings are tied to the actual GB10 architecture.</td>
             </tr>
             <tr>
               <td>OS baseline</td>
@@ -182,32 +180,32 @@
               <td>The public record names the software floor for reproducibility.</td>
             </tr>
             <tr>
-              <td>Management approach</td>
-              <td>Normal LAN management remains separate from the direct fabric</td>
-              <td>Administration and recovery are not dependent on the experiment.</td>
+              <td>Management path</td>
+              <td>Normal LAN administration remains separate from the direct fabric</td>
+              <td>Recovery and maintenance do not depend on the experimental fabric path.</td>
             </tr>
             <tr>
               <td>High-speed device class</td>
               <td>Mellanox / NVIDIA ConnectX-7-class NICs reported locally</td>
-              <td>The private fabric test is grounded in the right hardware class.</td>
+              <td>The fabric validation is grounded in the correct device class.</td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <section class="section cool" id="data" aria-labelledby="data-heading">
+    <section class="section cool" id="benchmarks" aria-labelledby="benchmarks-heading">
       <div class="section-header">
         <div>
-          <p class="section-label teal">Measured data</p>
-          <h2 id="data-heading">The Numbers People Came For</h2>
+          <p class="section-label blue">Benchmark evidence</p>
+          <h2 id="benchmarks-heading">Measured Results Available For Review</h2>
         </div>
-        <p class="muted">These are the publishable measurements on disk today. The page separates single-node baselines, negative kernel findings, and pending multi-node claims so the record stays honest.</p>
+        <p class="muted">The publishable dataset currently consists of single-GB10 baselines, serving-shape measurements, and kernel/runtime experiments. Final two-node service performance is a separate validation gate.</p>
       </div>
 
       <figure class="image-frame">
         <img src="benchmark-graphs.png" alt="Four benchmark graphs comparing GPT-OSS 120B OOB versus tuned decode, Qwen Coder serving shape, Qwen Coder raw scaling, and MMQ tuning results.">
-        <figcaption>Representative graphs from the proof pack: OOB versus tuned GPT-OSS, Qwen Coder serving and raw sweeps, and a negative MMQ tuning result.</figcaption>
+        <figcaption>Public graph set: OOB versus tuned GPT-OSS, Qwen Coder serving and raw sweeps, and an MMQ-off regression result.</figcaption>
       </figure>
 
       <h3>GPT-OSS 120B on one GB10</h3>
@@ -217,7 +215,7 @@
             <tr>
               <th>Measurement</th>
               <th>Recorded value</th>
-              <th>Takeaway</th>
+              <th>Interpretation</th>
             </tr>
           </thead>
           <tbody>
@@ -229,12 +227,12 @@
             <tr>
               <td>Live implementation audit</td>
               <td><code>63 tok/s</code> batch-1 decode</td>
-              <td>A useful GPT-OSS 120B lane on one GB10-class system.</td>
+              <td>Useful local GPT-OSS 120B decode performance on one GB10-class system.</td>
             </tr>
             <tr>
               <td>Model memory</td>
               <td><code>64.02 GiB</code> MXFP4</td>
-              <td>The 120B MoE leaves real memory room on a 128GB box.</td>
+              <td>The 120B MoE leaves meaningful memory room on a 128GB unified-memory node.</td>
             </tr>
             <tr>
               <td>KV cache headroom</td>
@@ -244,7 +242,7 @@
             <tr>
               <td>AIME25 local eval</td>
               <td><code>0.925</code> over <code>240</code> samples</td>
-              <td>Functional eval data exists, not just throughput.</td>
+              <td>Functional evaluation data exists alongside throughput data.</td>
             </tr>
           </tbody>
         </table>
@@ -257,14 +255,14 @@
             <tr>
               <th>Measurement</th>
               <th>Recorded value</th>
-              <th>Takeaway</th>
+              <th>Interpretation</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Verified serving geometry</td>
               <td><code>262656</code> context, <code>3</code> slots, <code>87552</code> tokens per slot</td>
-              <td>Concrete long-context serving shape, not a short prompt demo.</td>
+              <td>Concrete long-context serving geometry rather than a short-prompt demonstration.</td>
             </tr>
             <tr>
               <td>Single-request decode</td>
@@ -274,7 +272,7 @@
             <tr>
               <td>Three concurrent requests</td>
               <td>About <code>31.34 tok/s</code> per stream</td>
-              <td>Relevant to planner, implementor, and auditor agents sharing a box.</td>
+              <td>Relevant to multi-agent planner, implementor, and auditor workloads.</td>
             </tr>
             <tr>
               <td>Raw batched decode sweep</td>
@@ -284,20 +282,20 @@
             <tr>
               <td>Repeated-run audited lane</td>
               <td><code>35.07 tok/s</code> average decode, about <code>105.2 tok/s</code> aggregate at 3-way</td>
-              <td>The median-of-5 lane survived audit better than the earlier single-run winner.</td>
+              <td>Median-of-5 result retained after review.</td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <section class="section" id="kernel" aria-labelledby="kernel-heading">
+    <section class="section" id="runtime" aria-labelledby="runtime-heading">
       <div class="section-header">
         <div>
-          <p class="section-label red">Kernel notes</p>
-          <h2 id="kernel-heading">The Negative Results Are Useful</h2>
+          <p class="section-label blue">Runtime findings</p>
+          <h2 id="runtime-heading">Kernel And Serving Observations</h2>
         </div>
-        <p class="muted">The kernel/runtime work is worth publishing because it rules out easy switches and narrows the real CUDA target.</p>
+        <p class="muted">Negative results are included because they constrain the optimization path and reduce repeat work.</p>
       </div>
 
       <div class="table-wrap">
@@ -318,12 +316,12 @@
             <tr>
               <td>Disable MMQ globally</td>
               <td>Raw <code>90.73 tok/s</code>; live decode <code>31.36</code> vs <code>31.38</code>; prompt t/s regressed from <code>162.40</code> to <code>66.96</code></td>
-              <td>MMQ yes/no is not the lever. The live path needs a narrower edit.</td>
+              <td>Global MMQ disable is not an acceptable optimization path.</td>
             </tr>
             <tr>
               <td>Disable stream-k globally</td>
               <td>The reproducer exceeded <code>6m20s</code> and was terminated; expected baseline was about <code>2m36s</code></td>
-              <td>stream-k is required on this branch. Disabling it is not a viable tuning path.</td>
+              <td>stream-k is required on this branch.</td>
             </tr>
             <tr>
               <td>TurboQuant decode path</td>
@@ -333,74 +331,74 @@
             <tr>
               <td>GB10 Blackwell constraint</td>
               <td><code>sm_121</code> is not datacenter Blackwell</td>
-              <td>No WGMMA/tcgen05 assumptions. Tune for the actual GB10 ISA and memory hierarchy.</td>
+              <td>Optimization work must match the actual GB10 ISA and memory hierarchy.</td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <section class="section tint" id="next" aria-labelledby="next-heading">
+    <section class="section tint" id="limitations" aria-labelledby="limitations-heading">
       <div class="section-header">
         <div>
-          <p class="section-label amber">Not claimed yet</p>
-          <h2 id="next-heading">The Next Validation Pass</h2>
+          <p class="section-label amber">Limitations</p>
+          <h2 id="limitations-heading">Claims Not Yet Made</h2>
         </div>
-        <p class="muted">The open work is concrete. It is not being blended into the verified numbers above.</p>
+        <p class="muted">The following items remain open and must be completed before stronger two-node or cluster-level claims are published.</p>
       </div>
 
       <ol class="timeline">
         <li>
           <span class="step-number">01</span>
           <div>
-            <strong>Install the correct-speed QSFP cable.</strong>
-            <p class="muted">Do not hard-code the link to the temporary 40G cable. Let the NICs negotiate, then record link speed, MTU, and counters.</p>
+            <strong>Correct-speed QSFP fabric cable installed.</strong>
+            <p class="muted">The current temporary cable is sufficient for setup work but is not a basis for final GB10 fabric throughput claims.</p>
           </div>
         </li>
         <li>
           <span class="step-number">02</span>
           <div>
-            <strong>Run forward and reverse fabric tests.</strong>
-            <p class="muted">Capture <code>iperf3</code> both directions, jumbo-frame checks when MTU 9000 is valid, and error/drop/FEC counters before and after sustained load.</p>
+            <strong>Forward and reverse fabric throughput recorded.</strong>
+            <p class="muted">Required evidence includes negotiated link speed, MTU, iperf3 both directions, and NIC error/drop/FEC counters.</p>
           </div>
         </li>
         <li>
           <span class="step-number">03</span>
           <div>
-            <strong>Run real coding tasks across the model candidates.</strong>
-            <p class="muted">Use long repositories, multi-file edits, tests, failures, and 8-slot subagent pressure. Score correctness, completion behavior, queue behavior, latency, decode speed, memory, and crashes.</p>
+            <strong>Long-context coding tasks run across model candidates.</strong>
+            <p class="muted">Qwen, MiniMax, and GLM candidates require the same repository-scale tasks, scoring rules, service geometry, and failure reporting.</p>
           </div>
         </li>
         <li>
           <span class="step-number">04</span>
           <div>
-            <strong>Publish only repeated combined-service results.</strong>
-            <p class="muted">A stronger two-node claim needs fabric numbers, long-context coding tasks, and repeated service runs under one recorded launch shape.</p>
+            <strong>Repeated combined-service results captured.</strong>
+            <p class="muted">A validated two-node inference claim requires repeated service runs under one recorded launch configuration.</p>
           </div>
         </li>
       </ol>
 
-      <div class="band red">
-        No public claim is being made yet that C-1 and C-2 are a fully validated combined inference server. The hardware is installed, the target is defined, and the missing tests are named.
+      <div class="band amber">
+        Current public status: two GB10 nodes are installed, model assets are staged, and single-node evidence is published. A final combined-inference-server claim is intentionally withheld until the fabric and service validation gates are complete.
       </div>
     </section>
 
-    <section class="section terminal" id="ask" aria-labelledby="ask-heading">
+    <section class="section terminal" id="sponsorship" aria-labelledby="sponsorship-heading">
       <div class="section-header">
         <div>
-          <p class="section-label amber">Hardware request</p>
-          <h2 id="ask-heading">A Third GB10 Changes The Experiment</h2>
+          <p class="section-label blue">Hardware request</p>
+          <h2 id="sponsorship-heading">Permanent GB10 Sponsorship Request</h2>
         </div>
-        <p class="muted">With two nodes, the fabric test is point-to-point. With three, the topology becomes the small direct ring NVIDIA documents for Spark-class systems. That is a different validation problem, not just more memory.</p>
+        <p class="muted">A third GB10 changes the validation from point-to-point testing into the small direct ring topology documented for Spark-class systems. That unlocks service placement, routing, failure behavior, and multi-node agent pressure testing.</p>
       </div>
 
       <div class="ask-grid">
         <div class="ask-panel">
-          <h3>Permanent sponsorship ask</h3>
+          <h3>Requested contribution</h3>
           <ul>
             <li>Minimum: one permanent ASUS GX10 / NVIDIA GB10-class validation node plus the correct fabric cable.</li>
             <li>Preferred: two permanent GB10-class nodes plus a compatible QSFP switch or fabric kit.</li>
-            <li>Useful add-ons: correct cables/transceivers, spare storage, and a vendor technical contact for fabric and runtime questions.</li>
+            <li>Useful additions: correct cables/transceivers, spare storage, and a vendor technical contact for fabric and runtime questions.</li>
           </ul>
           <div class="button-row">
             <a class="button teal" href="mailto:mgsheehyjr89@gmail.com?subject=GB10%20hardware%20sponsorship">Contact Mark</a>
@@ -409,15 +407,15 @@
         </div>
 
         <div class="method-grid">
-          <div class="method-card amber">
-            <strong>What a sponsor gets</strong>
-            <p>Public acknowledgement, reproducible setup notes, fabric diagnostics, model-fit tables, benchmark results, and kernel/runtime findings.</p>
-          </div>
           <div class="method-card blue">
-            <strong>What the third node unlocks</strong>
-            <p>Ring topology validation, service-placement choices, routing behavior, failure behavior, and long-running agent traffic under load.</p>
+            <strong>Public deliverables</strong>
+            <p>Setup notes, fabric diagnostics, reproducible launch configurations, model-fit tables, benchmark results, and kernel/runtime findings.</p>
           </div>
-          <div class="method-card red">
+          <div class="method-card teal">
+            <strong>Three-node value</strong>
+            <p>Ring topology validation, service placement, routing behavior, failure behavior, and long-running agent traffic under load.</p>
+          </div>
+          <div class="method-card amber">
             <strong>Data boundary</strong>
             <p>Public tasks use public repos, synthetic infrastructure tasks, redacted examples, or purpose-built test repos. No member data or private employer material.</p>
           </div>
@@ -429,7 +427,7 @@
       <div class="section-header">
         <div>
           <p class="section-label blue">Proof pack</p>
-          <h2 id="proof-pack-heading">Download The Verification Materials</h2>
+          <h2 id="proof-pack-heading">Verification Materials</h2>
         </div>
         <p class="muted">The proof pack contains machine-readable data, methodology notes, limitations, launch summaries, sanitized logs, and a sponsor handout.</p>
       </div>
@@ -441,13 +439,13 @@
           <p><a href="proof-pack.zip">Download proof-pack.zip</a></p>
         </div>
         <div class="proof-card teal">
-          <strong>Machine-readable data</strong>
-          <p class="muted">Benchmark values are available as CSV and JSON so claims can be checked without scraping the page.</p>
+          <strong>Benchmark data</strong>
+          <p class="muted">CSV and JSON files provide the values used by the public benchmark graphs.</p>
           <p><a href="proof-pack/benchmark-results.csv">CSV</a> / <a href="proof-pack/benchmark-results.json">JSON</a></p>
         </div>
         <div class="proof-card amber">
-          <strong>Method and caveats</strong>
-          <p class="muted">Benchmark rules, privacy boundary, current limitations, and validation gates.</p>
+          <strong>Method and limitations</strong>
+          <p class="muted">Benchmark method, privacy boundary, current caveats, and validation gates.</p>
           <p><a href="proof-pack/methodology.md">Methodology</a> / <a href="proof-pack/limitations.md">Limitations</a></p>
         </div>
       </div>
@@ -456,10 +454,10 @@
     <section class="section tint" id="project-lead" aria-labelledby="project-lead-heading">
       <div class="section-header">
         <div>
-          <p class="section-label green">Project lead</p>
-          <h2 id="project-lead-heading">Who Is Running The Validation</h2>
+          <p class="section-label blue">Contact</p>
+          <h2 id="project-lead-heading">Project Lead</h2>
         </div>
-        <p class="muted">Independent validation led by a systems and network administrator focused on private inference, long-context agents, and practical infrastructure work.</p>
+        <p class="muted">Independent validation led by a systems and network administrator focused on private inference, long-context agents, and practical infrastructure deployment.</p>
       </div>
 
       <div class="profile-grid">
@@ -469,19 +467,19 @@
           <p><a href="mailto:mgsheehyjr89@gmail.com">mgsheehyjr89@gmail.com</a></p>
         </div>
         <div class="profile-card teal">
-          <h3>Why I care</h3>
-          <p class="muted">Cloud-only AI does not fit every privacy-sensitive workflow. This work tests whether small local GB10 clusters can provide enough context, speed, and operational headroom to matter.</p>
+          <h3>Rationale</h3>
+          <p class="muted">Cloud-only AI is not suitable for every privacy-sensitive workflow. This validation tests whether compact local GB10 clusters can provide useful context, speed, and operational headroom.</p>
         </div>
-        <div class="profile-card amber">
+        <div class="profile-card blue">
           <h3>References</h3>
-          <p class="muted"><a href="https://docs.nvidia.com/dgx/dgx-spark/spark-clustering.html">NVIDIA Spark clustering</a>, <a href="https://build.nvidia.com/spark/connect-three-sparks">three-Spark ring topology</a>, and <a href="https://developer.nvidia.com/blog/new-software-and-model-optimizations-supercharge-nvidia-dgx-spark/">DGX Spark software notes</a> informed the topology work.</p>
+          <p class="muted"><a href="https://docs.nvidia.com/dgx/dgx-spark/spark-clustering.html">NVIDIA Spark clustering</a>, <a href="https://build.nvidia.com/spark/connect-three-sparks">three-Spark ring topology</a>, and <a href="https://developer.nvidia.com/blog/new-software-and-model-optimizations-supercharge-nvidia-dgx-spark/">DGX Spark software notes</a> inform the topology work.</p>
         </div>
       </div>
     </section>
 
     <footer class="site-footer">
       <p>Contact: Mark Sheehy, <a href="mailto:mgsheehyjr89@gmail.com">mgsheehyjr89@gmail.com</a></p>
-      <p>Hardware, model, and kernel claims are separated so reviewers can tell what is measured, what is under test, and what still needs validation.</p>
+      <p>Hardware, model, runtime, and fabric claims are separated by evidence level so reviewers can distinguish measured results from pending validation gates.</p>
     </footer>
   </main>
 </body>

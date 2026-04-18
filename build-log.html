@@ -3,62 +3,62 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Building a Two-GB10 Local AI Cluster</title>
-  <meta name="description" content="A first-person build log for a two-node ASUS GX10 / NVIDIA GB10 local AI cluster: network shape, configs, benchmark evidence, kernel findings, model choices, and next tests.">
+  <title>Thera GB10 Validation Configuration Notes</title>
+  <meta name="description" content="Configuration notes for a two-node ASUS GX10 / NVIDIA GB10 local inference validation: network isolation, fabric commands, benchmark evidence, model-serving target, limitations, and sponsorship request.">
   <meta name="author" content="Mark Sheehy">
   <link rel="canonical" href="https://mgsheehyjr89.github.io/build-log.html">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="stylesheet" href="site.css">
   <meta property="og:type" content="article">
-  <meta property="og:site_name" content="Thera GB10 Field Lab">
-  <meta property="og:title" content="Building a Two-GB10 Local AI Cluster">
-  <meta property="og:description" content="What I configured, what measured well, what broke, and why the third GB10 matters.">
+  <meta property="og:site_name" content="Thera GB10 Validation">
+  <meta property="og:title" content="Thera GB10 Validation Configuration Notes">
+  <meta property="og:description" content="Network shape, fabric commands, benchmark evidence, kernel findings, model-serving target, and validation gates for a two-node GB10 inference testbed.">
   <meta property="og:url" content="https://mgsheehyjr89.github.io/build-log.html">
   <meta property="og:image" content="https://mgsheehyjr89.github.io/social-card.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Building a Two-GB10 Local AI Cluster">
-  <meta name="twitter:description" content="Network shape, configs, benchmark evidence, kernel findings, model choices, and next tests.">
+  <meta name="twitter:title" content="Thera GB10 Validation Configuration Notes">
+  <meta name="twitter:description" content="Network shape, fabric commands, benchmark evidence, kernel findings, model-serving target, and validation gates.">
   <meta name="twitter:image" content="https://mgsheehyjr89.github.io/social-card.png">
 </head>
 <body>
   <div class="topbar">
-    <div class="brand">Thera GB10 Field Lab</div>
+    <div class="brand">Thera GB10 Validation</div>
     <nav class="nav" aria-label="Site sections">
       <a href="index.html">Main page</a>
-      <a href="index.html#data">Data</a>
+      <a href="index.html#benchmarks">Benchmarks</a>
       <a href="proof-pack.zip">Proof pack</a>
       <a href="mailto:mgsheehyjr89@gmail.com">Contact</a>
     </nav>
   </div>
 
   <header class="article-hero">
-    <div class="eyebrow">Build log - April 18, 2026</div>
-    <h1>Building a Two-GB10 Local AI Cluster</h1>
-    <p class="lead">I bought the first two ASUS GX10 / NVIDIA GB10 systems myself because I wanted to stop guessing about local long-context coding agents. This is the setup work, the benchmark evidence, the mistakes, and the reason the next node matters.</p>
+    <div class="eyebrow">Configuration notes - April 18, 2026</div>
+    <h1>Thera GB10 Validation Configuration Notes</h1>
+    <p class="lead">This technical note records the current two-node GB10 validation shape: management isolation, direct-fabric configuration, benchmark evidence, runtime findings, model-serving target, and the gates required before stronger cluster claims are published.</p>
   </header>
 
   <main class="article-shell">
     <div class="article-layout">
       <article class="post">
-        <p class="section-label blue">Short version</p>
-        <p>I have two GB10-class systems online, large model assets staged, single-node benchmark data on disk, and a private fabric design ready for correct-speed validation. The next useful result is a repeated two-node service run under long-context coding pressure. After that, a third GB10 changes the topology from point-to-point into the small ring NVIDIA documents for Spark-class systems.</p>
+        <p class="section-label blue">Summary</p>
+        <p>The current testbed includes two ASUS GX10 / NVIDIA GB10-class systems, large model assets staged for side-by-side testing, and measured single-node inference data. The next publication-grade result is a repeated two-node service run after correct-speed fabric validation.</p>
 
         <figure class="image-frame">
           <img src="evidence-visual.png" alt="GB10 validation evidence board with owned hardware, model assets, benchmark evidence, and next validation pass.">
-          <figcaption>The public evidence board I am using: hardware class, model assets, benchmark record, and validation gates.</figcaption>
+          <figcaption>Public evidence board: hardware class, staged model assets, benchmark record, and validation gates.</figcaption>
         </figure>
 
-        <h2>Why I Built It This Way</h2>
-        <p>The workload I care about is not a chatbot answering one prompt. I want local agents that can stay inside a large repo, keep context, call tools, make edits, run tests, absorb failures, and finish without turning the hard parts into stubs.</p>
+        <h2>Validation Objective</h2>
+        <p>The workload under evaluation is local long-context coding and infrastructure automation. The system must support repository-scale context, multiple agent slots, tool use, edits across files, test execution, failure recovery, and sustained operation without relying on hosted model infrastructure.</p>
 
-        <p>That changes the whole shape of the system. The model has to be smart enough for coding, fast enough that agents do not stall, and large enough in context that several slots can work at once. I am targeting eight slots and a four-million-token context pool because the extra slots are for subagents, not for casual chat concurrency.</p>
+        <p>The two-node target is a single high-capability model served across both GB10 systems with eight slots and a four-million-token context pool. Additional slots are intended for subagent work, not general chat concurrency.</p>
 
-        <div class="pull">The main design rule is simple: never replace the boring management path with the experimental high-speed path. Add the fabric as a separate network and prove it before moving model traffic onto it.</div>
+        <div class="pull">Design principle: keep routine management separate from the experimental high-speed fabric. Validate the fabric as an additional network, not as a replacement for recovery and administration.</div>
 
-        <h2>The Network Shape</h2>
-        <p>Both systems keep normal LAN management for SSH, updates, package sync, and recovery. The high-speed link is treated as a private fabric. It has no default gateway and no reason to carry ordinary management traffic.</p>
+        <h2>Network Architecture</h2>
+        <p>Both systems keep normal LAN management for SSH, updates, package sync, and recovery. The high-speed link is configured as an isolated private fabric with no default gateway. This keeps administrative recovery independent from fabric experiments.</p>
 
-        <p>I started with Ethernet mode because plain IP needs to be boring before RDMA, InfiniBand, or distributed runtime tuning enters the picture. The temporary cable is only useful for bring-up. It is not the basis for a final throughput claim, and I am not hard-coding the configuration to its temporary limit.</p>
+        <p>The initial fabric mode is Ethernet/IP. RDMA and InfiniBand tuning are deferred until basic link negotiation, MTU behavior, counter health, and bidirectional throughput are demonstrated.</p>
 
         <pre><code>lspci | grep -Ei 'mellanox|nvidia|connectx|ethernet|infiniband'
 ip -br link
@@ -70,8 +70,8 @@ sudo ethtool &lt;fabric_iface&gt;
 sudo mst status
 sudo mlxconfig -d &lt;device&gt; q | grep -Ei 'LINK_TYPE|SRIOV|ROCE'</code></pre>
 
-        <h2>The Fabric Config</h2>
-        <p>The direct fabric is a small private subnet with one address on each node and no gateway. The placeholders below are intentional. The useful public part is the shape, not private addressing.</p>
+        <h2>Fabric Configuration Shape</h2>
+        <p>The direct fabric uses a small private point-to-point subnet with one address per node and no gateway. The placeholders below intentionally avoid publishing private addressing.</p>
 
         <pre><code># C-1
 sudo nmcli con add type ethernet ifname &lt;fabric_iface&gt; \
@@ -91,7 +91,7 @@ sudo nmcli con add type ethernet ifname &lt;fabric_iface&gt; \
 sudo nmcli con mod gb10-fabric-c1 802-3-ethernet.mtu 9000
 sudo nmcli con up gb10-fabric-c1</code></pre>
 
-        <p>The final fabric test is narrow: negotiated link speed, MTU, counters, forward iperf3, reverse iperf3, jumbo ping when MTU 9000 is valid, and error/drop/FEC counters before and after load.</p>
+        <p>The temporary cable is acceptable for setup, but it is not a final performance basis. The validated run requires negotiated link speed, MTU, counter checks, forward iperf3, reverse iperf3, jumbo ping when applicable, and counter comparison before and after sustained load.</p>
 
         <pre><code>iperf3 -s -B &lt;c1_fabric_ip&gt;
 iperf3 -c &lt;c1_fabric_ip&gt; -P 8 -t 30
@@ -101,20 +101,20 @@ ping -M do -s 8972 -c 3 &lt;peer_fabric_ip&gt;
 
 sudo ethtool -S &lt;fabric_iface&gt; | grep -Ei 'err|drop|fec|crc|timeout|pause'</code></pre>
 
-        <h2>The Model-Serving Target</h2>
-        <p>The question is not which file is biggest. The question is which single model gives the best coding intelligence at usable speed while leaving enough memory for KV cache, compute, and the operating systems.</p>
+        <h2>Model-Serving Target</h2>
+        <p>The selection question is the best single model for the two-node GB10 memory envelope when the objective is coding quality, inference speed, long context, and stable system headroom. Raw model size alone is not the selection criterion.</p>
 
-        <p>Right now the working two-node target is Qwen3.5-397B IQ3 with eight slots sharing a four-million-token context pool. MiniMax M2.7 IQ4 is staged as a smaller challenger. GLM remains the family I am watching hardest for long-running agent behavior, but I am not calling a winner until the same coding tasks run across the candidates.</p>
+        <p>Current target: Qwen3.5-397B IQ3 across the two GB10 systems with eight slots sharing a four-million-token context pool. MiniMax M2.7 IQ4 is staged as a smaller challenger. GLM remains a high-interest candidate for long-running agent behavior, pending fit and runtime validation.</p>
 
         <pre><code>model: Qwen3.5-397B-A17B-UD-IQ3_S
 slots: 8
 context_pool: 4M tokens
 kv_profile_observed: K=q8_0, V=turbo2
-reserve: keep OS and service headroom on both nodes
-test_load: real repos, multi-file edits, tests, failures recorded</code></pre>
+reserve: OS and service headroom on both nodes
+test_load: real repositories, multi-file edits, tests, failures recorded</code></pre>
 
-        <h2>Numbers I Can Publish Today</h2>
-        <p>The strongest numbers today are still single-GB10 baselines and kernel/runtime findings. I am keeping two-node fabric claims separate until the correct cable and repeated service benchmarks are finished.</p>
+        <h2>Current Benchmark Evidence</h2>
+        <p>The strongest publishable values today are single-GB10 baselines and kernel/runtime findings. Two-node fabric and service claims remain gated on correct-speed cable validation and repeated combined-service runs.</p>
 
         <div class="table-wrap">
           <table>
@@ -122,19 +122,19 @@ test_load: real repos, multi-file edits, tests, failures recorded</code></pre>
               <tr>
                 <th>Measurement</th>
                 <th>Recorded value</th>
-                <th>Takeaway</th>
+                <th>Interpretation</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>GPT-OSS 120B tuned decode</td>
                 <td><code>63 tok/s</code> batch-1 decode</td>
-                <td>One GB10-class system can run a useful 120B lane.</td>
+                <td>One GB10-class system can run a useful 120B local inference lane.</td>
               </tr>
               <tr>
                 <td>GPT-OSS AIME25 local eval</td>
                 <td><code>0.925</code> over <code>240</code> samples</td>
-                <td>There is functional eval data, not only throughput.</td>
+                <td>Functional evaluation data accompanies throughput data.</td>
               </tr>
               <tr>
                 <td>Qwen Coder raw sweep</td>
@@ -144,7 +144,7 @@ test_load: real repos, multi-file edits, tests, failures recorded</code></pre>
               <tr>
                 <td>MMQ-off experiment</td>
                 <td>Prompt throughput regressed from <code>162.40</code> to <code>66.96 tok/s</code></td>
-                <td>The easy toggle was not the real optimization path.</td>
+                <td>Global MMQ disable is not an acceptable tuning path.</td>
               </tr>
             </tbody>
           </table>
@@ -152,44 +152,44 @@ test_load: real repos, multi-file edits, tests, failures recorded</code></pre>
 
         <figure class="image-frame">
           <img src="benchmark-graphs.png" alt="Benchmark graphs for GPT-OSS tuned decode, Qwen Coder serving shape, Qwen raw scaling, and MMQ tuning results.">
-          <figcaption>The graph set includes useful baselines plus a negative kernel result that saves tuning time.</figcaption>
+          <figcaption>Benchmark graph set: GPT-OSS OOB versus tuned, Qwen serving geometry, Qwen raw scaling, and MMQ-off regression.</figcaption>
         </figure>
 
-        <h2>What Broke Or Almost Broke</h2>
+        <h2>Known Limitations</h2>
         <ul>
-          <li>The cable mattered more than expected. A lower-rated cable is fine for setup, but it is not a final fabric benchmark.</li>
-          <li>The easy kernel toggles did not solve the bottleneck. MMQ-off stayed flat on decode and hurt prompt throughput; disabling stream-k globally was worse.</li>
-          <li>Benchmarks that look good in isolation are not enough. The real test is long-context coding with multiple agent slots under the same launch configuration.</li>
-          <li>Model quality claims are fragile unless Qwen, MiniMax, and GLM run the same tasks with the same scoring rules.</li>
+          <li>Final fabric throughput is not claimed until the correct-speed cable is installed and tested.</li>
+          <li>Current public Qwen Coder graphs are single-GB10 historical baselines, not final combined-node service results.</li>
+          <li>Model quality claims require the same long-context coding tasks across Qwen, MiniMax, and GLM candidates.</li>
+          <li>Kernel tuning findings currently rule out broad switches; they do not yet constitute a deployable CUDA speedup.</li>
         </ul>
 
-        <h2>What I Would Repeat</h2>
+        <h2>Repeatable Practices</h2>
         <ol>
-          <li>Name the nodes and document roles first.</li>
-          <li>Keep LAN management separate from the high-speed fabric.</li>
-          <li>Prove IP networking before RDMA or distributed runtime tuning.</li>
-          <li>Record negative results because they stop the next person from wasting the same night.</li>
-          <li>Publish benchmark data as CSV/JSON, not only screenshots.</li>
+          <li>Name nodes and document roles before distributed service work.</li>
+          <li>Keep LAN management separate from high-speed fabric experiments.</li>
+          <li>Validate plain IP networking before RDMA or distributed runtime tuning.</li>
+          <li>Retain negative benchmark results when they materially narrow the tuning path.</li>
+          <li>Publish benchmark data as CSV/JSON in addition to screenshots.</li>
         </ol>
 
-        <h2>Why A Third Node Changes The Work</h2>
-        <p>With two nodes, the fabric test is point-to-point. With three, the topology becomes a small ring, which is the shape NVIDIA documents for three Spark-class systems using direct QSFP connections. That matters because the third node is not just more memory. It changes the validation: ring behavior, routing choices, service placement, failure behavior, and whether long-running agent traffic stays usable under load.</p>
+        <h2>Three-Node Expansion Rationale</h2>
+        <p>Two nodes validate point-to-point fabric behavior. Three nodes introduce the small direct-ring topology documented for Spark-class systems and enable validation of routing behavior, service placement, failure handling, and sustained agent traffic under load.</p>
 
-        <p>A fourth node would open Q3/Q4 tradeoff testing and redundancy experiments, but the first meaningful jump is two to three. That is why the sponsorship request starts with one permanent GB10-class node plus the right fabric cable.</p>
+        <p>A fourth node enables higher-precision quantization tradeoff testing and redundancy experiments. The first materially different topology, however, begins at three nodes.</p>
 
-        <h2>The Next Concrete Test</h2>
+        <h2>Next Validation Gate</h2>
         <ol>
           <li>Install the correct-speed fabric cable.</li>
-          <li>Record negotiated link speed, MTU, and counters.</li>
+          <li>Record negotiated link speed, MTU, and interface counters.</li>
           <li>Run forward and reverse iperf3.</li>
           <li>Start the combined model service with the recorded launch shape.</li>
           <li>Run real long-context coding tasks across Qwen and MiniMax, then GLM if fit and runtime shape validate cleanly.</li>
           <li>Score correctness, completion behavior, queue behavior, time-to-first-token, decode throughput, memory pressure, and failures.</li>
         </ol>
 
-        <div class="band red">I am not trying to make a tiny cluster win a synthetic one-prompt chart. I am testing whether local GB10 systems can support the work commercial agents often fail at: staying on a task, using long context, running tools, editing real repositories, absorbing test failures, and finishing.</div>
+        <div class="band amber">Validation target: determine whether local GB10 systems can sustain long-context coding agents that use tools, edit real repositories, recover from test failures, and complete multi-step work without relying on hosted model infrastructure.</div>
 
-        <h2>References I Used</h2>
+        <h2>References</h2>
         <ul>
           <li><a href="https://docs.nvidia.com/dgx/dgx-spark/spark-clustering.html">NVIDIA DGX Spark stacking guide</a></li>
           <li><a href="https://build.nvidia.com/spark/connect-three-sparks">NVIDIA three-Spark ring topology playbook</a></li>
@@ -199,7 +199,7 @@ test_load: real repos, multi-file edits, tests, failures recorded</code></pre>
 
         <div class="ask-panel">
           <h2>Permanent Hardware Request</h2>
-          <p>The first two systems are privately funded. The useful next contribution is one permanent GB10-class node plus the correct fabric cable. The preferred contribution is two permanent nodes plus a compatible QSFP switch or fabric kit.</p>
+          <p>The first two systems are privately funded. The minimum useful contribution is one permanent GB10-class node plus the correct fabric cable. The preferred contribution is two permanent nodes plus a compatible QSFP switch or fabric kit.</p>
           <div class="button-row">
             <a class="button teal" href="mailto:mgsheehyjr89@gmail.com?subject=GB10%20hardware%20sponsorship">Contact Mark</a>
             <a class="button secondary" href="proof-pack.zip">Download proof pack</a>
@@ -207,22 +207,22 @@ test_load: real repos, multi-file edits, tests, failures recorded</code></pre>
         </div>
       </article>
 
-      <aside class="side" aria-label="Build log summary">
+      <aside class="side" aria-label="Configuration note summary">
         <div class="side-card blue">
           <strong>Current state</strong>
-          <p>Two GB10-class systems are installed. Final fabric claims wait for the correct-speed cable and repeated service benchmarks.</p>
+          <p>Two GB10-class systems installed; final fabric claims pending correct-speed cable validation.</p>
         </div>
         <div class="side-card teal">
-          <strong>Best current proof</strong>
-          <p>Single-node GPT-OSS 120B and Qwen Coder baselines, model assets on disk, and kernel/runtime tuning records.</p>
+          <strong>Current evidence</strong>
+          <p>Single-node GPT-OSS 120B and Qwen Coder baselines, model assets, and kernel/runtime tuning records.</p>
+        </div>
+        <div class="side-card blue">
+          <strong>Open model question</strong>
+          <p>Best single model for coding quality, long context, inference speed, and stable system headroom.</p>
         </div>
         <div class="side-card amber">
-          <strong>Open question</strong>
-          <p>Which single model gives the best mix of coding intelligence, long context, and speed across the two GB10 nodes?</p>
-        </div>
-        <div class="side-card red">
           <strong>Next hardware</strong>
-          <p>One permanent GB10-class node plus the correct fabric cable turns the setup into a three-node ring validation.</p>
+          <p>One permanent GB10-class node plus correct fabric cable enables three-node ring validation.</p>
         </div>
       </aside>
     </div>
